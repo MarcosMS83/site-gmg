@@ -2,12 +2,13 @@
 <html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>MS Geradores - Dimensional GMG</title>
+  <title>MS Geradores - Gerador de Dimensionais</title>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script src="https://unpkg.com/downloadjs@1.4.7"></script>
 
   <style>
 
@@ -19,12 +20,12 @@
     }
 
     body{
-      background:#f2f5f9;
+      background:#f3f5f9;
       padding:40px;
     }
 
     .container{
-      max-width:1000px;
+      max-width:900px;
       margin:auto;
       background:white;
       padding:40px;
@@ -32,21 +33,17 @@
       box-shadow:0 10px 30px rgba(0,0,0,0.1);
     }
 
-    .logo{
+    h1{
       text-align:center;
-      margin-bottom:30px;
-    }
-
-    .logo h1{
       color:#0f4ea8;
-      font-size:40px;
+      margin-bottom:10px;
+      font-size:38px;
     }
 
     .subtitle{
       text-align:center;
       color:#666;
       margin-bottom:40px;
-      font-size:18px;
     }
 
     .grid{
@@ -73,11 +70,8 @@
       font-size:16px;
     }
 
-    .button{
-      margin-top:35px;
-    }
-
     button{
+      margin-top:35px;
       width:100%;
       padding:18px;
       border:none;
@@ -91,95 +85,20 @@
     }
 
     button:hover{
-      background:#093779;
+      background:#093a7d;
     }
 
-    .preview{
-      margin-top:50px;
-      padding:30px;
-      background:#fafafa;
-      border-radius:16px;
-      border:2px dashed #ccc;
-    }
-
-    .preview-title{
-      font-size:22px;
-      font-weight:bold;
-      margin-bottom:25px;
-      color:#0f4ea8;
-      text-align:center;
-    }
-
-    .drawing{
-      width:100%;
-      height:420px;
-      background:white;
-      border:2px solid #ddd;
-      position:relative;
-      overflow:hidden;
-      border-radius:10px;
-    }
-
-    .base{
-      width:75%;
-      height:140px;
-      background:#d8d8d8;
-      border:3px solid #444;
-      position:absolute;
-      left:50%;
-      transform:translateX(-50%);
-      bottom:60px;
-    }
-
-    .gmg{
-      width:50%;
-      height:120px;
-      background:#b8c8e8;
-      border:3px solid #0f4ea8;
-      position:absolute;
-      left:50%;
-      transform:translateX(-50%);
-      bottom:210px;
-    }
-
-    .measure{
-      position:absolute;
-      background:white;
-      padding:4px 10px;
-      font-weight:bold;
-      border-radius:8px;
-      border:1px solid #ccc;
-      color:#111;
-    }
-
-    .bottom-measure{
-      bottom:15px;
-      left:50%;
-      transform:translateX(-50%);
-    }
-
-    .left-measure{
-      left:15px;
-      top:50%;
-      transform:translateY(-50%) rotate(-90deg);
-    }
-
-    .right-measure{
-      right:15px;
-      top:50%;
-      transform:translateY(-50%) rotate(-90deg);
-    }
-
-    .power{
-      top:20px;
-      left:50%;
-      transform:translateX(-50%);
-      background:#0f4ea8;
-      color:white;
+    .info{
+      margin-top:30px;
+      background:#eef3ff;
+      padding:20px;
+      border-radius:12px;
+      color:#333;
+      line-height:1.7;
     }
 
     .footer{
-      margin-top:35px;
+      margin-top:30px;
       text-align:center;
       color:#777;
       font-size:14px;
@@ -209,156 +128,173 @@
 
   <div class="container">
 
-    <div class="logo">
-      <h1>MS GERADORES</h1>
-    </div>
+    <h1>MS GERADORES</h1>
 
     <div class="subtitle">
-      Sistema Automático de Dimensionais GMG
+      Gerador Automático de Dimensionais
     </div>
 
     <div class="grid">
 
       <div class="field">
         <label>Potência (KVA)</label>
-        <input type="number" id="potencia" placeholder="Ex: 55">
+        <input type="number" id="potencia" placeholder="Ex: 180">
       </div>
 
       <div class="field">
-        <label>Comprimento (mm)</label>
-        <input type="number" id="comprimento" placeholder="Ex: 4200">
+        <label>Comprimento Base (mm)</label>
+        <input type="number" id="comprimento" placeholder="Ex: 5240">
       </div>
 
       <div class="field">
-        <label>Altura (mm)</label>
-        <input type="number" id="altura" placeholder="Ex: 1280">
+        <label>Altura Base (mm)</label>
+        <input type="number" id="altura" placeholder="Ex: 3130">
       </div>
 
       <div class="field">
-        <label>Largura (mm)</label>
-        <input type="number" id="largura" placeholder="Ex: 2200">
+        <label>Largura GMG (mm)</label>
+        <input type="number" id="largura" placeholder="Ex: 1130">
+      </div>
+
+      <div class="field">
+        <label>Altura GMG (mm)</label>
+        <input type="number" id="alturaGmg" placeholder="Ex: 1580">
       </div>
 
     </div>
 
-    <div class="button">
-      <button onclick="gerarPDF()">
-        GERAR E BAIXAR PDF
-      </button>
-    </div>
+    <button onclick="gerarPDF()">
+      GERAR E BAIXAR PDF
+    </button>
 
-    <div class="preview">
+    <div class="info">
 
-      <div class="preview-title">
-        Pré-visualização do Dimensional
-      </div>
+      <b>IMPORTANTE:</b><br><br>
 
-      <div class="drawing">
+      Faça upload do arquivo:
+      <br><br>
 
-        <div class="gmg"></div>
+      <b>Dimensional GMG 180KVA.pdf</b>
+      <br><br>
 
-        <div class="base"></div>
-
-        <div class="measure power" id="potenciaPreview">
-          25 KVA
-        </div>
-
-        <div class="measure bottom-measure" id="comprimentoPreview">
-          4200 mm
-        </div>
-
-        <div class="measure left-measure" id="alturaPreview">
-          1280 mm
-        </div>
-
-        <div class="measure right-measure" id="larguraPreview">
-          2200 mm
-        </div>
-
-      </div>
+      dentro do GitHub junto com:
+      <br>
+      <b>index.html</b>
 
     </div>
 
     <div class="footer">
-      MS Geradores © Todos os direitos reservados
+      MS Geradores © Sistema Automático
     </div>
 
   </div>
 
-  <script>
+<script>
 
-    const potencia = document.getElementById("potencia");
-    const comprimento = document.getElementById("comprimento");
-    const altura = document.getElementById("altura");
-    const largura = document.getElementById("largura");
+async function gerarPDF(){
 
-    potencia.addEventListener("input", () => {
-      document.getElementById("potenciaPreview").innerText =
-        potencia.value + " KVA";
+  const potencia = document.getElementById("potencia").value || "180";
+  const comprimento = document.getElementById("comprimento").value || "5240";
+  const altura = document.getElementById("altura").value || "3130";
+  const largura = document.getElementById("largura").value || "1130";
+  const alturaGmg = document.getElementById("alturaGmg").value || "1580";
+
+  const existingPdfBytes = await fetch("Dimensional GMG 180KVA.pdf")
+    .then(res => res.arrayBuffer());
+
+  const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
+
+  const pages = pdfDoc.getPages();
+
+  const firstPage = pages[0];
+
+  const { width, height } = firstPage.getSize();
+
+  const white = PDFLib.rgb(1,1,1);
+
+  const black = PDFLib.rgb(0,0,0);
+
+  function apagar(x,y,w,h){
+
+    firstPage.drawRectangle({
+      x:x,
+      y:y,
+      width:w,
+      height:h,
+      color:white
     });
 
-    comprimento.addEventListener("input", () => {
-      document.getElementById("comprimentoPreview").innerText =
-        comprimento.value + " mm";
-    });
+  }
 
-    altura.addEventListener("input", () => {
-      document.getElementById("alturaPreview").innerText =
-        altura.value + " mm";
-    });
+  /*
+    APAGANDO MEDIDAS ANTIGAS
+  */
 
-    largura.addEventListener("input", () => {
-      document.getElementById("larguraPreview").innerText =
-        largura.value + " mm";
-    });
+  apagar(290,80,90,20);
+  apagar(110,165,90,20);
+  apagar(75,445,80,20);
+  apagar(470,445,80,20);
+  apagar(630,330,80,20);
 
-    async function gerarPDF(){
+  apagar(350,18,220,20);
 
-      const { jsPDF } = window.jspdf;
+  /*
+    ESCREVENDO NOVAS MEDIDAS
+  */
 
-      const doc = new jsPDF({
-        orientation: "landscape"
-      });
+  firstPage.drawText(comprimento,{
+    x:300,
+    y:82,
+    size:12,
+    color:black
+  });
 
-      const pot = potencia.value || "25";
-      const comp = comprimento.value || "4200";
-      const alt = altura.value || "1280";
-      const larg = largura.value || "2200";
+  firstPage.drawText(altura,{
+    x:120,
+    y:168,
+    size:12,
+    color:black
+  });
 
-      doc.setFontSize(24);
-      doc.text("MS GERADORES", 20, 20);
+  firstPage.drawText(largura,{
+    x:80,
+    y:448,
+    size:12,
+    color:black
+  });
 
-      doc.setFontSize(18);
-      doc.text(`DIMENSIONAL GMG ${pot} KVA`, 20, 35);
+  firstPage.drawText(comprimento,{
+    x:475,
+    y:448,
+    size:12,
+    color:black
+  });
 
-      doc.setLineWidth(1);
+  firstPage.drawText(alturaGmg,{
+    x:635,
+    y:333,
+    size:12,
+    color:black
+  });
 
-      doc.rect(40, 70, 220, 80);
+  firstPage.drawText(`DIMENSIONAL COM BASE GMG ${potencia}KVA -`,{
+    x:355,
+    y:20,
+    size:11,
+    color:black
+  });
 
-      doc.rect(85, 90, 130, 40);
+  const pdfBytes = await pdfDoc.save();
 
-      doc.setFontSize(14);
+  download(
+    pdfBytes,
+    `Dimensional_GMG_${potencia}KVA.pdf`,
+    "application/pdf"
+  );
 
-      doc.text(`${comp} mm`, 125, 165);
+}
 
-      doc.text(`${alt} mm`, 30, 120, {angle:90});
-
-      doc.text(`${larg} mm`, 265, 120, {angle:90});
-
-      doc.text(`Potência: ${pot} KVA`, 20, 190);
-
-      doc.text(`Comprimento: ${comp} mm`, 20, 200);
-
-      doc.text(`Altura: ${alt} mm`, 20, 210);
-
-      doc.text(`Largura: ${larg} mm`, 20, 220);
-
-      doc.save(`Dimensional_GMG_${pot}KVA.pdf`);
-
-    }
-
-  </script>
+</script>
 
 </body>
-
 </html>
