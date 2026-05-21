@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MS Geradores</title>
+<title>MS Geradores - Coordenadas</title>
 
 <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
 <script src="https://unpkg.com/downloadjs@1.4.7"></script>
@@ -20,7 +20,7 @@ body{
 }
 
 .container{
-  max-width:700px;
+  max-width:900px;
   margin:auto;
   background:white;
   padding:40px;
@@ -32,16 +32,28 @@ h1{
   color:#0f4ea8;
 }
 
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.card{
+  border:1px solid #ddd;
+  padding:20px;
+  border-radius:12px;
+}
+
 label{
   display:block;
-  margin-top:15px;
+  margin-top:10px;
   margin-bottom:5px;
   font-weight:bold;
 }
 
 input{
   width:100%;
-  padding:14px;
+  padding:12px;
   border:1px solid #ccc;
   border-radius:10px;
 }
@@ -62,6 +74,11 @@ button:hover{
   background:#0b3d84;
 }
 
+.subtitle{
+  margin-bottom:25px;
+  color:#666;
+}
+
 </style>
 
 </head>
@@ -72,17 +89,109 @@ button:hover{
 
 <h1>MS GERADORES</h1>
 
-<label>Potência (KVA)</label>
+<div class="subtitle">
+Defina as medidas e as coordenadas exatas onde serão escritas no PDF
+</div>
+
+<div class="grid">
+
+<!-- POTENCIA -->
+
+<div class="card">
+
+<h3>Potência</h3>
+
+<label>Valor</label>
 <input type="number" id="potencia">
 
-<label>Comprimento (mm)</label>
-<input type="number" id="comprimento">
+<label>X</label>
+<input type="number" id="potenciaX" value="343">
 
-<label>Largura (mm)</label>
+<label>Y</label>
+<input type="number" id="potenciaY" value="14">
+
+</div>
+
+<!-- ALTURA -->
+
+<div class="card">
+
+<h3>Altura</h3>
+
+<label>Valor</label>
+<input type="number" id="altura">
+
+<label>X</label>
+<input type="number" id="alturaX" value="415">
+
+<label>Y</label>
+<input type="number" id="alturaY" value="150">
+
+</div>
+
+<!-- LARGURA -->
+
+<div class="card">
+
+<h3>Largura</h3>
+
+<label>Valor</label>
 <input type="number" id="largura">
 
-<label>Altura (mm)</label>
-<input type="number" id="altura">
+<label>X</label>
+<input type="number" id="larguraX" value="100">
+
+<label>Y</label>
+<input type="number" id="larguraY" value="200">
+
+</div>
+
+<!-- COMPRIMENTO -->
+
+<div class="card">
+
+<h3>Comprimento</h3>
+
+<label>Valor</label>
+<input type="number" id="comprimento">
+
+<label>X</label>
+<input type="number" id="comprimentoX" value="200">
+
+<label>Y</label>
+<input type="number" id="comprimentoY" value="200">
+
+</div>
+
+<!-- LARGURA BASE -->
+
+<div class="card">
+
+<h3>Largura Base (+2000)</h3>
+
+<label>X</label>
+<input type="number" id="larguraBaseX" value="300">
+
+<label>Y</label>
+<input type="number" id="larguraBaseY" value="250">
+
+</div>
+
+<!-- COMPRIMENTO BASE -->
+
+<div class="card">
+
+<h3>Comprimento Base (+2000)</h3>
+
+<label>X</label>
+<input type="number" id="comprimentoBaseX" value="350">
+
+<label>Y</label>
+<input type="number" id="comprimentoBaseY" value="250">
+
+</div>
+
+</div>
 
 <button onclick="gerarPDF()">
 GERAR PDF
@@ -95,15 +204,15 @@ GERAR PDF
 async function gerarPDF(){
 
   /*
-  CAMPOS
+  VALORES
   */
 
   const potencia =
     document.getElementById("potencia").value;
 
-  const comprimento =
+  const altura =
     parseInt(
-      document.getElementById("comprimento").value
+      document.getElementById("altura").value
     );
 
   const largura =
@@ -111,27 +220,74 @@ async function gerarPDF(){
       document.getElementById("largura").value
     );
 
-  const altura =
+  const comprimento =
     parseInt(
-      document.getElementById("altura").value
+      document.getElementById("comprimento").value
     );
 
   /*
-  VALIDAR
+  COORDENADAS
   */
 
-  if(
-    !potencia ||
-    !comprimento ||
-    !largura ||
-    !altura
-  ){
+  const potenciaX =
+    parseInt(
+      document.getElementById("potenciaX").value
+    );
 
-    alert("Preencha todos os campos");
+  const potenciaY =
+    parseInt(
+      document.getElementById("potenciaY").value
+    );
 
-    return;
+  const alturaX =
+    parseInt(
+      document.getElementById("alturaX").value
+    );
 
-  }
+  const alturaY =
+    parseInt(
+      document.getElementById("alturaY").value
+    );
+
+  const larguraX =
+    parseInt(
+      document.getElementById("larguraX").value
+    );
+
+  const larguraY =
+    parseInt(
+      document.getElementById("larguraY").value
+    );
+
+  const comprimentoX =
+    parseInt(
+      document.getElementById("comprimentoX").value
+    );
+
+  const comprimentoY =
+    parseInt(
+      document.getElementById("comprimentoY").value
+    );
+
+  const larguraBaseX =
+    parseInt(
+      document.getElementById("larguraBaseX").value
+    );
+
+  const larguraBaseY =
+    parseInt(
+      document.getElementById("larguraBaseY").value
+    );
+
+  const comprimentoBaseX =
+    parseInt(
+      document.getElementById("comprimentoBaseX").value
+    );
+
+  const comprimentoBaseY =
+    parseInt(
+      document.getElementById("comprimentoBaseY").value
+    );
 
   /*
   REGRAS
@@ -144,7 +300,7 @@ async function gerarPDF(){
     comprimento + 2000;
 
   /*
-  CARREGAR PDF
+  PDF
   */
 
   const existingPdfBytes =
@@ -169,23 +325,14 @@ async function gerarPDF(){
     );
 
   /*
-  ===================================
-  ESCREVER NOVOS VALORES
-  ===================================
-  */
-
-  /*
   ALTURA
-  ALTERADO:
-  X=415
-  Y=150
   */
 
   page.drawText(
     String(altura),
     {
-      x:415,
-      y:150,
+      x:alturaX,
+      y:alturaY,
       size:7,
       font:font,
       color:black
@@ -194,15 +341,13 @@ async function gerarPDF(){
 
   /*
   LARGURA
-  X=100
-  Y=200
   */
 
   page.drawText(
     String(largura),
     {
-      x:100,
-      y:200,
+      x:larguraX,
+      y:larguraY,
       size:7,
       font:font,
       color:black
@@ -211,15 +356,13 @@ async function gerarPDF(){
 
   /*
   COMPRIMENTO
-  X=200
-  Y=200
   */
 
   page.drawText(
     String(comprimento),
     {
-      x:200,
-      y:200,
+      x:comprimentoX,
+      y:comprimentoY,
       size:7,
       font:font,
       color:black
@@ -228,16 +371,13 @@ async function gerarPDF(){
 
   /*
   LARGURA BASE
-  largura + 2000
-  X=300
-  Y=250
   */
 
   page.drawText(
     String(larguraBase),
     {
-      x:300,
-      y:250,
+      x:larguraBaseX,
+      y:larguraBaseY,
       size:7,
       font:font,
       color:black
@@ -246,16 +386,13 @@ async function gerarPDF(){
 
   /*
   COMPRIMENTO BASE
-  comprimento + 2000
-  X=350
-  Y=250
   */
 
   page.drawText(
     String(comprimentoBase),
     {
-      x:350,
-      y:250,
+      x:comprimentoBaseX,
+      y:comprimentoBaseY,
       size:7,
       font:font,
       color:black
@@ -269,8 +406,8 @@ async function gerarPDF(){
   page.drawText(
     `DIMENSIONAL COM BASE GMG ${potencia}KVA -`,
     {
-      x:343,
-      y:14,
+      x:potenciaX,
+      y:potenciaY,
       size:7,
       font:font,
       color:black
