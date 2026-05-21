@@ -101,22 +101,6 @@ button:hover{
   color:#777;
 }
 
-@media(max-width:700px){
-
-  body{
-    padding:15px;
-  }
-
-  .container{
-    padding:20px;
-  }
-
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-}
-
 </style>
 
 </head>
@@ -135,22 +119,22 @@ Gerador Automático de Dimensionais
 
 <div class="field">
 <label>Potência (KVA)</label>
-<input type="number" id="potencia" placeholder="Ex: 25">
+<input type="number" id="potencia" placeholder="25">
 </div>
 
 <div class="field">
 <label>Comprimento (mm)</label>
-<input type="number" id="comprimento" placeholder="Ex: 2200">
+<input type="number" id="comprimento" placeholder="2200">
 </div>
 
 <div class="field">
 <label>Largura (mm)</label>
-<input type="number" id="largura" placeholder="Ex: 890">
+<input type="number" id="largura" placeholder="890">
 </div>
 
 <div class="field">
 <label>Altura (mm)</label>
-<input type="number" id="alturaGmg" placeholder="Ex: 1280">
+<input type="number" id="alturaGmg" placeholder="1280">
 </div>
 
 </div>
@@ -203,7 +187,7 @@ async function gerarPDF(){
   );
 
   /*
-  REGRAS AUTOMÁTICAS
+  REGRAS
   */
 
   const comprimentoBase = comprimento + 2000;
@@ -211,7 +195,7 @@ async function gerarPDF(){
   const larguraBase = largura + 2000;
 
   /*
-  CARREGAR PDF
+  CARREGA PDF
   */
 
   const existingPdfBytes = await fetch(
@@ -229,11 +213,11 @@ async function gerarPDF(){
 
   const font =
     await pdfDoc.embedFont(
-      PDFLib.StandardFonts.HelveticaBold
+      PDFLib.StandardFonts.Helvetica
     );
 
   /*
-  FUNÇÃO APAGAR
+  APAGAR TEXTO ANTIGO
   */
 
   function apagar(x,y,w,h){
@@ -250,91 +234,71 @@ async function gerarPDF(){
   }
 
   /*
-  APAGAR MEDIDAS ANTIGAS
+  ÁREAS PEQUENAS
   */
 
-  apagar(102,160,78,16);
+  apagar(108,161,34,10);
 
-  apagar(289,78,82,16);
+  apagar(292,80,40,10);
 
-  apagar(68,441,55,16);
+  apagar(74,442,26,10);
 
-  apagar(462,441,82,16);
+  apagar(468,442,40,10);
 
-  apagar(627,325,70,16);
+  apagar(632,327,34,10);
 
-  apagar(224,327,70,16);
+  apagar(230,329,34,10);
 
-  apagar(345,12,250,16);
+  apagar(348,15,180,10);
 
   /*
-  2200 -> comprimento
+  ESCREVER NOVOS TEXTOS
   */
 
   page.drawText(String(comprimento),{
-    x:229,
-    y:329,
-    size:11,
+    x:231,
+    y:330,
+    size:6,
     font:font,
     color:black
   });
-
-  /*
-  4200 -> comprimento + 2000
-  */
 
   page.drawText(String(comprimentoBase),{
-    x:291,
-    y:79,
-    size:11,
+    x:293,
+    y:81,
+    size:6,
     font:font,
     color:black
   });
-
-  /*
-  4200 lateral
-  */
 
   page.drawText(String(comprimentoBase),{
-    x:463,
-    y:442,
-    size:11,
+    x:469,
+    y:443,
+    size:6,
     font:font,
     color:black
   });
-
-  /*
-  2890 -> largura + 2000
-  */
 
   page.drawText(String(larguraBase),{
     x:109,
     y:163,
-    size:11,
+    size:6,
     font:font,
     color:black
   });
-
-  /*
-  890 -> largura
-  */
 
   page.drawText(String(largura),{
-    x:72,
-    y:442,
-    size:11,
+    x:75,
+    y:443,
+    size:6,
     font:font,
     color:black
   });
 
-  /*
-  1280 -> altura
-  */
-
   page.drawText(String(altura),{
-    x:629,
-    y:327,
-    size:11,
+    x:633,
+    y:328,
+    size:6,
     font:font,
     color:black
   });
@@ -346,16 +310,16 @@ async function gerarPDF(){
   page.drawText(
     `DIMENSIONAL COM BASE GMG ${potencia}KVA -`,
     {
-      x:347,
-      y:15,
-      size:10,
+      x:349,
+      y:16,
+      size:7,
       font:font,
       color:black
     }
   );
 
   /*
-  SALVAR PDF
+  SALVAR
   */
 
   const pdfBytes = await pdfDoc.save();
