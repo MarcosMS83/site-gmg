@@ -135,22 +135,22 @@ Gerador Automático de Dimensionais
 
 <div class="field">
 <label>Potência (KVA)</label>
-<input type="number" id="potencia" placeholder="Ex: 180">
+<input type="number" id="potencia" placeholder="Ex: 25">
 </div>
 
 <div class="field">
 <label>Comprimento (mm)</label>
-<input type="number" id="comprimento" placeholder="Ex: 3240">
+<input type="number" id="comprimento" placeholder="Ex: 2200">
 </div>
 
 <div class="field">
 <label>Largura (mm)</label>
-<input type="number" id="largura" placeholder="Ex: 1130">
+<input type="number" id="largura" placeholder="Ex: 890">
 </div>
 
 <div class="field">
 <label>Altura (mm)</label>
-<input type="number" id="alturaGmg" placeholder="Ex: 1580">
+<input type="number" id="alturaGmg" placeholder="Ex: 1280">
 </div>
 
 </div>
@@ -172,7 +172,7 @@ No GitHub devem existir:
 <b>
 index.html
 <br>
-Dimensional GMG 180KVA.pdf
+Dimensional GMG 25 KVA.pdf
 </b>
 
 </div>
@@ -188,18 +188,18 @@ MS Geradores © Sistema Automático
 async function gerarPDF(){
 
   const potencia =
-    document.getElementById("potencia").value || "180";
+    document.getElementById("potencia").value || "25";
 
   const comprimento = parseInt(
-    document.getElementById("comprimento").value || "3240"
+    document.getElementById("comprimento").value || "2200"
   );
 
   const largura = parseInt(
-    document.getElementById("largura").value || "1130"
+    document.getElementById("largura").value || "890"
   );
 
   const altura = parseInt(
-    document.getElementById("alturaGmg").value || "1580"
+    document.getElementById("alturaGmg").value || "1280"
   );
 
   /*
@@ -215,7 +215,7 @@ async function gerarPDF(){
   */
 
   const existingPdfBytes = await fetch(
-    "Dimensional GMG 180KVA.pdf"
+    "Dimensional GMG 25 KVA.pdf"
   ).then(res => res.arrayBuffer());
 
   const pdfDoc =
@@ -247,76 +247,76 @@ async function gerarPDF(){
   APAGAR NÚMEROS ANTIGOS
   */
 
-  apagar(108,160,110,24); // 3130
-  apagar(288,76,110,24); // 5240 superior
-  apagar(70,440,110,24); // 1130
-  apagar(465,440,110,24); // 5240 lateral
-  apagar(625,323,110,24); // 1580
-  apagar(225,325,110,24); // 3240
-  apagar(345,12,280,24); // titulo
+  apagar(100,160,110,24); // 2890
+  apagar(285,80,110,24); // 4200 superior
+  apagar(65,440,110,24); // 890
+  apagar(455,440,110,24); // 4200 lateral
+  apagar(620,325,110,24); // 1280
+  apagar(220,325,110,24); // 2200
+  apagar(340,12,280,24); // titulo
 
   /*
-  3240 -> comprimento
+  2200 -> comprimento
   */
 
   page.drawText(String(comprimento),{
-    x:232,
-    y:331,
+    x:225,
+    y:330,
     size:12,
     color:black
   });
 
   /*
-  5240 -> comprimento + 2000
+  4200 -> comprimento + 2000
   */
 
   page.drawText(String(comprimentoBase),{
-    x:294,
-    y:79,
+    x:290,
+    y:80,
     size:12,
     color:black
   });
 
   /*
-  5240 lateral
+  4200 lateral
   */
 
   page.drawText(String(comprimentoBase),{
-    x:468,
-    y:443,
-    size:12,
-    color:black
-  });
-
-  /*
-  3130 -> largura + 2000
-  */
-
-  page.drawText(String(larguraBase),{
-    x:113,
-    y:163,
-    size:12,
-    color:black
-  });
-
-  /*
-  1130 -> largura
-  */
-
-  page.drawText(String(largura),{
-    x:73,
+    x:460,
     y:442,
     size:12,
     color:black
   });
 
   /*
-  1580 -> altura
+  2890 -> largura + 2000
+  */
+
+  page.drawText(String(larguraBase),{
+    x:105,
+    y:163,
+    size:12,
+    color:black
+  });
+
+  /*
+  890 -> largura
+  */
+
+  page.drawText(String(largura),{
+    x:70,
+    y:442,
+    size:12,
+    color:black
+  });
+
+  /*
+  1280 -> altura
   */
 
   page.drawText(String(altura),{
-    x:628,
-    y:327,
+    x:625,
+    y:328,
     size:12,
     color:black
   });
@@ -328,7 +328,7 @@ async function gerarPDF(){
   page.drawText(
     `DIMENSIONAL COM BASE GMG ${potencia}KVA -`,
     {
-      x:350,
+      x:345,
       y:16,
       size:11,
       color:black
