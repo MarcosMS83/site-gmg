@@ -203,7 +203,7 @@ async function gerarPDF(){
   );
 
   /*
-  REGRAS
+  REGRAS AUTOMÁTICAS
   */
 
   const comprimentoBase = comprimento + 2000;
@@ -253,28 +253,28 @@ async function gerarPDF(){
   APAGAR MEDIDAS ANTIGAS
   */
 
-  apagar(92,156,130,32);
+  apagar(102,160,78,16);
 
-  apagar(280,74,140,30);
+  apagar(289,78,82,16);
 
-  apagar(58,437,120,30);
+  apagar(68,441,55,16);
 
-  apagar(452,437,140,30);
+  apagar(462,441,82,16);
 
-  apagar(618,320,130,32);
+  apagar(627,325,70,16);
 
-  apagar(215,320,130,32);
+  apagar(224,327,70,16);
 
-  apagar(335,10,320,28);
+  apagar(345,12,250,16);
 
   /*
   2200 -> comprimento
   */
 
   page.drawText(String(comprimento),{
-    x:228,
+    x:229,
     y:329,
-    size:13,
+    size:11,
     font:font,
     color:black
   });
@@ -284,9 +284,9 @@ async function gerarPDF(){
   */
 
   page.drawText(String(comprimentoBase),{
-    x:292,
-    y:78,
-    size:13,
+    x:291,
+    y:79,
+    size:11,
     font:font,
     color:black
   });
@@ -296,9 +296,9 @@ async function gerarPDF(){
   */
 
   page.drawText(String(comprimentoBase),{
-    x:462,
-    y:441,
-    size:13,
+    x:463,
+    y:442,
+    size:11,
     font:font,
     color:black
   });
@@ -308,9 +308,9 @@ async function gerarPDF(){
   */
 
   page.drawText(String(larguraBase),{
-    x:108,
-    y:162,
-    size:13,
+    x:109,
+    y:163,
+    size:11,
     font:font,
     color:black
   });
@@ -321,8 +321,8 @@ async function gerarPDF(){
 
   page.drawText(String(largura),{
     x:72,
-    y:441,
-    size:13,
+    y:442,
+    size:11,
     font:font,
     color:black
   });
@@ -332,9 +332,9 @@ async function gerarPDF(){
   */
 
   page.drawText(String(altura),{
-    x:628,
-    y:326,
-    size:13,
+    x:629,
+    y:327,
+    size:11,
     font:font,
     color:black
   });
@@ -346,9 +346,9 @@ async function gerarPDF(){
   page.drawText(
     `DIMENSIONAL COM BASE GMG ${potencia}KVA -`,
     {
-      x:345,
+      x:347,
       y:15,
-      size:11,
+      size:10,
       font:font,
       color:black
     }
