@@ -119,22 +119,22 @@ Gerador Automático de Dimensionais
 
 <div class="field">
 <label>Potência (KVA)</label>
-<input type="number" id="potencia" placeholder="25">
+<input type="number" id="potencia">
 </div>
 
 <div class="field">
 <label>Comprimento (mm)</label>
-<input type="number" id="comprimento" placeholder="2200">
+<input type="number" id="comprimento">
 </div>
 
 <div class="field">
 <label>Largura (mm)</label>
-<input type="number" id="largura" placeholder="890">
+<input type="number" id="largura">
 </div>
 
 <div class="field">
 <label>Altura (mm)</label>
-<input type="number" id="alturaGmg" placeholder="1280">
+<input type="number" id="alturaGmg">
 </div>
 
 </div>
@@ -171,20 +171,41 @@ MS Geradores © Sistema Automático
 
 async function gerarPDF(){
 
+  /*
+  CAPTURA DADOS
+  */
+
   const potencia =
-    document.getElementById("potencia").value || "25";
+    document.getElementById("potencia").value;
 
   const comprimento = parseInt(
-    document.getElementById("comprimento").value || "2200"
+    document.getElementById("comprimento").value
   );
 
   const largura = parseInt(
-    document.getElementById("largura").value || "890"
+    document.getElementById("largura").value
   );
 
   const altura = parseInt(
-    document.getElementById("alturaGmg").value || "1280"
+    document.getElementById("alturaGmg").value
   );
+
+  /*
+  VALIDAR CAMPOS
+  */
+
+  if(
+    !potencia ||
+    !comprimento ||
+    !largura ||
+    !altura
+  ){
+
+    alert("Preencha todos os campos.");
+
+    return;
+
+  }
 
   /*
   REGRAS
@@ -217,7 +238,7 @@ async function gerarPDF(){
     );
 
   /*
-  APAGAR TEXTO ANTIGO
+  APAGAR
   */
 
   function apagar(x,y,w,h){
@@ -234,7 +255,7 @@ async function gerarPDF(){
   }
 
   /*
-  ÁREAS PEQUENAS
+  APAGAR NÚMEROS ANTIGOS
   */
 
   apagar(108,161,34,10);
@@ -252,7 +273,7 @@ async function gerarPDF(){
   apagar(348,15,180,10);
 
   /*
-  ESCREVER NOVOS TEXTOS
+  ESCREVER NOVOS
   */
 
   page.drawText(String(comprimento),{
@@ -319,7 +340,7 @@ async function gerarPDF(){
   );
 
   /*
-  SALVAR
+  SALVAR PDF
   */
 
   const pdfBytes = await pdfDoc.save();
