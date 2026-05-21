@@ -25,4 +25,324 @@ body{
   background:white;
   padding:40px;
   border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.
+}
+
+h1{
+  margin-bottom:30px;
+  color:#0f4ea8;
+}
+
+label{
+  display:block;
+  margin-top:15px;
+  margin-bottom:5px;
+  font-weight:bold;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  border:1px solid #ccc;
+  border-radius:10px;
+}
+
+button{
+  width:100%;
+  padding:18px;
+  border:none;
+  background:#0f4ea8;
+  color:white;
+  font-size:18px;
+  border-radius:12px;
+  cursor:pointer;
+  margin-top:30px;
+}
+
+button:hover{
+  background:#0b3d84;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>MS GERADORES</h1>
+
+<label>Potência (KVA)</label>
+<input type="number" id="potencia">
+
+<label>Comprimento (mm)</label>
+<input type="number" id="comprimento">
+
+<label>Largura (mm)</label>
+<input type="number" id="largura">
+
+<label>Altura (mm)</label>
+<input type="number" id="altura">
+
+<button onclick="gerarPDF()">
+GERAR PDF
+</button>
+
+</div>
+
+<script>
+
+async function gerarPDF(){
+
+  /*
+  CAMPOS
+  */
+
+  const potencia =
+    document.getElementById("potencia").value;
+
+  const comprimento =
+    parseInt(
+      document.getElementById("comprimento").value
+    );
+
+  const largura =
+    parseInt(
+      document.getElementById("largura").value
+    );
+
+  const altura =
+    parseInt(
+      document.getElementById("altura").value
+    );
+
+  /*
+  VALIDAR
+  */
+
+  if(
+    !potencia ||
+    !comprimento ||
+    !largura ||
+    !altura
+  ){
+
+    alert("Preencha todos os campos");
+
+    return;
+
+  }
+
+  /*
+  REGRAS
+  */
+
+  const comprimentoBase =
+    comprimento + 2000;
+
+  const larguraBase =
+    largura + 2000;
+
+  /*
+  CARREGAR PDF
+  */
+
+  const existingPdfBytes =
+    await fetch(
+      "Dimensional GMG 25 KVA.pdf"
+    ).then(res => res.arrayBuffer());
+
+  const pdfDoc =
+    await PDFLib.PDFDocument.load(
+      existingPdfBytes
+    );
+
+  const page =
+    pdfDoc.getPages()[0];
+
+  const white =
+    PDFLib.rgb(1,1,1);
+
+  const black =
+    PDFLib.rgb(0,0,0);
+
+  const font =
+    await pdfDoc.embedFont(
+      PDFLib.StandardFonts.Helvetica
+    );
+
+  /*
+  APAGAR TEXTO ANTIGO
+  */
+
+  function apagar(x,y,w,h){
+
+    page.drawRectangle({
+      x:x,
+      y:y,
+      width:w,
+      height:h,
+      color:white,
+      borderWidth:0
+    });
+
+  }
+
+  /*
+  ===================================
+  APAGAR MEDIDAS
+  ===================================
+  */
+
+  /*
+  4200 superior
+  */
+
+  apagar(286,77,55,11);
+
+  /*
+  2200
+  */
+
+  apagar(214,323,55,11);
+
+  /*
+  2890
+  */
+
+  apagar(98,159,55,11);
+
+  /*
+  890
+  */
+
+  apagar(67,440,40,11);
+
+  /*
+  1280
+  */
+
+  apagar(618,323,45,11);
+
+  /*
+  TITULO
+  */
+
+  apagar(340,12,210,11);
+
+  /*
+  ===================================
+  ESCREVER NOVOS VALORES
+  ===================================
+  */
+
+  /*
+  4200 -> comprimento + 2000
+  */
+
+  page.drawText(
+    String(comprimentoBase),
+    {
+      x:288,
+      y:79,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  2200 -> comprimento
+  */
+
+  page.drawText(
+    String(comprimento),
+    {
+      x:216,
+      y:325,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  2890 -> largura + 2000
+  */
+
+  page.drawText(
+    String(larguraBase),
+    {
+      x:100,
+      y:161,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  890 -> largura
+  */
+
+  page.drawText(
+    String(largura),
+    {
+      x:69,
+      y:442,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  1280 -> altura
+  */
+
+  page.drawText(
+    String(altura),
+    {
+      x:620,
+      y:325,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  TITULO
+  */
+
+  page.drawText(
+    `DIMENSIONAL COM BASE GMG ${potencia}KVA -`,
+    {
+      x:343,
+      y:14,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  SALVAR PDF
+  */
+
+  const pdfBytes =
+    await pdfDoc.save();
+
+  download(
+    pdfBytes,
+    `GMG_${potencia}KVA.pdf`,
+    "application/pdf"
+  );
+
+}
+
+</script>
+
+</body>
+
+</html>
