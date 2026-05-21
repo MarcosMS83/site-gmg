@@ -6,99 +6,43 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MS Geradores - Dimensional GMG</title>
+<title>MS Geradores</title>
 
 <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
 <script src="https://unpkg.com/downloadjs@1.4.7"></script>
 
 <style>
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial, Helvetica, sans-serif;
-}
-
 body{
-  background:#f3f5f9;
+  font-family:Arial;
+  background:#f4f4f4;
   padding:40px;
 }
 
 .container{
-  max-width:900px;
+  max-width:700px;
   margin:auto;
   background:white;
   padding:40px;
   border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.1);
-}
-
-h1{
-  text-align:center;
-  color:#0f4ea8;
-  margin-bottom:10px;
-  font-size:40px;
-}
-
-.subtitle{
-  text-align:center;
-  color:#666;
-  margin-bottom:40px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:25px;
-}
-
-.field{
-  display:flex;
-  flex-direction:column;
-}
-
-label{
-  margin-bottom:8px;
-  font-weight:bold;
 }
 
 input{
-  padding:15px;
-  border-radius:12px;
-  border:1px solid #ccc;
-  font-size:16px;
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  margin-bottom:20px;
 }
 
 button{
   width:100%;
-  margin-top:35px;
   padding:18px;
   border:none;
-  border-radius:14px;
   background:#0f4ea8;
   color:white;
   font-size:18px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-button:hover{
-  background:#09397d;
-}
-
-.info{
-  margin-top:30px;
-  background:#eef3ff;
-  padding:20px;
   border-radius:12px;
-  line-height:1.7;
-}
-
-.footer{
-  margin-top:30px;
-  text-align:center;
-  color:#777;
+  cursor:pointer;
 }
 
 </style>
@@ -111,69 +55,27 @@ button:hover{
 
 <h1>MS GERADORES</h1>
 
-<div class="subtitle">
-Gerador Automático de Dimensionais
-</div>
-
-<div class="grid">
-
-<div class="field">
-<label>Potência (KVA)</label>
+<label>Potência</label>
 <input type="number" id="potencia">
-</div>
 
-<div class="field">
-<label>Comprimento (mm)</label>
+<label>Comprimento</label>
 <input type="number" id="comprimento">
-</div>
 
-<div class="field">
-<label>Largura (mm)</label>
+<label>Largura</label>
 <input type="number" id="largura">
-</div>
 
-<div class="field">
-<label>Altura (mm)</label>
+<label>Altura</label>
 <input type="number" id="altura">
-</div>
-
-</div>
 
 <button onclick="gerarPDF()">
-GERAR E BAIXAR PDF
+GERAR PDF
 </button>
-
-<div class="info">
-
-<b>IMPORTANTE:</b>
-
-<br><br>
-
-No GitHub devem existir:
-
-<br><br>
-
-<b>
-index.html
-<br>
-Dimensional GMG 25 KVA.pdf
-</b>
-
-</div>
-
-<div class="footer">
-MS Geradores © Sistema Automático
-</div>
 
 </div>
 
 <script>
 
 async function gerarPDF(){
-
-  /*
-  CAMPOS
-  */
 
   const potencia =
     document.getElementById("potencia").value;
@@ -193,10 +95,6 @@ async function gerarPDF(){
       document.getElementById("altura").value
     );
 
-  /*
-  VALIDAR
-  */
-
   if(
     !potencia ||
     !comprimento ||
@@ -204,7 +102,7 @@ async function gerarPDF(){
     !altura
   ){
 
-    alert("Preencha todos os campos.");
+    alert("Preencha todos os campos");
 
     return;
 
@@ -221,7 +119,7 @@ async function gerarPDF(){
     largura + 2000;
 
   /*
-  CARREGAR PDF
+  PDF
   */
 
   const existingPdfBytes =
@@ -249,7 +147,7 @@ async function gerarPDF(){
     );
 
   /*
-  FUNÇÃO APAGAR
+  APAGAR
   */
 
   function apagar(x,y,w,h){
@@ -266,144 +164,99 @@ async function gerarPDF(){
   }
 
   /*
-  ========================================
+  =====================================
   APAGAR VALORES ORIGINAIS
-  ========================================
+  =====================================
+  */
+
+  apagar(286,77,55,11);
+
+  apagar(214,323,55,11);
+
+  apagar(98,159,55,11);
+
+  apagar(67,440,40,11);
+
+  apagar(618,323,45,11);
+
+  apagar(340,12,200,11);
+
+  /*
+  =====================================
+  ESCREVER NOVOS
+  =====================================
   */
 
   /*
-  1280
+  4200
   */
 
-  apagar(617,323,38,10);
+  page.drawText(
+    String(comprimentoBase),
+    {
+      x:288,
+      y:79,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
 
   /*
   2200
   */
 
-  apagar(218,323,38,10);
-
-  /*
-  4200 superior
-  */
-
-  apagar(286,77,42,10);
-
-  /*
-  4200 lateral
-  */
-
-  apagar(457,440,42,10);
+  page.drawText(
+    String(comprimento),
+    {
+      x:216,
+      y:325,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
 
   /*
   2890
   */
 
-  apagar(103,160,42,10);
+  page.drawText(
+    String(larguraBase),
+    {
+      x:100,
+      y:161,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
 
   /*
   890
   */
 
-  apagar(69,440,28,10);
+  page.drawText(
+    String(largura),
+    {
+      x:69,
+      y:442,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
 
   /*
-  TITULO
-  */
-
-  apagar(344,13,190,10);
-
-  /*
-  ========================================
-  ESCREVER NOVOS VALORES
-  ========================================
-  */
-
-  /*
-  1280 -> altura
+  1280
   */
 
   page.drawText(
     String(altura),
     {
-      x:618,
-      y:324,
-      size:6,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  2200 -> comprimento
-  */
-
-  page.drawText(
-    String(comprimento),
-    {
-      x:219,
-      y:324,
-      size:6,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  4200 -> comprimento + 2000
-  */
-
-  page.drawText(
-    String(comprimentoBase),
-    {
-      x:287,
-      y:78,
-      size:6,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  4200 lateral
-  */
-
-  page.drawText(
-    String(comprimentoBase),
-    {
-      x:458,
-      y:441,
-      size:6,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  2890 -> largura + 2000
-  */
-
-  page.drawText(
-    String(larguraBase),
-    {
-      x:104,
-      y:161,
-      size:6,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  890 -> largura
-  */
-
-  page.drawText(
-    String(largura),
-    {
-      x:70,
-      y:441,
-      size:6,
+      x:620,
+      y:325,
+      size:7,
       font:font,
       color:black
     }
@@ -416,7 +269,7 @@ async function gerarPDF(){
   page.drawText(
     `DIMENSIONAL COM BASE GMG ${potencia}KVA -`,
     {
-      x:345,
+      x:343,
       y:14,
       size:7,
       font:font,
@@ -425,7 +278,7 @@ async function gerarPDF(){
   );
 
   /*
-  SALVAR PDF
+  SALVAR
   */
 
   const pdfBytes =
@@ -433,7 +286,7 @@ async function gerarPDF(){
 
   download(
     pdfBytes,
-    `Dimensional_GMG_${potencia}KVA.pdf`,
+    `GMG_${potencia}KVA.pdf`,
     "application/pdf"
   );
 
