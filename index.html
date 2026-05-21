@@ -101,6 +101,22 @@ button:hover{
   color:#777;
 }
 
+@media(max-width:700px){
+
+  body{
+    padding:15px;
+  }
+
+  .container{
+    padding:20px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
 </style>
 
 </head>
@@ -119,22 +135,22 @@ Gerador Automático de Dimensionais
 
 <div class="field">
 <label>Potência (KVA)</label>
-<input type="number" id="potencia">
+<input type="number" id="potencia" placeholder="Ex: 25">
 </div>
 
 <div class="field">
 <label>Comprimento (mm)</label>
-<input type="number" id="comprimento">
+<input type="number" id="comprimento" placeholder="Ex: 2200">
 </div>
 
 <div class="field">
 <label>Largura (mm)</label>
-<input type="number" id="largura">
+<input type="number" id="largura" placeholder="Ex: 890">
 </div>
 
 <div class="field">
 <label>Altura (mm)</label>
-<input type="number" id="alturaGmg">
+<input type="number" id="alturaGmg" placeholder="Ex: 1280">
 </div>
 
 </div>
@@ -171,41 +187,20 @@ MS Geradores © Sistema Automático
 
 async function gerarPDF(){
 
-  /*
-  CAPTURA DADOS
-  */
-
   const potencia =
-    document.getElementById("potencia").value;
+    document.getElementById("potencia").value || "25";
 
   const comprimento = parseInt(
-    document.getElementById("comprimento").value
+    document.getElementById("comprimento").value || "2200"
   );
 
   const largura = parseInt(
-    document.getElementById("largura").value
+    document.getElementById("largura").value || "890"
   );
 
   const altura = parseInt(
-    document.getElementById("alturaGmg").value
+    document.getElementById("alturaGmg").value || "1280"
   );
-
-  /*
-  VALIDAR CAMPOS
-  */
-
-  if(
-    !potencia ||
-    !comprimento ||
-    !largura ||
-    !altura
-  ){
-
-    alert("Preencha todos os campos.");
-
-    return;
-
-  }
 
   /*
   REGRAS
@@ -216,7 +211,7 @@ async function gerarPDF(){
   const larguraBase = largura + 2000;
 
   /*
-  CARREGA PDF
+  CARREGAR PDF
   */
 
   const existingPdfBytes = await fetch(
@@ -234,11 +229,11 @@ async function gerarPDF(){
 
   const font =
     await pdfDoc.embedFont(
-      PDFLib.StandardFonts.Helvetica
+      PDFLib.StandardFonts.HelveticaBold
     );
 
   /*
-  APAGAR
+  FUNÇÃO APAGAR
   */
 
   function apagar(x,y,w,h){
@@ -255,71 +250,91 @@ async function gerarPDF(){
   }
 
   /*
-  APAGAR NÚMEROS ANTIGOS
+  APAGAR MEDIDAS ANTIGAS
   */
 
-  apagar(108,161,34,10);
+  apagar(92,156,130,32);
 
-  apagar(292,80,40,10);
+  apagar(280,74,140,30);
 
-  apagar(74,442,26,10);
+  apagar(58,437,120,30);
 
-  apagar(468,442,40,10);
+  apagar(452,437,140,30);
 
-  apagar(632,327,34,10);
+  apagar(618,320,130,32);
 
-  apagar(230,329,34,10);
+  apagar(215,320,130,32);
 
-  apagar(348,15,180,10);
+  apagar(335,10,320,28);
 
   /*
-  ESCREVER NOVOS
+  2200 -> comprimento
   */
 
   page.drawText(String(comprimento),{
-    x:231,
-    y:330,
-    size:6,
+    x:228,
+    y:329,
+    size:13,
     font:font,
     color:black
   });
 
+  /*
+  4200 -> comprimento + 2000
+  */
+
   page.drawText(String(comprimentoBase),{
-    x:293,
-    y:81,
-    size:6,
+    x:292,
+    y:78,
+    size:13,
     font:font,
     color:black
   });
 
+  /*
+  4200 lateral
+  */
+
   page.drawText(String(comprimentoBase),{
-    x:469,
-    y:443,
-    size:6,
+    x:462,
+    y:441,
+    size:13,
     font:font,
     color:black
   });
+
+  /*
+  2890 -> largura + 2000
+  */
 
   page.drawText(String(larguraBase),{
-    x:109,
-    y:163,
-    size:6,
+    x:108,
+    y:162,
+    size:13,
     font:font,
     color:black
   });
+
+  /*
+  890 -> largura
+  */
 
   page.drawText(String(largura),{
-    x:75,
-    y:443,
-    size:6,
+    x:72,
+    y:441,
+    size:13,
     font:font,
     color:black
   });
 
+  /*
+  1280 -> altura
+  */
+
   page.drawText(String(altura),{
-    x:633,
-    y:328,
-    size:6,
+    x:628,
+    y:326,
+    size:13,
     font:font,
     color:black
   });
@@ -331,9 +346,9 @@ async function gerarPDF(){
   page.drawText(
     `DIMENSIONAL COM BASE GMG ${potencia}KVA -`,
     {
-      x:349,
-      y:16,
-      size:7,
+      x:345,
+      y:15,
+      size:11,
       font:font,
       color:black
     }
