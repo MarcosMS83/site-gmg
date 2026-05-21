@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MS Geradores - Debug Coordenadas PDF</title>
+<title>MS Geradores</title>
 
 <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
 <script src="https://unpkg.com/downloadjs@1.4.7"></script>
@@ -28,8 +28,8 @@ body{
 }
 
 h1{
-  color:#0f4ea8;
   margin-bottom:30px;
+  color:#0f4ea8;
 }
 
 label{
@@ -62,24 +62,6 @@ button:hover{
   background:#0b3d84;
 }
 
-.info{
-  margin-top:30px;
-  background:#eef3ff;
-  padding:20px;
-  border-radius:12px;
-  line-height:1.7;
-}
-
-.code{
-  background:#111;
-  color:#0f0;
-  padding:15px;
-  border-radius:10px;
-  margin-top:15px;
-  font-family:monospace;
-  font-size:14px;
-}
-
 </style>
 
 </head>
@@ -88,56 +70,33 @@ button:hover{
 
 <div class="container">
 
-<h1>MS GERADORES - DEBUG PDF</h1>
+<h1>MS GERADORES</h1>
 
-<label>Potência</label>
+<label>Potência (KVA)</label>
 <input type="number" id="potencia">
 
-<label>Comprimento</label>
+<label>Comprimento (mm)</label>
 <input type="number" id="comprimento">
 
-<label>Largura</label>
+<label>Largura (mm)</label>
 <input type="number" id="largura">
 
-<label>Altura</label>
+<label>Altura (mm)</label>
 <input type="number" id="altura">
 
 <button onclick="gerarPDF()">
-GERAR PDF DEBUG
+GERAR PDF
 </button>
-
-<div class="info">
-
-<b>COMO DESCOBRIR POSIÇÕES:</b>
-
-<div class="code">
-
-x = esquerda/direita<br>
-y = baixo/cima
-
-</div>
-
-<br>
-
-Exemplo:
-
-<div class="code">
-
-page.drawText("2200",{<br>
-x:216,<br>
-y:325,<br>
-size:7<br>
-});
-
-</div>
-
-</div>
 
 </div>
 
 <script>
 
 async function gerarPDF(){
+
+  /*
+  CAMPOS
+  */
 
   const potencia =
     document.getElementById("potencia").value;
@@ -157,6 +116,10 @@ async function gerarPDF(){
       document.getElementById("altura").value
     );
 
+  /*
+  VALIDAR
+  */
+
   if(
     !potencia ||
     !comprimento ||
@@ -174,14 +137,14 @@ async function gerarPDF(){
   REGRAS
   */
 
-  const comprimentoBase =
-    comprimento + 2000;
-
   const larguraBase =
     largura + 2000;
 
+  const comprimentoBase =
+    comprimento + 2000;
+
   /*
-  PDF
+  CARREGAR PDF
   */
 
   const existingPdfBytes =
@@ -197,17 +160,8 @@ async function gerarPDF(){
   const page =
     pdfDoc.getPages()[0];
 
-  const white =
-    PDFLib.rgb(1,1,1);
-
   const black =
     PDFLib.rgb(0,0,0);
-
-  const gray =
-    PDFLib.rgb(0.85,0.85,0.85);
-
-  const red =
-    PDFLib.rgb(1,0,0);
 
   const font =
     await pdfDoc.embedFont(
@@ -215,141 +169,93 @@ async function gerarPDF(){
     );
 
   /*
-  =========================================
-  GRID DEBUG
-  =========================================
+  ===================================
+  ESCREVER NOVOS VALORES
+  ===================================
   */
 
-  for(let x=0;x<900;x+=20){
-
-    page.drawLine({
-      start:{x:x,y:0},
-      end:{x:x,y:700},
-      thickness:0.3,
-      color:gray
-    });
-
-    page.drawText(
-      String(x),
-      {
-        x:x+1,
-        y:2,
-        size:4,
-        font:font,
-        color:red
-      }
-    );
-
-  }
-
-  for(let y=0;y<700;y+=20){
-
-    page.drawLine({
-      start:{x:0,y:y},
-      end:{x:900,y:y},
-      thickness:0.3,
-      color:gray
-    });
-
-    page.drawText(
-      String(y),
-      {
-        x:2,
-        y:y+1,
-        size:4,
-        font:font,
-        color:red
-      }
-    );
-
-  }
-
   /*
-  =========================================
-  APAGAR TEXTO ANTIGO
-  =========================================
+  ALTURA
+  X=100
+  Y=200
   */
 
-  function apagar(x,y,w,h){
-
-    page.drawRectangle({
-      x:x,
-      y:y,
-      width:w,
-      height:h,
-      color:white,
-      borderWidth:0
-    });
-
-  }
-
-  apagar(286,77,55,11);
-
-  apagar(214,323,55,11);
-
-  apagar(98,159,55,11);
-
-  apagar(67,440,40,11);
-
-  apagar(618,323,45,11);
-
-  apagar(340,12,210,11);
+  page.drawText(
+    String(altura),
+    {
+      x:100,
+      y:200,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
 
   /*
-  =========================================
-  ESCREVER
-  =========================================
+  LARGURA
+  ALTERADO:
+  X=100
+  Y=200
+  */
+
+  page.drawText(
+    String(largura),
+    {
+      x:100,
+      y:200,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  COMPRIMENTO
+  X=200
+  Y=200
+  */
+
+  page.drawText(
+    String(comprimento),
+    {
+      x:200,
+      y:200,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  LARGURA BASE
+  largura + 2000
+  X=300
+  Y=250
+  */
+
+  page.drawText(
+    String(larguraBase),
+    {
+      x:300,
+      y:250,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  COMPRIMENTO BASE
+  comprimento + 2000
+  X=350
+  Y=250
   */
 
   page.drawText(
     String(comprimentoBase),
     {
-      x:288,
-      y:79,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    String(comprimento),
-    {
-      x:216,
-      y:375,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    String(larguraBase),
-    {
-      x:100,
-      y:161,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    String(largura),
-    {
-      x:69,
-      y:442,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    String(altura),
-    {
-      x:620,
-      y:325,
+      x:350,
+      y:250,
       size:7,
       font:font,
       color:black
@@ -380,7 +286,7 @@ async function gerarPDF(){
 
   download(
     pdfBytes,
-    `DEBUG_GMG_${potencia}KVA.pdf`,
+    `GMG_${potencia}KVA.pdf`,
     "application/pdf"
   );
 
