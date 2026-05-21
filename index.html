@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MS Geradores</title>
+<title>MS Geradores - Debug Coordenadas PDF</title>
 
 <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
 <script src="https://unpkg.com/downloadjs@1.4.7"></script>
@@ -28,8 +28,8 @@ body{
 }
 
 h1{
-  margin-bottom:30px;
   color:#0f4ea8;
+  margin-bottom:30px;
 }
 
 label{
@@ -62,6 +62,24 @@ button:hover{
   background:#0b3d84;
 }
 
+.info{
+  margin-top:30px;
+  background:#eef3ff;
+  padding:20px;
+  border-radius:12px;
+  line-height:1.7;
+}
+
+.code{
+  background:#111;
+  color:#0f0;
+  padding:15px;
+  border-radius:10px;
+  margin-top:15px;
+  font-family:monospace;
+  font-size:14px;
+}
+
 </style>
 
 </head>
@@ -70,33 +88,56 @@ button:hover{
 
 <div class="container">
 
-<h1>MS GERADORES</h1>
+<h1>MS GERADORES - DEBUG PDF</h1>
 
-<label>Potência (KVA)</label>
+<label>Potência</label>
 <input type="number" id="potencia">
 
-<label>Comprimento (mm)</label>
+<label>Comprimento</label>
 <input type="number" id="comprimento">
 
-<label>Largura (mm)</label>
+<label>Largura</label>
 <input type="number" id="largura">
 
-<label>Altura (mm)</label>
+<label>Altura</label>
 <input type="number" id="altura">
 
 <button onclick="gerarPDF()">
-GERAR PDF
+GERAR PDF DEBUG
 </button>
+
+<div class="info">
+
+<b>COMO DESCOBRIR POSIÇÕES:</b>
+
+<div class="code">
+
+x = esquerda/direita<br>
+y = baixo/cima
+
+</div>
+
+<br>
+
+Exemplo:
+
+<div class="code">
+
+page.drawText("2200",{<br>
+x:216,<br>
+y:325,<br>
+size:7<br>
+});
+
+</div>
+
+</div>
 
 </div>
 
 <script>
 
 async function gerarPDF(){
-
-  /*
-  CAMPOS
-  */
 
   const potencia =
     document.getElementById("potencia").value;
@@ -115,10 +156,6 @@ async function gerarPDF(){
     parseInt(
       document.getElementById("altura").value
     );
-
-  /*
-  VALIDAR
-  */
 
   if(
     !potencia ||
@@ -144,7 +181,7 @@ async function gerarPDF(){
     largura + 2000;
 
   /*
-  CARREGAR PDF
+  PDF
   */
 
   const existingPdfBytes =
@@ -166,13 +203,71 @@ async function gerarPDF(){
   const black =
     PDFLib.rgb(0,0,0);
 
+  const gray =
+    PDFLib.rgb(0.85,0.85,0.85);
+
+  const red =
+    PDFLib.rgb(1,0,0);
+
   const font =
     await pdfDoc.embedFont(
       PDFLib.StandardFonts.Helvetica
     );
 
   /*
+  =========================================
+  GRID DEBUG
+  =========================================
+  */
+
+  for(let x=0;x<900;x+=20){
+
+    page.drawLine({
+      start:{x:x,y:0},
+      end:{x:x,y:700},
+      thickness:0.3,
+      color:gray
+    });
+
+    page.drawText(
+      String(x),
+      {
+        x:x+1,
+        y:2,
+        size:4,
+        font:font,
+        color:red
+      }
+    );
+
+  }
+
+  for(let y=0;y<700;y+=20){
+
+    page.drawLine({
+      start:{x:0,y:y},
+      end:{x:900,y:y},
+      thickness:0.3,
+      color:gray
+    });
+
+    page.drawText(
+      String(y),
+      {
+        x:2,
+        y:y+1,
+        size:4,
+        font:font,
+        color:red
+      }
+    );
+
+  }
+
+  /*
+  =========================================
   APAGAR TEXTO ANTIGO
+  =========================================
   */
 
   function apagar(x,y,w,h){
@@ -188,56 +283,22 @@ async function gerarPDF(){
 
   }
 
-  /*
-  ===================================
-  APAGAR MEDIDAS
-  ===================================
-  */
-
-  /*
-  4200 superior
-  */
-
   apagar(286,77,55,11);
-
-  /*
-  2200
-  */
 
   apagar(214,323,55,11);
 
-  /*
-  2890
-  */
-
   apagar(98,159,55,11);
-
-  /*
-  890
-  */
 
   apagar(67,440,40,11);
 
-  /*
-  1280
-  */
-
   apagar(618,323,45,11);
-
-  /*
-  TITULO
-  */
 
   apagar(340,12,210,11);
 
   /*
-  ===================================
-  ESCREVER NOVOS VALORES
-  ===================================
-  */
-
-  /*
-  4200 -> comprimento + 2000
+  =========================================
+  ESCREVER
+  =========================================
   */
 
   page.drawText(
@@ -251,24 +312,16 @@ async function gerarPDF(){
     }
   );
 
-  /*
-  2200 -> comprimento
-  */
-
   page.drawText(
     String(comprimento),
     {
       x:216,
-      y:325,
+      y:375,
       size:7,
       font:font,
       color:black
     }
   );
-
-  /*
-  2890 -> largura + 2000
-  */
 
   page.drawText(
     String(larguraBase),
@@ -281,10 +334,6 @@ async function gerarPDF(){
     }
   );
 
-  /*
-  890 -> largura
-  */
-
   page.drawText(
     String(largura),
     {
@@ -295,10 +344,6 @@ async function gerarPDF(){
       color:black
     }
   );
-
-  /*
-  1280 -> altura
-  */
 
   page.drawText(
     String(altura),
@@ -327,7 +372,7 @@ async function gerarPDF(){
   );
 
   /*
-  SALVAR PDF
+  SALVAR
   */
 
   const pdfBytes =
@@ -335,7 +380,7 @@ async function gerarPDF(){
 
   download(
     pdfBytes,
-    `GMG_${potencia}KVA.pdf`,
+    `DEBUG_GMG_${potencia}KVA.pdf`,
     "application/pdf"
   );
 
