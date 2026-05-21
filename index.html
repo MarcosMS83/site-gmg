@@ -94,10 +94,6 @@ GERAR PDF
 
 async function gerarPDF(){
 
-  /*
-  CAMPOS
-  */
-
   const potencia =
     document.getElementById("potencia").value;
 
@@ -115,10 +111,6 @@ async function gerarPDF(){
     parseInt(
       document.getElementById("altura").value
     );
-
-  /*
-  VALIDAR
-  */
 
   if(
     !potencia ||
@@ -189,44 +181,18 @@ async function gerarPDF(){
   }
 
   /*
-  ===================================
   APAGAR MEDIDAS
-  ===================================
-  */
-
-  /*
-  4200 superior
   */
 
   apagar(286,77,55,11);
 
-  /*
-  2200
-  */
-
   apagar(214,323,55,11);
-
-  /*
-  2890
-  */
 
   apagar(98,159,55,11);
 
-  /*
-  890
-  */
-
   apagar(67,440,40,11);
 
-  /*
-  1280
-  */
-
   apagar(618,323,45,11);
-
-  /*
-  TITULO
-  */
 
   apagar(340,12,210,11);
 
@@ -244,7 +210,7 @@ async function gerarPDF(){
     String(comprimentoBase),
     {
       x:288,
-      y:79,
+      y:82,
       size:7,
       font:font,
       color:black
@@ -259,7 +225,7 @@ async function gerarPDF(){
     String(comprimento),
     {
       x:216,
-      y:325,
+      y:328,
       size:7,
       font:font,
       color:black
