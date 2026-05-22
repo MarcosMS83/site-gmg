@@ -1,466 +1,121 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!-- ========================================= -->
+<!-- NOVA ABA -->
+<!-- ========================================= -->
 
-<head>
+<div class="tabs">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>MS Geradores - PDF</title>
-
-<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
-<script src="https://unpkg.com/downloadjs@1.4.7"></script>
-
-<style>
-
-body{
-  font-family:Arial;
-  background:#f4f4f4;
-  padding:40px;
-}
-
-.container{
-  max-width:700px;
-  margin:auto;
-  background:white;
-  padding:40px;
-  border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.1);
-}
-
-.logo-area{
-  text-align:center;
-  margin-bottom:20px;
-}
-
-.logo-ms{
-  max-width:91px;
-}
-
-h1{
-  margin-bottom:15px;
-  color:#0f4ea8;
-  text-align:center;
-}
-
-.subtitle{
-  margin-bottom:30px;
-  color:#666;
-  text-align:center;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-}
-
-.card{
-  border:1px solid #ddd;
-  padding:20px;
-  border-radius:12px;
-}
-
-label{
-  display:block;
-  margin-bottom:8px;
-  font-weight:bold;
-}
-
-input{
-  width:100%;
-  padding:14px;
-  border:1px solid #ccc;
-  border-radius:10px;
-  font-size:16px;
-}
-
-small{
-  color:#777;
-  display:block;
-  margin-top:6px;
-}
-
-button{
-  width:100%;
-  padding:18px;
-  border:none;
-  background:#0f4ea8;
-  color:white;
-  font-size:18px;
-  border-radius:12px;
-  cursor:pointer;
-  margin-top:30px;
-  font-weight:bold;
-}
-
-button:hover{
-  background:#0b3d84;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-<!-- LOGO -->
-
-<div class="logo-area">
-
-<img
-  src="logo.jpeg"
-  alt="MS Geradores"
-  class="logo-ms"
+<button
+  class="tab-button active"
+  onclick="abrirAba('aba-gmg')"
 >
+GMG CARENADO
+</button>
 
-</div>
-
-<h1>MS GERADORES</h1>
-
-<div class="subtitle">
-Gerador automático de PDF dimensional
-</div>
-
-<div class="grid">
-
-<div class="card">
-
-<label>Potência (kVA)</label>
-<input type="number" id="potencia">
-
-</div>
-
-<div class="card">
-
-<label>Largura (mm)</label>
-<input type="number" id="largura">
-
-</div>
-
-<div class="card">
-
-<label>Altura (mm)</label>
-<input type="number" id="altura">
-
-</div>
-
-<div class="card">
-
-<label>Comprimento (mm)</label>
-<input type="number" id="comprimento">
-
-</div>
-
-<div class="card">
-
-<label>Peso (kg) - Opcional</label>
-<input type="number" id="peso">
-
-<small>
-Se deixar vazio o peso não será inserido no PDF
-</small>
-
-</div>
-
-</div>
-
-<button onclick="gerarPDF()">
-GERAR PDF
+<button
+  class="tab-button"
+  onclick="abrirAba('aba-sala')"
+>
+SALA GMG ABERTO
 </button>
 
 </div>
 
-<script>
+<!-- ========================================= -->
+<!-- ABA NOVA -->
+<!-- ========================================= -->
 
-async function gerarPDF(){
+<div id="aba-sala" class="tab-content" style="display:none;">
 
-  /*
-  VALORES
-  */
+<div class="subtitle">
+Layout sala GMG aberto com kit atenuador
+</div>
 
-  const potencia =
-    document.getElementById("potencia").value;
+<div class="grid">
 
-  const altura =
-    parseInt(
-      document.getElementById("altura").value
-    );
+<!-- POTENCIA -->
 
-  const largura =
-    parseInt(
-      document.getElementById("largura").value
-    );
+<div class="card">
 
-  const comprimento =
-    parseInt(
-      document.getElementById("comprimento").value
-    );
+<label>Potência (kVA)</label>
+<input type="number" id="salaPotencia">
 
-  /*
-  PESO OPCIONAL
-  */
+</div>
 
-  const peso =
-    document.getElementById("peso").value;
+<!-- GERADOR -->
 
-  /*
-  VALIDAR
-  */
+<div class="card">
 
-  if(
-    !potencia ||
-    !altura ||
-    !largura ||
-    !comprimento
-  ){
+<label>Comprimento GMG (mm)</label>
+<input type="number" id="gmgComprimento">
 
-    alert("Preencha os campos obrigatórios.");
+</div>
 
-    return;
+<div class="card">
 
-  }
+<label>Largura GMG (mm)</label>
+<input type="number" id="gmgLargura">
 
-  /*
-  REGRAS
-  */
+</div>
 
-  const larguraBase =
-    largura + 2000;
+<!-- ATENUADOR ENTRADA -->
 
-  const comprimentoBase =
-    comprimento + 2000;
+<div class="card">
 
-  /*
-  COORDENADAS FIXAS
-  */
+<label>Largura Atenuador Entrada (mm)</label>
+<input type="number" id="entradaLargura">
 
-  /*
-  ALTURA
-  */
+</div>
 
-  const alturaX = 85;
-  const alturaY = 430;
+<div class="card">
 
-  /*
-  LARGURA
-  */
-
-  const larguraX = 620;
-  const larguraY = 325;
-
-  /*
-  COMPRIMENTO
-  */
-
-  const comprimentoX = 235;
-  const comprimentoY = 328;
-
-  /*
-  LARGURA BASE
-  */
-
-  const larguraBaseX = 85;
-  const larguraBaseY = 218;
-
-  /*
-  COMPRIMENTO BASE 1
-  */
-
-  const comprimentoBase1X = 235;
-  const comprimentoBase1Y = 297;
-
-  /*
-  COMPRIMENTO BASE 2
-  */
-
-  const comprimentoBase2X = 620;
-  const comprimentoBase2Y = 210;
-
-  /*
-  POTENCIA PDF
-  */
-
-  const potenciaX = 710;
-  const potenciaY = 32;
-
-  /*
-  PESO PDF
-  VOCÊ PODE ALTERAR AQUI
-  */
-
-  const pesoX = 605;
-  const pesoY = 60;
-
-  /*
-  PDF
-  */
-
-  const existingPdfBytes =
-    await fetch(
-      "Dimensional GMG 25 KVA.pdf"
-    ).then(res => res.arrayBuffer());
-
-  const pdfDoc =
-    await PDFLib.PDFDocument.load(
-      existingPdfBytes
-    );
-
-  const page =
-    pdfDoc.getPages()[0];
-
-  const black =
-    PDFLib.rgb(0,0,0);
-
-  const font =
-    await pdfDoc.embedFont(
-      PDFLib.StandardFonts.Helvetica
-    );
-
-  /*
-  ALTURA
-  */
-
-  page.drawText(
-    String(altura),
-    {
-      x:alturaX,
-      y:alturaY,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  LARGURA
-  */
-
-  page.drawText(
-    String(largura),
-    {
-      x:larguraX,
-      y:larguraY,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  COMPRIMENTO
-  */
-
-  page.drawText(
-    String(comprimento),
-    {
-      x:comprimentoX,
-      y:comprimentoY,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  LARGURA BASE
-  */
-
-  page.drawText(
-    String(larguraBase),
-    {
-      x:larguraBaseX,
-      y:larguraBaseY,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  COMPRIMENTO BASE 1
-  */
-
-  page.drawText(
-    String(comprimentoBase),
-    {
-      x:comprimentoBase1X,
-      y:comprimentoBase1Y,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  COMPRIMENTO BASE 2
-  */
-
-  page.drawText(
-    String(comprimentoBase),
-    {
-      x:comprimentoBase2X,
-      y:comprimentoBase2Y,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  PESO
-  SOMENTE SE PREENCHIDO
-  */
-
-  if(peso){
-
-    page.drawText(
-      `Peso: ${peso} kg`,
-      {
-        x:pesoX,
-        y:pesoY,
-        size:7,
-        font:font,
-        color:black
-      }
-    );
-
-  }
-
-  /*
-  TITULO PDF
-  */
-
-  page.drawText(
-    `${potencia}kVA`,
-    {
-      x:potenciaX,
-      y:potenciaY,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  SALVAR
-  */
-
-  const pdfBytes =
-    await pdfDoc.save();
-
-  download(
-    pdfBytes,
-    `GMG_${potencia}kVA.pdf`,
-    "application/pdf"
-  );
-
-}
-
-</script>
-
-</body>
-
-</html>
+<label>Comprimento Atenuador Entrada (mm)</label>
+<input type="number" id="entradaComprimento">
+
+</div>
+
+<div class="card">
+
+<label>Altura Atenuador Entrada (mm)</label>
+<input type="number" id="entradaAltura">
+
+</div>
+
+<!-- ATENUADOR SAIDA -->
+
+<div class="card">
+
+<label>Largura Atenuador Saída (mm)</label>
+<input type="number" id="saidaLargura">
+
+</div>
+
+<div class="card">
+
+<label>Comprimento Atenuador Saída (mm)</label>
+<input type="number" id="saidaComprimento">
+
+</div>
+
+<div class="card">
+
+<label>Altura Atenuador Saída (mm)</label>
+<input type="number" id="saidaAltura">
+
+</div>
+
+<!-- PORTA -->
+
+<div class="card">
+
+<label>Largura Porta (mm)</label>
+<input type="number" id="larguraPorta">
+
+</div>
+
+</div>
+
+<button onclick="gerarPDFSala()">
+GERAR PDF SALA
+</button>
+
+</div>
