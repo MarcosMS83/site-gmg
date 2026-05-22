@@ -434,7 +434,7 @@ async function gerarPDF(){
   */
 
   page.drawText(
-    `${potencia}KVA`,
+    `${potencia}kVA`,
     {
       x:potenciaX,
       y:potenciaY,
@@ -453,7 +453,7 @@ async function gerarPDF(){
 
   download(
     pdfBytes,
-    `GMG_${potencia}KVA.pdf`,
+    `GMG_${potencia}kVA.pdf`,
     "application/pdf"
   );
 
