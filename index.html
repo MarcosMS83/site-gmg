@@ -355,7 +355,7 @@ function abrirAba(id, botao){
 }
 
 /* ========================================= */
-/* PDF GMG */
+/* PDF GMG CARENADO */
 /* ========================================= */
 
 async function gerarPDF(){
@@ -452,10 +452,6 @@ async function gerarPDF(){
     await pdfDoc.embedFont(
       PDFLib.StandardFonts.Helvetica
     );
-
-  /*
-  TEXTOS
-  */
 
   page.drawText(
     String(altura),
@@ -668,49 +664,13 @@ async function gerarPDFSala(){
   const tituloX = 60;
   const tituloY = 760;
 
-  const gmgComprimentoX = 100;
-  const gmgComprimentoY = 700;
-
-  const gmgLarguraX = 250;
-  const gmgLarguraY = 700;
-
-  const entradaComprimentoX = 100;
-  const entradaComprimentoY = 650;
-
-  const entradaLarguraX = 250;
-  const entradaLarguraY = 650;
-
-  const entradaAlturaX = 400;
-  const entradaAlturaY = 650;
-
-  const saidaComprimentoX = 100;
-  const saidaComprimentoY = 600;
-
-  const saidaLarguraX = 250;
-  const saidaLarguraY = 600;
-
-  const saidaAlturaX = 400;
-  const saidaAlturaY = 600;
-
-  const peDireitoX = 100;
-  const peDireitoY = 550;
-
-  const larguraSalaX = 250;
-  const larguraSalaY = 550;
-
-  const comprimentoSalaX = 400;
-  const comprimentoSalaY = 550;
-
-  const larguraPortaX = 550;
-  const larguraPortaY = 550;
-
   /*
   PDF
   */
 
   const existingPdfBytes =
     await fetch(
-    "OK - LAYOUT SALA - GMG ABERTO COM KIT ATENUAÇÃO.pdf"
+      "OK - LAYOUT SALA - GMG ABERTO COM KIT ATENUAÇÃO.pdf"
     ).then(res => res.arrayBuffer());
 
   const pdfDoc =
@@ -743,158 +703,6 @@ async function gerarPDFSala(){
       color:black
     }
   );
-
-  /*
-  GMG
-  */
-
-  page.drawText(
-    `Comprimento GMG: ${gmgComprimento}`,
-    {
-      x:gmgComprimentoX,
-      y:gmgComprimentoY,
-      size:8,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    `Largura GMG: ${gmgLargura}`,
-    {
-      x:gmgLarguraX,
-      y:gmgLarguraY,
-      size:8,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  ENTRADA
-  */
-
-  page.drawText(
-    `Comp. Entrada: ${entradaComprimento}`,
-    {
-      x:entradaComprimentoX,
-      y:entradaComprimentoY,
-      size:8,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    `Larg. Entrada: ${entradaLargura}`,
-    {
-      x:entradaLarguraX,
-      y:entradaLarguraY,
-      size:8,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    `Alt. Entrada: ${entradaAltura}`,
-    {
-      x:entradaAlturaX,
-      y:entradaAlturaY,
-      size:8,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  SAIDA
-  */
-
-  page.drawText(
-    `Comp. Saída: ${saidaComprimento}`,
-    {
-      x:saidaComprimentoX,
-      y:saidaComprimentoY,
-      size:8,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    `Larg. Saída: ${saidaLargura}`,
-    {
-      x:saidaLarguraX,
-      y:saidaLarguraY,
-      size:8,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    `Alt. Saída: ${saidaAltura}`,
-    {
-      x:saidaAlturaX,
-      y:saidaAlturaY,
-      size:8,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  SALA
-  */
-
-  page.drawText(
-    `Pé Direito: ${peDireito}`,
-    {
-      x:peDireitoX,
-      y:peDireitoY,
-      size:8,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    `Largura Sala: ${larguraSala}`,
-    {
-      x:larguraSalaX,
-      y:larguraSalaY,
-      size:8,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    `Comprimento Sala: ${comprimentoSala}`,
-    {
-      x:comprimentoSalaX,
-      y:comprimentoSalaY,
-      size:8,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    `Largura Porta: ${larguraPorta}`,
-    {
-      x:larguraPortaX,
-      y:larguraPortaY,
-      size:8,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  SALVAR
-  */
 
   const pdfBytes =
     await pdfDoc.save();
