@@ -189,23 +189,54 @@ async function gerarPDF(){
   COORDENADAS FIXAS
   */
 
+  /*
+  ALTURA
+  */
+
   const alturaX = 75;
   const alturaY = 430;
+
+  /*
+  LARGURA
+  */
 
   const larguraX = 620;
   const larguraY = 325;
 
+  /*
+  COMPRIMENTO
+  */
+
   const comprimentoX = 235;
   const comprimentoY = 328;
 
-  const larguraBase1X = 80;
-  const larguraBase1Y = 220;
+  /*
+  LARGURA BASE
+  */
 
-  const larguraBase2X = 300;
-  const larguraBase2Y = 220;
+  const larguraBaseX = 80;
+  const larguraBaseY = 220;
 
-  const comprimentoBaseX = 235;
-  const comprimentoBaseY = 297;
+  /*
+  COMPRIMENTO BASE 1
+  */
+
+  const comprimentoBase1X = 235;
+  const comprimentoBase1Y = 297;
+
+  /*
+  COMPRIMENTO BASE 2
+  */
+
+  const comprimentoBase2X = 620;
+  const comprimentoBase2Y = 220;
+
+  /*
+  POTENCIA PDF
+  */
+
+  const potenciaX = 620;
+  const potenciaY = 30;
 
   /*
   PDF
@@ -278,14 +309,14 @@ async function gerarPDF(){
   );
 
   /*
-  LARGURA BASE 1
+  LARGURA BASE
   */
 
   page.drawText(
     String(larguraBase),
     {
-      x:larguraBase1X,
-      y:larguraBase1Y,
+      x:larguraBaseX,
+      y:larguraBaseY,
       size:7,
       font:font,
       color:black
@@ -293,29 +324,29 @@ async function gerarPDF(){
   );
 
   /*
-  LARGURA BASE 2
-  */
-
-  page.drawText(
-    String(larguraBase),
-    {
-      x:larguraBase2X,
-      y:larguraBase2Y,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  /*
-  COMPRIMENTO BASE
+  COMPRIMENTO BASE 1
   */
 
   page.drawText(
     String(comprimentoBase),
     {
-      x:comprimentoBaseX,
-      y:comprimentoBaseY,
+      x:comprimentoBase1X,
+      y:comprimentoBase1Y,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  COMPRIMENTO BASE 2
+  */
+
+  page.drawText(
+    String(comprimentoBase),
+    {
+      x:comprimentoBase2X,
+      y:comprimentoBase2Y,
       size:7,
       font:font,
       color:black
@@ -329,8 +360,8 @@ async function gerarPDF(){
   page.drawText(
     `DIMENSIONAL COM BASE GMG ${potencia}KVA`,
     {
-      x:343,
-      y:14,
+      x:potenciaX,
+      y:potenciaY,
       size:7,
       font:font,
       color:black
