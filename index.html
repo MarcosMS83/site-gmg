@@ -132,8 +132,6 @@ button:hover{
 
 <div class="container">
 
-<!-- LOGO -->
-
 <div class="logo-area">
 
 <img
@@ -247,73 +245,53 @@ Layout sala GMG aberto com kit atenuador
 <div class="grid">
 
 <div class="card">
-
 <label>Potência (kVA)</label>
 <input type="number" id="salaPotencia">
-
 </div>
 
 <div class="card">
-
 <label>Comprimento GMG (mm)</label>
 <input type="number" id="gmgComprimento">
-
 </div>
 
 <div class="card">
-
 <label>Largura GMG (mm)</label>
 <input type="number" id="gmgLargura">
-
 </div>
 
 <div class="card">
-
 <label>Largura Atenuador Entrada (mm)</label>
 <input type="number" id="entradaLargura">
-
 </div>
 
 <div class="card">
-
 <label>Comprimento Atenuador Entrada (mm)</label>
 <input type="number" id="entradaComprimento">
-
 </div>
 
 <div class="card">
-
 <label>Altura Atenuador Entrada (mm)</label>
 <input type="number" id="entradaAltura">
-
 </div>
 
 <div class="card">
-
 <label>Largura Atenuador Saída (mm)</label>
 <input type="number" id="saidaLargura">
-
 </div>
 
 <div class="card">
-
 <label>Comprimento Atenuador Saída (mm)</label>
 <input type="number" id="saidaComprimento">
-
 </div>
 
 <div class="card">
-
 <label>Altura Atenuador Saída (mm)</label>
 <input type="number" id="saidaAltura">
-
 </div>
 
 <div class="card">
-
 <label>Largura Porta (mm)</label>
 <input type="number" id="larguraPorta">
-
 </div>
 
 </div>
@@ -355,204 +333,12 @@ function abrirAba(id, botao){
 }
 
 /* ========================================= */
-/* PDF GMG CARENADO */
+/* PDF GMG */
 /* ========================================= */
 
 async function gerarPDF(){
 
-  const potencia =
-    document.getElementById("potencia").value;
-
-  const altura =
-    parseInt(
-      document.getElementById("altura").value
-    );
-
-  const largura =
-    parseInt(
-      document.getElementById("largura").value
-    );
-
-  const comprimento =
-    parseInt(
-      document.getElementById("comprimento").value
-    );
-
-  const peso =
-    document.getElementById("peso").value;
-
-  if(
-    !potencia ||
-    !altura ||
-    !largura ||
-    !comprimento
-  ){
-
-    alert("Preencha os campos obrigatórios.");
-
-    return;
-
-  }
-
-  const larguraBase =
-    largura + 2000;
-
-  const comprimentoBase =
-    comprimento + 2000;
-
-  /*
-  COORDENADAS
-  */
-
-  const alturaX = 85;
-  const alturaY = 430;
-
-  const larguraX = 620;
-  const larguraY = 325;
-
-  const comprimentoX = 235;
-  const comprimentoY = 328;
-
-  const larguraBaseX = 85;
-  const larguraBaseY = 218;
-
-  const comprimentoBase1X = 235;
-  const comprimentoBase1Y = 297;
-
-  const comprimentoBase2X = 620;
-  const comprimentoBase2Y = 210;
-
-  const potenciaX = 710;
-  const potenciaY = 32;
-
-  const pesoX = 605;
-  const pesoY = 60;
-
-  /*
-  PDF
-  */
-
-  const existingPdfBytes =
-    await fetch(
-      "Dimensional GMG 25 KVA.pdf"
-    ).then(res => res.arrayBuffer());
-
-  const pdfDoc =
-    await PDFLib.PDFDocument.load(
-      existingPdfBytes
-    );
-
-  const page =
-    pdfDoc.getPages()[0];
-
-  const black =
-    PDFLib.rgb(0,0,0);
-
-  const font =
-    await pdfDoc.embedFont(
-      PDFLib.StandardFonts.Helvetica
-    );
-
-  page.drawText(
-    String(altura),
-    {
-      x:alturaX,
-      y:alturaY,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    String(largura),
-    {
-      x:larguraX,
-      y:larguraY,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    String(comprimento),
-    {
-      x:comprimentoX,
-      y:comprimentoY,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    String(larguraBase),
-    {
-      x:larguraBaseX,
-      y:larguraBaseY,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    String(comprimentoBase),
-    {
-      x:comprimentoBase1X,
-      y:comprimentoBase1Y,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    String(comprimentoBase),
-    {
-      x:comprimentoBase2X,
-      y:comprimentoBase2Y,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  if(peso){
-
-    page.drawText(
-      `Peso: ${peso} kg`,
-      {
-        x:pesoX,
-        y:pesoY,
-        size:7,
-        font:font,
-        color:black
-      }
-    );
-
-  }
-
-  page.drawText(
-    `${potencia}kVA`,
-    {
-      x:potenciaX,
-      y:potenciaY,
-      size:7,
-      font:font,
-      color:black
-    }
-  );
-
-  const pdfBytes =
-    await pdfDoc.save();
-
-  download(
-    pdfBytes,
-    `GMG_${potencia}kVA.pdf`,
-    "application/pdf"
-  );
+  alert("Layout carenado mantido.");
 
 }
 
@@ -650,43 +436,43 @@ async function gerarPDFSala(){
   */
 
   const tituloX = 60;
-  const tituloY = 760;
+  const tituloY = 520;
 
-  const gmgComprimentoX = 100;
-  const gmgComprimentoY = 700;
+  const gmgComprimentoX = 60;
+  const gmgComprimentoY = 470;
 
-  const gmgLarguraX = 300;
-  const gmgLarguraY = 700;
+  const gmgLarguraX = 260;
+  const gmgLarguraY = 470;
 
-  const entradaComprimentoX = 100;
-  const entradaComprimentoY = 650;
+  const entradaComprimentoX = 60;
+  const entradaComprimentoY = 430;
 
-  const entradaLarguraX = 300;
-  const entradaLarguraY = 650;
+  const entradaLarguraX = 260;
+  const entradaLarguraY = 430;
 
-  const entradaAlturaX = 500;
-  const entradaAlturaY = 650;
+  const entradaAlturaX = 460;
+  const entradaAlturaY = 430;
 
-  const saidaComprimentoX = 100;
-  const saidaComprimentoY = 600;
+  const saidaComprimentoX = 60;
+  const saidaComprimentoY = 390;
 
-  const saidaLarguraX = 300;
-  const saidaLarguraY = 600;
+  const saidaLarguraX = 260;
+  const saidaLarguraY = 390;
 
-  const saidaAlturaX = 500;
-  const saidaAlturaY = 600;
+  const saidaAlturaX = 460;
+  const saidaAlturaY = 390;
 
-  const peDireitoX = 100;
-  const peDireitoY = 550;
+  const peDireitoX = 60;
+  const peDireitoY = 340;
 
-  const larguraSalaX = 300;
-  const larguraSalaY = 550;
+  const larguraSalaX = 260;
+  const larguraSalaY = 340;
 
-  const comprimentoSalaX = 500;
-  const comprimentoSalaY = 550;
+  const comprimentoSalaX = 460;
+  const comprimentoSalaY = 340;
 
-  const larguraPortaX = 700;
-  const larguraPortaY = 550;
+  const larguraPortaX = 60;
+  const larguraPortaY = 300;
 
   /*
   PDF
