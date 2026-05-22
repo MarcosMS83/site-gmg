@@ -90,36 +90,54 @@ button:hover{
 <h1>MS GERADORES</h1>
 
 <div class="subtitle">
-Defina as medidas e as coordenadas exatas onde serão escritas no PDF
+Defina apenas as medidas principais e ajuste as coordenadas desejadas
 </div>
 
 <div class="grid">
 
-<!-- POTENCIA -->
+<!-- MEDIDAS PRINCIPAIS -->
 
 <div class="card">
 
 <h3>Potência</h3>
 
-<label>Valor</label>
+<label>Potência (KVA)</label>
 <input type="number" id="potencia">
-
-<label>X</label>
-<input type="number" id="potenciaX" value="343">
-
-<label>Y</label>
-<input type="number" id="potenciaY" value="14">
 
 </div>
 
-<!-- ALTURA -->
+<div class="card">
+
+<h3>Largura</h3>
+
+<label>Largura (mm)</label>
+<input type="number" id="largura">
+
+</div>
 
 <div class="card">
 
 <h3>Altura</h3>
 
-<label>Valor</label>
+<label>Altura (mm)</label>
 <input type="number" id="altura">
+
+</div>
+
+<div class="card">
+
+<h3>Comprimento</h3>
+
+<label>Comprimento (mm)</label>
+<input type="number" id="comprimento">
+
+</div>
+
+<!-- COORDENADAS -->
+
+<div class="card">
+
+<h3>Coordenadas Altura</h3>
 
 <label>X</label>
 <input type="number" id="alturaX" value="75">
@@ -129,14 +147,9 @@ Defina as medidas e as coordenadas exatas onde serão escritas no PDF
 
 </div>
 
-<!-- LARGURA -->
-
 <div class="card">
 
-<h3>Largura</h3>
-
-<label>Valor</label>
-<input type="number" id="largura">
+<h3>Coordenadas Largura</h3>
 
 <label>X</label>
 <input type="number" id="larguraX" value="620">
@@ -146,14 +159,9 @@ Defina as medidas e as coordenadas exatas onde serão escritas no PDF
 
 </div>
 
-<!-- COMPRIMENTO -->
-
 <div class="card">
 
-<h3>Comprimento</h3>
-
-<label>Valor</label>
-<input type="number" id="comprimento">
+<h3>Coordenadas Comprimento</h3>
 
 <label>X</label>
 <input type="number" id="comprimentoX" value="235">
@@ -163,17 +171,31 @@ Defina as medidas e as coordenadas exatas onde serão escritas no PDF
 
 </div>
 
-<!-- LARGURA BASE -->
+<!-- LARGURA BASE 1 -->
 
 <div class="card">
 
-<h3>Largura Base (+2000)</h3>
+<h3>Largura Base (+2000) - POSIÇÃO 1</h3>
 
 <label>X</label>
-<input type="number" id="larguraBaseX" value="80">
+<input type="number" id="larguraBase1X" value="80">
 
 <label>Y</label>
-<input type="number" id="larguraBaseY" value="220">
+<input type="number" id="larguraBase1Y" value="220">
+
+</div>
+
+<!-- LARGURA BASE 2 -->
+
+<div class="card">
+
+<h3>Largura Base (+2000) - POSIÇÃO 2</h3>
+
+<label>X</label>
+<input type="number" id="larguraBase2X" value="300">
+
+<label>Y</label>
+<input type="number" id="larguraBase2Y" value="220">
 
 </div>
 
@@ -229,16 +251,6 @@ async function gerarPDF(){
   COORDENADAS
   */
 
-  const potenciaX =
-    parseInt(
-      document.getElementById("potenciaX").value
-    );
-
-  const potenciaY =
-    parseInt(
-      document.getElementById("potenciaY").value
-    );
-
   const alturaX =
     parseInt(
       document.getElementById("alturaX").value
@@ -269,15 +281,33 @@ async function gerarPDF(){
       document.getElementById("comprimentoY").value
     );
 
-  const larguraBaseX =
+  /*
+  LARGURA BASE DUPLICADA
+  */
+
+  const larguraBase1X =
     parseInt(
-      document.getElementById("larguraBaseX").value
+      document.getElementById("larguraBase1X").value
     );
 
-  const larguraBaseY =
+  const larguraBase1Y =
     parseInt(
-      document.getElementById("larguraBaseY").value
+      document.getElementById("larguraBase1Y").value
     );
+
+  const larguraBase2X =
+    parseInt(
+      document.getElementById("larguraBase2X").value
+    );
+
+  const larguraBase2Y =
+    parseInt(
+      document.getElementById("larguraBase2Y").value
+    );
+
+  /*
+  COMPRIMENTO BASE
+  */
 
   const comprimentoBaseX =
     parseInt(
@@ -370,14 +400,29 @@ async function gerarPDF(){
   );
 
   /*
-  LARGURA BASE
+  LARGURA BASE - POSIÇÃO 1
   */
 
   page.drawText(
     String(larguraBase),
     {
-      x:larguraBaseX,
-      y:larguraBaseY,
+      x:larguraBase1X,
+      y:larguraBase1Y,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  LARGURA BASE - POSIÇÃO 2
+  */
+
+  page.drawText(
+    String(larguraBase),
+    {
+      x:larguraBase2X,
+      y:larguraBase2Y,
       size:7,
       font:font,
       color:black
@@ -406,8 +451,8 @@ async function gerarPDF(){
   page.drawText(
     `DIMENSIONAL COM BASE GMG ${potencia}KVA -`,
     {
-      x:potenciaX,
-      y:potenciaY,
+      x:343,
+      y:14,
       size:7,
       font:font,
       color:black
