@@ -20,7 +20,7 @@ body{
 }
 
 .container{
-  max-width:700px;
+  max-width:1100px;
   margin:auto;
   background:white;
   padding:40px;
@@ -47,6 +47,32 @@ h1{
   margin-bottom:30px;
   color:#666;
   text-align:center;
+}
+
+.tabs{
+  display:flex;
+  gap:10px;
+  margin-bottom:30px;
+}
+
+.tab-button{
+  flex:1;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  background:#ddd;
+  font-weight:bold;
+  font-size:16px;
+}
+
+.tab-button.active{
+  background:#0f4ea8;
+  color:white;
+}
+
+.tab-content{
+  display:none;
 }
 
 .grid{
@@ -120,6 +146,38 @@ button:hover{
 
 <h1>MS GERADORES</h1>
 
+<!-- ========================================= -->
+<!-- ABAS -->
+<!-- ========================================= -->
+
+<div class="tabs">
+
+<button
+  class="tab-button active"
+  onclick="abrirAba('aba-gmg', this)"
+>
+GMG CARENADO
+</button>
+
+<button
+  class="tab-button"
+  onclick="abrirAba('aba-sala', this)"
+>
+SALA GMG ABERTO
+</button>
+
+</div>
+
+<!-- ========================================= -->
+<!-- ABA GMG -->
+<!-- ========================================= -->
+
+<div
+  id="aba-gmg"
+  class="tab-content"
+  style="display:block;"
+>
+
 <div class="subtitle">
 Gerador automático de PDF dimensional
 </div>
@@ -173,13 +231,134 @@ GERAR PDF
 
 </div>
 
+<!-- ========================================= -->
+<!-- ABA SALA -->
+<!-- ========================================= -->
+
+<div
+  id="aba-sala"
+  class="tab-content"
+>
+
+<div class="subtitle">
+Layout sala GMG aberto com kit atenuador
+</div>
+
+<div class="grid">
+
+<div class="card">
+
+<label>Potência (kVA)</label>
+<input type="number" id="salaPotencia">
+
+</div>
+
+<div class="card">
+
+<label>Comprimento GMG (mm)</label>
+<input type="number" id="gmgComprimento">
+
+</div>
+
+<div class="card">
+
+<label>Largura GMG (mm)</label>
+<input type="number" id="gmgLargura">
+
+</div>
+
+<div class="card">
+
+<label>Largura Atenuador Entrada (mm)</label>
+<input type="number" id="entradaLargura">
+
+</div>
+
+<div class="card">
+
+<label>Comprimento Atenuador Entrada (mm)</label>
+<input type="number" id="entradaComprimento">
+
+</div>
+
+<div class="card">
+
+<label>Altura Atenuador Entrada (mm)</label>
+<input type="number" id="entradaAltura">
+
+</div>
+
+<div class="card">
+
+<label>Largura Atenuador Saída (mm)</label>
+<input type="number" id="saidaLargura">
+
+</div>
+
+<div class="card">
+
+<label>Comprimento Atenuador Saída (mm)</label>
+<input type="number" id="saidaComprimento">
+
+</div>
+
+<div class="card">
+
+<label>Altura Atenuador Saída (mm)</label>
+<input type="number" id="saidaAltura">
+
+</div>
+
+<div class="card">
+
+<label>Largura Porta (mm)</label>
+<input type="number" id="larguraPorta">
+
+</div>
+
+</div>
+
+<button onclick="gerarPDFSala()">
+GERAR PDF SALA
+</button>
+
+</div>
+
+</div>
+
 <script>
 
-async function gerarPDF(){
+/* ========================================= */
+/* ABAS */
+/* ========================================= */
 
-  /*
-  VALORES
-  */
+function abrirAba(id, botao){
+
+  document
+    .querySelectorAll(".tab-content")
+    .forEach(el=>{
+      el.style.display="none";
+    });
+
+  document
+    .querySelectorAll(".tab-button")
+    .forEach(el=>{
+      el.classList.remove("active");
+    });
+
+  document
+    .getElementById(id)
+    .style.display="block";
+
+  botao.classList.add("active");
+
+}
+
+/* ========================================= */
+/* PDF GMG */
+/* ========================================= */
+
+async function gerarPDF(){
 
   const potencia =
     document.getElementById("potencia").value;
@@ -199,16 +378,8 @@ async function gerarPDF(){
       document.getElementById("comprimento").value
     );
 
-  /*
-  PESO OPCIONAL
-  */
-
   const peso =
     document.getElementById("peso").value;
-
-  /*
-  VALIDAR
-  */
 
   if(
     !potencia ||
@@ -223,10 +394,6 @@ async function gerarPDF(){
 
   }
 
-  /*
-  REGRAS
-  */
-
   const larguraBase =
     largura + 2000;
 
@@ -234,62 +401,29 @@ async function gerarPDF(){
     comprimento + 2000;
 
   /*
-  COORDENADAS FIXAS
-  */
-
-  /*
-  ALTURA
+  COORDENADAS
   */
 
   const alturaX = 85;
   const alturaY = 430;
 
-  /*
-  LARGURA
-  */
-
   const larguraX = 620;
   const larguraY = 325;
-
-  /*
-  COMPRIMENTO
-  */
 
   const comprimentoX = 235;
   const comprimentoY = 328;
 
-  /*
-  LARGURA BASE
-  */
-
   const larguraBaseX = 85;
   const larguraBaseY = 218;
-
-  /*
-  COMPRIMENTO BASE 1
-  */
 
   const comprimentoBase1X = 235;
   const comprimentoBase1Y = 297;
 
-  /*
-  COMPRIMENTO BASE 2
-  */
-
   const comprimentoBase2X = 620;
   const comprimentoBase2Y = 210;
 
-  /*
-  POTENCIA PDF
-  */
-
   const potenciaX = 710;
   const potenciaY = 32;
-
-  /*
-  PESO PDF
-  VOCÊ PODE ALTERAR AQUI
-  */
 
   const pesoX = 605;
   const pesoY = 60;
@@ -320,7 +454,7 @@ async function gerarPDF(){
     );
 
   /*
-  ALTURA
+  TEXTOS
   */
 
   page.drawText(
@@ -334,10 +468,6 @@ async function gerarPDF(){
     }
   );
 
-  /*
-  LARGURA
-  */
-
   page.drawText(
     String(largura),
     {
@@ -348,10 +478,6 @@ async function gerarPDF(){
       color:black
     }
   );
-
-  /*
-  COMPRIMENTO
-  */
 
   page.drawText(
     String(comprimento),
@@ -364,10 +490,6 @@ async function gerarPDF(){
     }
   );
 
-  /*
-  LARGURA BASE
-  */
-
   page.drawText(
     String(larguraBase),
     {
@@ -378,10 +500,6 @@ async function gerarPDF(){
       color:black
     }
   );
-
-  /*
-  COMPRIMENTO BASE 1
-  */
 
   page.drawText(
     String(comprimentoBase),
@@ -394,10 +512,6 @@ async function gerarPDF(){
     }
   );
 
-  /*
-  COMPRIMENTO BASE 2
-  */
-
   page.drawText(
     String(comprimentoBase),
     {
@@ -408,11 +522,6 @@ async function gerarPDF(){
       color:black
     }
   );
-
-  /*
-  PESO
-  SOMENTE SE PREENCHIDO
-  */
 
   if(peso){
 
@@ -429,16 +538,355 @@ async function gerarPDF(){
 
   }
 
-  /*
-  TITULO PDF
-  */
-
   page.drawText(
     `${potencia}kVA`,
     {
       x:potenciaX,
       y:potenciaY,
       size:7,
+      font:font,
+      color:black
+    }
+  );
+
+  const pdfBytes =
+    await pdfDoc.save();
+
+  download(
+    pdfBytes,
+    `GMG_${potencia}kVA.pdf`,
+    "application/pdf"
+  );
+
+}
+
+/* ========================================= */
+/* PDF SALA */
+/* ========================================= */
+
+async function gerarPDFSala(){
+
+  const potencia =
+    document.getElementById(
+      "salaPotencia"
+    ).value;
+
+  const gmgComprimento =
+    parseInt(
+      document.getElementById(
+        "gmgComprimento"
+      ).value
+    );
+
+  const gmgLargura =
+    parseInt(
+      document.getElementById(
+        "gmgLargura"
+      ).value
+    );
+
+  const entradaLargura =
+    parseInt(
+      document.getElementById(
+        "entradaLargura"
+      ).value
+    );
+
+  const entradaComprimento =
+    parseInt(
+      document.getElementById(
+        "entradaComprimento"
+      ).value
+    );
+
+  const entradaAltura =
+    parseInt(
+      document.getElementById(
+        "entradaAltura"
+      ).value
+    );
+
+  const saidaLargura =
+    parseInt(
+      document.getElementById(
+        "saidaLargura"
+      ).value
+    );
+
+  const saidaComprimento =
+    parseInt(
+      document.getElementById(
+        "saidaComprimento"
+      ).value
+    );
+
+  const saidaAltura =
+    parseInt(
+      document.getElementById(
+        "saidaAltura"
+      ).value
+    );
+
+  const larguraPorta =
+    parseInt(
+      document.getElementById(
+        "larguraPorta"
+      ).value
+    );
+
+  if(
+    !potencia ||
+    !gmgComprimento ||
+    !gmgLargura
+  ){
+
+    alert("Preencha os campos obrigatórios.");
+
+    return;
+
+  }
+
+  /*
+  CALCULOS
+  */
+
+  const peDireito = 3000;
+
+  const comprimentoSala =
+    entradaComprimento +
+    saidaComprimento +
+    gmgComprimento +
+    800;
+
+  const larguraSala =
+    gmgLargura + 2200;
+
+  /*
+  COORDENADAS
+  */
+
+  const tituloX = 60;
+  const tituloY = 760;
+
+  const gmgComprimentoX = 100;
+  const gmgComprimentoY = 700;
+
+  const gmgLarguraX = 250;
+  const gmgLarguraY = 700;
+
+  const entradaComprimentoX = 100;
+  const entradaComprimentoY = 650;
+
+  const entradaLarguraX = 250;
+  const entradaLarguraY = 650;
+
+  const entradaAlturaX = 400;
+  const entradaAlturaY = 650;
+
+  const saidaComprimentoX = 100;
+  const saidaComprimentoY = 600;
+
+  const saidaLarguraX = 250;
+  const saidaLarguraY = 600;
+
+  const saidaAlturaX = 400;
+  const saidaAlturaY = 600;
+
+  const peDireitoX = 100;
+  const peDireitoY = 550;
+
+  const larguraSalaX = 250;
+  const larguraSalaY = 550;
+
+  const comprimentoSalaX = 400;
+  const comprimentoSalaY = 550;
+
+  const larguraPortaX = 550;
+  const larguraPortaY = 550;
+
+  /*
+  PDF
+  */
+
+  const existingPdfBytes =
+    await fetch(
+      "Layout Sala.pdf"
+    ).then(res => res.arrayBuffer());
+
+  const pdfDoc =
+    await PDFLib.PDFDocument.load(
+      existingPdfBytes
+    );
+
+  const page =
+    pdfDoc.getPages()[0];
+
+  const black =
+    PDFLib.rgb(0,0,0);
+
+  const font =
+    await pdfDoc.embedFont(
+      PDFLib.StandardFonts.Helvetica
+    );
+
+  /*
+  TITULO
+  */
+
+  page.drawText(
+    `OK - LAYOUT SALA - GMG ABERTO COM KIT ATENUAÇÃO ${potencia}KVA`,
+    {
+      x:tituloX,
+      y:tituloY,
+      size:10,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  GMG
+  */
+
+  page.drawText(
+    `Comprimento GMG: ${gmgComprimento}`,
+    {
+      x:gmgComprimentoX,
+      y:gmgComprimentoY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `Largura GMG: ${gmgLargura}`,
+    {
+      x:gmgLarguraX,
+      y:gmgLarguraY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  ENTRADA
+  */
+
+  page.drawText(
+    `Comp. Entrada: ${entradaComprimento}`,
+    {
+      x:entradaComprimentoX,
+      y:entradaComprimentoY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `Larg. Entrada: ${entradaLargura}`,
+    {
+      x:entradaLarguraX,
+      y:entradaLarguraY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `Alt. Entrada: ${entradaAltura}`,
+    {
+      x:entradaAlturaX,
+      y:entradaAlturaY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  SAIDA
+  */
+
+  page.drawText(
+    `Comp. Saída: ${saidaComprimento}`,
+    {
+      x:saidaComprimentoX,
+      y:saidaComprimentoY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `Larg. Saída: ${saidaLargura}`,
+    {
+      x:saidaLarguraX,
+      y:saidaLarguraY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `Alt. Saída: ${saidaAltura}`,
+    {
+      x:saidaAlturaX,
+      y:saidaAlturaY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  SALA
+  */
+
+  page.drawText(
+    `Pé Direito: ${peDireito}`,
+    {
+      x:peDireitoX,
+      y:peDireitoY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `Largura Sala: ${larguraSala}`,
+    {
+      x:larguraSalaX,
+      y:larguraSalaY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `Comprimento Sala: ${comprimentoSala}`,
+    {
+      x:comprimentoSalaX,
+      y:comprimentoSalaY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `Largura Porta: ${larguraPorta}`,
+    {
+      x:larguraPortaX,
+      y:larguraPortaY,
+      size:8,
       font:font,
       color:black
     }
@@ -453,7 +901,7 @@ async function gerarPDF(){
 
   download(
     pdfBytes,
-    `GMG_${potencia}kVA.pdf`,
+    `LAYOUT_SALA_${potencia}KVA.pdf`,
     "application/pdf"
   );
 
