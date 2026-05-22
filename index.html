@@ -630,18 +630,6 @@ async function gerarPDFSala(){
       ).value
     );
 
-  if(
-    !potencia ||
-    !gmgComprimento ||
-    !gmgLargura
-  ){
-
-    alert("Preencha os campos obrigatórios.");
-
-    return;
-
-  }
-
   /*
   CALCULOS
   */
@@ -663,6 +651,42 @@ async function gerarPDFSala(){
 
   const tituloX = 60;
   const tituloY = 760;
+
+  const gmgComprimentoX = 100;
+  const gmgComprimentoY = 700;
+
+  const gmgLarguraX = 300;
+  const gmgLarguraY = 700;
+
+  const entradaComprimentoX = 100;
+  const entradaComprimentoY = 650;
+
+  const entradaLarguraX = 300;
+  const entradaLarguraY = 650;
+
+  const entradaAlturaX = 500;
+  const entradaAlturaY = 650;
+
+  const saidaComprimentoX = 100;
+  const saidaComprimentoY = 600;
+
+  const saidaLarguraX = 300;
+  const saidaLarguraY = 600;
+
+  const saidaAlturaX = 500;
+  const saidaAlturaY = 600;
+
+  const peDireitoX = 100;
+  const peDireitoY = 550;
+
+  const larguraSalaX = 300;
+  const larguraSalaY = 550;
+
+  const comprimentoSalaX = 500;
+  const comprimentoSalaY = 550;
+
+  const larguraPortaX = 700;
+  const larguraPortaY = 550;
 
   /*
   PDF
@@ -703,6 +727,158 @@ async function gerarPDFSala(){
       color:black
     }
   );
+
+  /*
+  GMG
+  */
+
+  page.drawText(
+    `Comprimento GMG: ${gmgComprimento}`,
+    {
+      x:gmgComprimentoX,
+      y:gmgComprimentoY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `Largura GMG: ${gmgLargura}`,
+    {
+      x:gmgLarguraX,
+      y:gmgLarguraY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  ENTRADA
+  */
+
+  page.drawText(
+    `Comp. Entrada: ${entradaComprimento}`,
+    {
+      x:entradaComprimentoX,
+      y:entradaComprimentoY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `Larg. Entrada: ${entradaLargura}`,
+    {
+      x:entradaLarguraX,
+      y:entradaLarguraY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `Alt. Entrada: ${entradaAltura}`,
+    {
+      x:entradaAlturaX,
+      y:entradaAlturaY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  SAIDA
+  */
+
+  page.drawText(
+    `Comp. Saída: ${saidaComprimento}`,
+    {
+      x:saidaComprimentoX,
+      y:saidaComprimentoY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `Larg. Saída: ${saidaLargura}`,
+    {
+      x:saidaLarguraX,
+      y:saidaLarguraY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `Alt. Saída: ${saidaAltura}`,
+    {
+      x:saidaAlturaX,
+      y:saidaAlturaY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  SALA
+  */
+
+  page.drawText(
+    `Pé Direito: ${peDireito}`,
+    {
+      x:peDireitoX,
+      y:peDireitoY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `Largura Sala: ${larguraSala}`,
+    {
+      x:larguraSalaX,
+      y:larguraSalaY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `Comprimento Sala: ${comprimentoSala}`,
+    {
+      x:comprimentoSalaX,
+      y:comprimentoSalaY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `Largura Porta: ${larguraPorta}`,
+    {
+      x:larguraPortaX,
+      y:larguraPortaY,
+      size:8,
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  SALVAR
+  */
 
   const pdfBytes =
     await pdfDoc.save();
