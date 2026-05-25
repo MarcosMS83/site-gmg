@@ -126,6 +126,8 @@ button:hover{
 
 <div class="container">
 
+<!-- LOGO -->
+
 <div class="logo-area">
 
 <img
@@ -137,6 +139,10 @@ button:hover{
 </div>
 
 <h1>MS GERADORES</h1>
+
+<!-- ========================================= -->
+<!-- ABAS -->
+<!-- ========================================= -->
 
 <div class="tabs">
 
@@ -172,26 +178,35 @@ Gerador automático de PDF dimensional
 <div class="grid">
 
 <div class="card">
+
 <label>Potência (kVA)</label>
 <input type="number" id="potencia">
+
 </div>
 
 <div class="card">
+
 <label>Largura (mm)</label>
 <input type="number" id="largura">
+
 </div>
 
 <div class="card">
+
 <label>Altura (mm)</label>
 <input type="number" id="altura">
+
 </div>
 
 <div class="card">
+
 <label>Comprimento (mm)</label>
 <input type="number" id="comprimento">
+
 </div>
 
 <div class="card">
+
 <label>Peso (kg) - Opcional</label>
 <input type="number" id="peso">
 
@@ -226,53 +241,73 @@ Layout sala GMG aberto com kit atenuador
 <div class="grid">
 
 <div class="card">
+
 <label>Potência (kVA)</label>
 <input type="number" id="salaPotencia">
+
 </div>
 
 <div class="card">
+
 <label>Comprimento GMG (mm)</label>
 <input type="number" id="gmgComprimento">
+
 </div>
 
 <div class="card">
+
 <label>Largura GMG (mm)</label>
 <input type="number" id="gmgLargura">
+
 </div>
 
 <div class="card">
+
 <label>Largura Atenuador Entrada (mm)</label>
 <input type="number" id="entradaLargura">
+
 </div>
 
 <div class="card">
+
 <label>Comprimento Atenuador Entrada (mm)</label>
 <input type="number" id="entradaComprimento">
+
 </div>
 
 <div class="card">
+
 <label>Altura Atenuador Entrada (mm)</label>
 <input type="number" id="entradaAltura">
+
 </div>
 
 <div class="card">
+
 <label>Largura Atenuador Saída (mm)</label>
 <input type="number" id="saidaLargura">
+
 </div>
 
 <div class="card">
+
 <label>Comprimento Atenuador Saída (mm)</label>
 <input type="number" id="saidaComprimento">
+
 </div>
 
 <div class="card">
+
 <label>Altura Atenuador Saída (mm)</label>
 <input type="number" id="saidaAltura">
+
 </div>
 
 <div class="card">
+
 <label>Largura Porta (mm)</label>
 <input type="number" id="larguraPorta">
+
 </div>
 
 </div>
@@ -310,7 +345,7 @@ function abrirAba(id, botao){
 }
 
 /* ========================================= */
-/* PDF CARENADO */
+/* PDF GMG CARENADO */
 /* ========================================= */
 
 async function gerarPDF(){
@@ -319,13 +354,19 @@ async function gerarPDF(){
     document.getElementById("potencia").value;
 
   const altura =
-    parseInt(document.getElementById("altura").value);
+    parseInt(
+      document.getElementById("altura").value
+    );
 
   const largura =
-    parseInt(document.getElementById("largura").value);
+    parseInt(
+      document.getElementById("largura").value
+    );
 
   const comprimento =
-    parseInt(document.getElementById("comprimento").value);
+    parseInt(
+      document.getElementById("comprimento").value
+    );
 
   const peso =
     document.getElementById("peso").value;
@@ -336,8 +377,11 @@ async function gerarPDF(){
     !largura ||
     !comprimento
   ){
+
     alert("Preencha os campos obrigatórios.");
+
     return;
+
   }
 
   const larguraBase =
@@ -345,6 +389,34 @@ async function gerarPDF(){
 
   const comprimentoBase =
     comprimento + 2000;
+
+  /*
+  COORDENADAS
+  */
+
+  const alturaX = 85;
+  const alturaY = 430;
+
+  const larguraX = 620;
+  const larguraY = 325;
+
+  const comprimentoX = 235;
+  const comprimentoY = 328;
+
+  const larguraBaseX = 85;
+  const larguraBaseY = 218;
+
+  const comprimentoBase1X = 235;
+  const comprimentoBase1Y = 297;
+
+  const comprimentoBase2X = 620;
+  const comprimentoBase2Y = 210;
+
+  const potenciaX = 710;
+  const potenciaY = 32;
+
+  const pesoX = 605;
+  const pesoY = 60;
 
   /*
   PDF
@@ -356,7 +428,9 @@ async function gerarPDF(){
     ).then(res => res.arrayBuffer());
 
   const pdfDoc =
-    await PDFLib.PDFDocument.load(existingPdfBytes);
+    await PDFLib.PDFDocument.load(
+      existingPdfBytes
+    );
 
   const page =
     pdfDoc.getPages()[0];
@@ -369,67 +443,81 @@ async function gerarPDF(){
       PDFLib.StandardFonts.Helvetica
     );
 
-  /*
-  TEXTOS
-  */
+  page.drawText(
+    String(altura),
+    {
+      x:alturaX,
+      y:alturaY,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
 
-  page.drawText(String(altura),{
-    x:85,
-    y:430,
-    size:7,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(largura),
+    {
+      x:larguraX,
+      y:larguraY,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
 
-  page.drawText(String(largura),{
-    x:620,
-    y:325,
-    size:7,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(comprimento),
+    {
+      x:comprimentoX,
+      y:comprimentoY,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
 
-  page.drawText(String(comprimento),{
-    x:235,
-    y:328,
-    size:7,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(larguraBase),
+    {
+      x:larguraBaseX,
+      y:larguraBaseY,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
 
-  page.drawText(String(larguraBase),{
-    x:85,
-    y:218,
-    size:7,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(comprimentoBase),
+    {
+      x:comprimentoBase1X,
+      y:comprimentoBase1Y,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
 
-  page.drawText(String(comprimentoBase),{
-    x:235,
-    y:297,
-    size:7,
-    font,
-    color:black
-  });
-
-  page.drawText(String(comprimentoBase),{
-    x:620,
-    y:210,
-    size:7,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(comprimentoBase),
+    {
+      x:comprimentoBase2X,
+      y:comprimentoBase2Y,
+      size:7,
+      font:font,
+      color:black
+    }
+  );
 
   if(peso){
 
     page.drawText(
       `Peso: ${peso} kg`,
       {
-        x:605,
-        y:60,
+        x:pesoX,
+        y:pesoY,
         size:7,
-        font,
+        font:font,
         color:black
       }
     );
@@ -439,10 +527,10 @@ async function gerarPDF(){
   page.drawText(
     `${potencia}kVA`,
     {
-      x:710,
-      y:32,
+      x:potenciaX,
+      y:potenciaY,
       size:7,
-      font,
+      font:font,
       color:black
     }
   );
@@ -465,34 +553,76 @@ async function gerarPDF(){
 async function gerarPDFSala(){
 
   const potencia =
-    document.getElementById("salaPotencia").value;
+    document.getElementById(
+      "salaPotencia"
+    ).value;
 
   const gmgComprimento =
-    parseInt(document.getElementById("gmgComprimento").value);
+    parseInt(
+      document.getElementById(
+        "gmgComprimento"
+      ).value
+    );
 
   const gmgLargura =
-    parseInt(document.getElementById("gmgLargura").value);
+    parseInt(
+      document.getElementById(
+        "gmgLargura"
+      ).value
+    );
 
   const entradaLargura =
-    parseInt(document.getElementById("entradaLargura").value);
+    parseInt(
+      document.getElementById(
+        "entradaLargura"
+      ).value
+    );
 
   const entradaComprimento =
-    parseInt(document.getElementById("entradaComprimento").value);
+    parseInt(
+      document.getElementById(
+        "entradaComprimento"
+      ).value
+    );
 
   const entradaAltura =
-    parseInt(document.getElementById("entradaAltura").value);
+    parseInt(
+      document.getElementById(
+        "entradaAltura"
+      ).value
+    );
 
   const saidaLargura =
-    parseInt(document.getElementById("saidaLargura").value);
+    parseInt(
+      document.getElementById(
+        "saidaLargura"
+      ).value
+    );
 
   const saidaComprimento =
-    parseInt(document.getElementById("saidaComprimento").value);
+    parseInt(
+      document.getElementById(
+        "saidaComprimento"
+      ).value
+    );
 
   const saidaAltura =
-    parseInt(document.getElementById("saidaAltura").value);
+    parseInt(
+      document.getElementById(
+        "saidaAltura"
+      ).value
+    );
 
   const larguraPorta =
-    parseInt(document.getElementById("larguraPorta").value);
+    parseInt(
+      document.getElementById(
+        "larguraPorta"
+      ).value
+    );
+
+  /*
+  FIXOS
+  */
 
   const peDireito = 3000;
 
@@ -506,6 +636,49 @@ async function gerarPDFSala(){
     gmgLargura + 2200;
 
   /*
+  COORDENADAS
+  */
+
+  const potenciaX = 600;
+  const potenciaY = 35;
+
+  const gmgLarguraX = 120;
+  const gmgLarguraY = 400;
+
+  const gmgComprimentoX = 250;
+  const gmgComprimentoY = 400;
+
+  const entradaLarguraX = 100;
+  const entradaLarguraY = 350;
+
+  const entradaComprimentoX = 200;
+  const entradaComprimentoY = 350;
+
+  const entradaAlturaX = 300;
+  const entradaAlturaY = 350;
+
+  const saidaLarguraX = 100;
+  const saidaLarguraY = 300;
+
+  const saidaComprimentoX = 200;
+  const saidaComprimentoY = 300;
+
+  const saidaAlturaX = 300;
+  const saidaAlturaY = 300;
+
+  const peDireitoX = 100;
+  const peDireitoY = 250;
+
+  const larguraSalaX = 200;
+  const larguraSalaY = 250;
+
+  const comprimentoSalaX = 300;
+  const comprimentoSalaY = 250;
+
+  const larguraPortaX = 400;
+  const larguraPortaY = 250;
+
+  /*
   PDF
   */
 
@@ -515,7 +688,9 @@ async function gerarPDFSala(){
     ).then(res => res.arrayBuffer());
 
   const pdfDoc =
-    await PDFLib.PDFDocument.load(existingPdfBytes);
+    await PDFLib.PDFDocument.load(
+      existingPdfBytes
+    );
 
   const page =
     pdfDoc.getPages()[0];
@@ -529,104 +704,184 @@ async function gerarPDFSala(){
     );
 
   /*
-  TEXTO HORIZONTAL
+  TITULO
   */
 
-  page.drawText(String(gmgLargura),{
-    x:120,
-    y:400,
-    size:8,
-    font,
-    color:black
-  });
+  page.drawText(
+    `OK - LAYOUT SALA - GMG ABERTO COM KIT ATENUAÇÃO ${potencia}KVA`,
+    {
+      x:potenciaX,
+      y:potenciaY,
+      size:8,
+      rotate: PDFLib.degrees(0),
+      font:font,
+      color:black
+    }
+  );
 
-  page.drawText(String(gmgComprimento),{
-    x:200,
-    y:400,
-    size:8,
-    font,
-    color:black
-  });
+  /*
+  GERADOR
+  */
 
-  page.drawText(String(entradaLargura),{
-    x:120,
-    y:330,
-    size:8,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(gmgLargura),
+    {
+      x:gmgLarguraX,
+      y:gmgLarguraY,
+      size:8,
+      rotate: PDFLib.degrees(0),
+      font:font,
+      color:black
+    }
+  );
 
-  page.drawText(String(entradaComprimento),{
-    x:200,
-    y:330,
-    size:8,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(gmgComprimento),
+    {
+      x:gmgComprimentoX,
+      y:gmgComprimentoY,
+      size:8,
+      rotate: PDFLib.degrees(0),
+      font:font,
+      color:black
+    }
+  );
 
-  page.drawText(String(entradaAltura),{
-    x:280,
-    y:330,
-    size:8,
-    font,
-    color:black
-  });
+  /*
+  ATENUADOR ENTRADA
+  */
 
-  page.drawText(String(saidaLargura),{
-    x:120,
-    y:260,
-    size:8,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(entradaLargura),
+    {
+      x:entradaLarguraX,
+      y:entradaLarguraY,
+      size:8,
+      rotate: PDFLib.degrees(0),
+      font:font,
+      color:black
+    }
+  );
 
-  page.drawText(String(saidaComprimento),{
-    x:200,
-    y:260,
-    size:8,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(entradaComprimento),
+    {
+      x:entradaComprimentoX,
+      y:entradaComprimentoY,
+      size:8,
+      rotate: PDFLib.degrees(0),
+      font:font,
+      color:black
+    }
+  );
 
-  page.drawText(String(saidaAltura),{
-    x:280,
-    y:260,
-    size:8,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(entradaAltura),
+    {
+      x:entradaAlturaX,
+      y:entradaAlturaY,
+      size:8,
+      rotate: PDFLib.degrees(0),
+      font:font,
+      color:black
+    }
+  );
 
-  page.drawText(String(peDireito),{
-    x:120,
-    y:180,
-    size:8,
-    font,
-    color:black
-  });
+  /*
+  ATENUADOR SAIDA
+  */
 
-  page.drawText(String(larguraSala),{
-    x:200,
-    y:180,
-    size:8,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(saidaLargura),
+    {
+      x:saidaLarguraX,
+      y:saidaLarguraY,
+      size:8,
+      rotate: PDFLib.degrees(0),
+      font:font,
+      color:black
+    }
+  );
 
-  page.drawText(String(comprimentoSala),{
-    x:280,
-    y:180,
-    size:8,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(saidaComprimento),
+    {
+      x:saidaComprimentoX,
+      y:saidaComprimentoY,
+      size:8,
+      rotate: PDFLib.degrees(0),
+      font:font,
+      color:black
+    }
+  );
 
-  page.drawText(String(larguraPorta),{
-    x:360,
-    y:180,
-    size:8,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(saidaAltura),
+    {
+      x:saidaAlturaX,
+      y:saidaAlturaY,
+      size:8,
+      rotate: PDFLib.degrees(0),
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  SALA
+  */
+
+  page.drawText(
+    String(peDireito),
+    {
+      x:peDireitoX,
+      y:peDireitoY,
+      size:8,
+      rotate: PDFLib.degrees(0),
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    String(larguraSala),
+    {
+      x:larguraSalaX,
+      y:larguraSalaY,
+      size:8,
+      rotate: PDFLib.degrees(0),
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    String(comprimentoSala),
+    {
+      x:comprimentoSalaX,
+      y:comprimentoSalaY,
+      size:8,
+      rotate: PDFLib.degrees(0),
+      font:font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    String(larguraPorta),
+    {
+      x:larguraPortaX,
+      y:larguraPortaY,
+      size:8,
+      rotate: PDFLib.degrees(0),
+      font:font,
+      color:black
+    }
+  );
+
+  /*
+  SALVAR
+  */
 
   const pdfBytes =
     await pdfDoc.save();
