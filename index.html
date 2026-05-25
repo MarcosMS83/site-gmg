@@ -315,7 +315,146 @@ function abrirAba(id, botao){
 
 async function gerarPDF(){
 
-  alert("Mantenha sua função original do carenado aqui.");
+  const potencia =
+    document.getElementById("potencia").value;
+
+  const altura =
+    parseInt(document.getElementById("altura").value);
+
+  const largura =
+    parseInt(document.getElementById("largura").value);
+
+  const comprimento =
+    parseInt(document.getElementById("comprimento").value);
+
+  const peso =
+    document.getElementById("peso").value;
+
+  if(
+    !potencia ||
+    !altura ||
+    !largura ||
+    !comprimento
+  ){
+    alert("Preencha os campos obrigatórios.");
+    return;
+  }
+
+  const larguraBase =
+    largura + 2000;
+
+  const comprimentoBase =
+    comprimento + 2000;
+
+  /*
+  PDF
+  */
+
+  const existingPdfBytes =
+    await fetch(
+      "Dimensional GMG 25 KVA.pdf"
+    ).then(res => res.arrayBuffer());
+
+  const pdfDoc =
+    await PDFLib.PDFDocument.load(existingPdfBytes);
+
+  const page =
+    pdfDoc.getPages()[0];
+
+  const black =
+    PDFLib.rgb(0,0,0);
+
+  const font =
+    await pdfDoc.embedFont(
+      PDFLib.StandardFonts.Helvetica
+    );
+
+  /*
+  TEXTOS
+  */
+
+  page.drawText(String(altura),{
+    x:85,
+    y:430,
+    size:7,
+    font,
+    color:black
+  });
+
+  page.drawText(String(largura),{
+    x:620,
+    y:325,
+    size:7,
+    font,
+    color:black
+  });
+
+  page.drawText(String(comprimento),{
+    x:235,
+    y:328,
+    size:7,
+    font,
+    color:black
+  });
+
+  page.drawText(String(larguraBase),{
+    x:85,
+    y:218,
+    size:7,
+    font,
+    color:black
+  });
+
+  page.drawText(String(comprimentoBase),{
+    x:235,
+    y:297,
+    size:7,
+    font,
+    color:black
+  });
+
+  page.drawText(String(comprimentoBase),{
+    x:620,
+    y:210,
+    size:7,
+    font,
+    color:black
+  });
+
+  if(peso){
+
+    page.drawText(
+      `Peso: ${peso} kg`,
+      {
+        x:605,
+        y:60,
+        size:7,
+        font,
+        color:black
+      }
+    );
+
+  }
+
+  page.drawText(
+    `${potencia}kVA`,
+    {
+      x:710,
+      y:32,
+      size:7,
+      font,
+      color:black
+    }
+  );
+
+  const pdfBytes =
+    await pdfDoc.save();
+
+  download(
+    pdfBytes,
+    `GMG_${potencia}kVA.pdf`,
+    "application/pdf"
+  );
 
 }
 
@@ -376,9 +515,7 @@ async function gerarPDFSala(){
     ).then(res => res.arrayBuffer());
 
   const pdfDoc =
-    await PDFLib.PDFDocument.load(
-      existingPdfBytes
-    );
+    await PDFLib.PDFDocument.load(existingPdfBytes);
 
   const page =
     pdfDoc.getPages()[0];
@@ -392,152 +529,104 @@ async function gerarPDFSala(){
     );
 
   /*
-  TEXTOS
+  TEXTO HORIZONTAL
   */
 
-  page.drawText(
-    String(gmgLargura),
-    {
-      x:120,
-      y:400,
-      size:8,
-      rotate: PDFLib.degrees(270),
-      font:font,
-      color:black
-    }
-  );
+  page.drawText(String(gmgLargura),{
+    x:120,
+    y:400,
+    size:8,
+    font,
+    color:black
+  });
 
-  page.drawText(
-    String(gmgComprimento),
-    {
-      x:200,
-      y:400,
-      size:8,
-      rotate: PDFLib.degrees(270),
-      font:font,
-      color:black
-    }
-  );
+  page.drawText(String(gmgComprimento),{
+    x:200,
+    y:400,
+    size:8,
+    font,
+    color:black
+  });
 
-  page.drawText(
-    String(entradaLargura),
-    {
-      x:120,
-      y:330,
-      size:8,
-      rotate: PDFLib.degrees(270),
-      font:font,
-      color:black
-    }
-  );
+  page.drawText(String(entradaLargura),{
+    x:120,
+    y:330,
+    size:8,
+    font,
+    color:black
+  });
 
-  page.drawText(
-    String(entradaComprimento),
-    {
-      x:200,
-      y:330,
-      size:8,
-      rotate: PDFLib.degrees(270),
-      font:font,
-      color:black
-    }
-  );
+  page.drawText(String(entradaComprimento),{
+    x:200,
+    y:330,
+    size:8,
+    font,
+    color:black
+  });
 
-  page.drawText(
-    String(entradaAltura),
-    {
-      x:280,
-      y:330,
-      size:8,
-      rotate: PDFLib.degrees(270),
-      font:font,
-      color:black
-    }
-  );
+  page.drawText(String(entradaAltura),{
+    x:280,
+    y:330,
+    size:8,
+    font,
+    color:black
+  });
 
-  page.drawText(
-    String(saidaLargura),
-    {
-      x:120,
-      y:260,
-      size:8,
-      rotate: PDFLib.degrees(270),
-      font:font,
-      color:black
-    }
-  );
+  page.drawText(String(saidaLargura),{
+    x:120,
+    y:260,
+    size:8,
+    font,
+    color:black
+  });
 
-  page.drawText(
-    String(saidaComprimento),
-    {
-      x:200,
-      y:260,
-      size:8,
-      rotate: PDFLib.degrees(270),
-      font:font,
-      color:black
-    }
-  );
+  page.drawText(String(saidaComprimento),{
+    x:200,
+    y:260,
+    size:8,
+    font,
+    color:black
+  });
 
-  page.drawText(
-    String(saidaAltura),
-    {
-      x:280,
-      y:260,
-      size:8,
-      rotate: PDFLib.degrees(270),
-      font:font,
-      color:black
-    }
-  );
+  page.drawText(String(saidaAltura),{
+    x:280,
+    y:260,
+    size:8,
+    font,
+    color:black
+  });
 
-  page.drawText(
-    String(peDireito),
-    {
-      x:120,
-      y:180,
-      size:8,
-      rotate: PDFLib.degrees(270),
-      font:font,
-      color:black
-    }
-  );
+  page.drawText(String(peDireito),{
+    x:120,
+    y:180,
+    size:8,
+    font,
+    color:black
+  });
 
-  page.drawText(
-    String(larguraSala),
-    {
-      x:200,
-      y:180,
-      size:8,
-      rotate: PDFLib.degrees(270),
-      font:font,
-      color:black
-    }
-  );
+  page.drawText(String(larguraSala),{
+    x:200,
+    y:180,
+    size:8,
+    font,
+    color:black
+  });
 
-  page.drawText(
-    String(comprimentoSala),
-    {
-      x:280,
-      y:180,
-      size:8,
-      rotate: PDFLib.degrees(270),
-      font:font,
-      color:black
-    }
-  );
+  page.drawText(String(comprimentoSala),{
+    x:280,
+    y:180,
+    size:8,
+    font,
+    color:black
+  });
 
-  page.drawText(
-    String(larguraPorta),
-    {
-      x:360,
-      y:180,
-      size:8,
-      rotate: PDFLib.degrees(270),
-      font:font,
-      color:black
-    }
-  );
+  page.drawText(String(larguraPorta),{
+    x:360,
+    y:180,
+    size:8,
+    font,
+    color:black
+  });
 
   const pdfBytes =
     await pdfDoc.save();
