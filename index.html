@@ -132,8 +132,6 @@ button:hover{
 
 <div class="container">
 
-<!-- LOGO -->
-
 <div class="logo-area">
 
 <img
@@ -247,73 +245,53 @@ Layout sala GMG aberto com kit atenuador
 <div class="grid">
 
 <div class="card">
-
 <label>Potência (kVA)</label>
 <input type="number" id="salaPotencia">
-
 </div>
 
 <div class="card">
-
 <label>Comprimento GMG (mm)</label>
 <input type="number" id="gmgComprimento">
-
 </div>
 
 <div class="card">
-
 <label>Largura GMG (mm)</label>
 <input type="number" id="gmgLargura">
-
 </div>
 
 <div class="card">
-
 <label>Largura Atenuador Entrada (mm)</label>
 <input type="number" id="entradaLargura">
-
 </div>
 
 <div class="card">
-
 <label>Comprimento Atenuador Entrada (mm)</label>
 <input type="number" id="entradaComprimento">
-
 </div>
 
 <div class="card">
-
 <label>Altura Atenuador Entrada (mm)</label>
 <input type="number" id="entradaAltura">
-
 </div>
 
 <div class="card">
-
 <label>Largura Atenuador Saída (mm)</label>
 <input type="number" id="saidaLargura">
-
 </div>
 
 <div class="card">
-
 <label>Comprimento Atenuador Saída (mm)</label>
 <input type="number" id="saidaComprimento">
-
 </div>
 
 <div class="card">
-
 <label>Altura Atenuador Saída (mm)</label>
 <input type="number" id="saidaAltura">
-
 </div>
 
 <div class="card">
-
 <label>Largura Porta (mm)</label>
 <input type="number" id="larguraPorta">
-
 </div>
 
 </div>
@@ -563,76 +541,34 @@ async function gerarPDF(){
 async function gerarPDFSala(){
 
   const potencia =
-    document.getElementById(
-      "salaPotencia"
-    ).value;
+    document.getElementById("salaPotencia").value;
 
   const gmgComprimento =
-    parseInt(
-      document.getElementById(
-        "gmgComprimento"
-      ).value
-    );
+    parseInt(document.getElementById("gmgComprimento").value);
 
   const gmgLargura =
-    parseInt(
-      document.getElementById(
-        "gmgLargura"
-      ).value
-    );
+    parseInt(document.getElementById("gmgLargura").value);
 
   const entradaLargura =
-    parseInt(
-      document.getElementById(
-        "entradaLargura"
-      ).value
-    );
+    parseInt(document.getElementById("entradaLargura").value);
 
   const entradaComprimento =
-    parseInt(
-      document.getElementById(
-        "entradaComprimento"
-      ).value
-    );
+    parseInt(document.getElementById("entradaComprimento").value);
 
   const entradaAltura =
-    parseInt(
-      document.getElementById(
-        "entradaAltura"
-      ).value
-    );
+    parseInt(document.getElementById("entradaAltura").value);
 
   const saidaLargura =
-    parseInt(
-      document.getElementById(
-        "saidaLargura"
-      ).value
-    );
+    parseInt(document.getElementById("saidaLargura").value);
 
   const saidaComprimento =
-    parseInt(
-      document.getElementById(
-        "saidaComprimento"
-      ).value
-    );
+    parseInt(document.getElementById("saidaComprimento").value);
 
   const saidaAltura =
-    parseInt(
-      document.getElementById(
-        "saidaAltura"
-      ).value
-    );
+    parseInt(document.getElementById("saidaAltura").value);
 
   const larguraPorta =
-    parseInt(
-      document.getElementById(
-        "larguraPorta"
-      ).value
-    );
-
-  /*
-  CALCULOS
-  */
+    parseInt(document.getElementById("larguraPorta").value);
 
   const peDireito = 3000;
 
@@ -650,43 +586,43 @@ async function gerarPDFSala(){
   */
 
   const tituloX = 60;
-  const tituloY = 760;
+  const tituloY = 520;
 
-  const gmgComprimentoX = 100;
-  const gmgComprimentoY = 700;
+  const gmgComprimentoX = 60;
+  const gmgComprimentoY = 470;
 
-  const gmgLarguraX = 300;
-  const gmgLarguraY = 700;
+  const gmgLarguraX = 260;
+  const gmgLarguraY = 470;
 
-  const entradaComprimentoX = 100;
-  const entradaComprimentoY = 650;
+  const entradaComprimentoX = 60;
+  const entradaComprimentoY = 430;
 
-  const entradaLarguraX = 300;
-  const entradaLarguraY = 650;
+  const entradaLarguraX = 260;
+  const entradaLarguraY = 430;
 
-  const entradaAlturaX = 500;
-  const entradaAlturaY = 650;
+  const entradaAlturaX = 460;
+  const entradaAlturaY = 430;
 
-  const saidaComprimentoX = 100;
-  const saidaComprimentoY = 600;
+  const saidaComprimentoX = 60;
+  const saidaComprimentoY = 390;
 
-  const saidaLarguraX = 300;
-  const saidaLarguraY = 600;
+  const saidaLarguraX = 260;
+  const saidaLarguraY = 390;
 
-  const saidaAlturaX = 500;
-  const saidaAlturaY = 600;
+  const saidaAlturaX = 460;
+  const saidaAlturaY = 390;
 
-  const peDireitoX = 100;
-  const peDireitoY = 550;
+  const peDireitoX = 60;
+  const peDireitoY = 340;
 
-  const larguraSalaX = 300;
-  const larguraSalaY = 550;
+  const larguraSalaX = 260;
+  const larguraSalaY = 340;
 
-  const comprimentoSalaX = 500;
-  const comprimentoSalaY = 550;
+  const comprimentoSalaX = 460;
+  const comprimentoSalaY = 340;
 
-  const larguraPortaX = 700;
-  const larguraPortaY = 550;
+  const larguraPortaX = 60;
+  const larguraPortaY = 300;
 
   /*
   PDF
@@ -714,7 +650,7 @@ async function gerarPDFSala(){
     );
 
   /*
-  TITULO
+  TEXTOS HORIZONTAIS
   */
 
   page.drawText(
@@ -723,14 +659,11 @@ async function gerarPDFSala(){
       x:tituloX,
       y:tituloY,
       size:10,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
   );
-
-  /*
-  GMG
-  */
 
   page.drawText(
     `Comprimento GMG: ${gmgComprimento}`,
@@ -738,6 +671,7 @@ async function gerarPDFSala(){
       x:gmgComprimentoX,
       y:gmgComprimentoY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -749,14 +683,11 @@ async function gerarPDFSala(){
       x:gmgLarguraX,
       y:gmgLarguraY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
   );
-
-  /*
-  ENTRADA
-  */
 
   page.drawText(
     `Comp. Entrada: ${entradaComprimento}`,
@@ -764,6 +695,7 @@ async function gerarPDFSala(){
       x:entradaComprimentoX,
       y:entradaComprimentoY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -775,6 +707,7 @@ async function gerarPDFSala(){
       x:entradaLarguraX,
       y:entradaLarguraY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -786,14 +719,11 @@ async function gerarPDFSala(){
       x:entradaAlturaX,
       y:entradaAlturaY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
   );
-
-  /*
-  SAIDA
-  */
 
   page.drawText(
     `Comp. Saída: ${saidaComprimento}`,
@@ -801,6 +731,7 @@ async function gerarPDFSala(){
       x:saidaComprimentoX,
       y:saidaComprimentoY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -812,6 +743,7 @@ async function gerarPDFSala(){
       x:saidaLarguraX,
       y:saidaLarguraY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -823,14 +755,11 @@ async function gerarPDFSala(){
       x:saidaAlturaX,
       y:saidaAlturaY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
   );
-
-  /*
-  SALA
-  */
 
   page.drawText(
     `Pé Direito: ${peDireito}`,
@@ -838,6 +767,7 @@ async function gerarPDFSala(){
       x:peDireitoX,
       y:peDireitoY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -849,6 +779,7 @@ async function gerarPDFSala(){
       x:larguraSalaX,
       y:larguraSalaY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -860,6 +791,7 @@ async function gerarPDFSala(){
       x:comprimentoSalaX,
       y:comprimentoSalaY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -871,14 +803,11 @@ async function gerarPDFSala(){
       x:larguraPortaX,
       y:larguraPortaY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
   );
-
-  /*
-  SALVAR
-  */
 
   const pdfBytes =
     await pdfDoc.save();
