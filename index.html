@@ -684,7 +684,7 @@ async function gerarPDFSala(){
 
   const existingPdfBytes =
     await fetch(
-      "Layout Sala.pdf"
+      "OK - LAYOUT SALA - GMG ABERTO COM KIT ATENUAÇÃO.pdf"
     ).then(res => res.arrayBuffer());
 
   const pdfDoc =
@@ -713,6 +713,7 @@ async function gerarPDFSala(){
       x:potenciaX,
       y:potenciaY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -728,6 +729,7 @@ async function gerarPDFSala(){
       x:gmgLarguraX,
       y:gmgLarguraY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -739,6 +741,7 @@ async function gerarPDFSala(){
       x:gmgComprimentoX,
       y:gmgComprimentoY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -754,6 +757,7 @@ async function gerarPDFSala(){
       x:entradaLarguraX,
       y:entradaLarguraY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -765,6 +769,7 @@ async function gerarPDFSala(){
       x:entradaComprimentoX,
       y:entradaComprimentoY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -776,6 +781,7 @@ async function gerarPDFSala(){
       x:entradaAlturaX,
       y:entradaAlturaY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -791,6 +797,7 @@ async function gerarPDFSala(){
       x:saidaLarguraX,
       y:saidaLarguraY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -802,6 +809,7 @@ async function gerarPDFSala(){
       x:saidaComprimentoX,
       y:saidaComprimentoY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -813,6 +821,7 @@ async function gerarPDFSala(){
       x:saidaAlturaX,
       y:saidaAlturaY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -828,6 +837,7 @@ async function gerarPDFSala(){
       x:peDireitoX,
       y:peDireitoY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -839,6 +849,7 @@ async function gerarPDFSala(){
       x:larguraSalaX,
       y:larguraSalaY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -850,6 +861,7 @@ async function gerarPDFSala(){
       x:comprimentoSalaX,
       y:comprimentoSalaY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
@@ -861,6 +873,7 @@ async function gerarPDFSala(){
       x:larguraPortaX,
       y:larguraPortaY,
       size:8,
+      rotate: PDFLib.degrees(0),
       font:font,
       color:black
     }
