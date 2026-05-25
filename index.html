@@ -1,49 +1,28 @@
-<!-- ========================================= -->
-<!-- ABAS -->
-<!-- ========================================= -->
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-<div class="tabs">
+<head>
 
-<button
-  class="tab-button active"
-  onclick="abrirAba('aba-gmg', this)"
->
-GMG CARENADO
-</button>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<button
-  class="tab-button"
-  onclick="abrirAba('aba-sala', this)"
->
-SALA GMG ABERTO
-</button>
+<title>MS Geradores - PDF</title>
 
-</div>
+<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+<script src="https://unpkg.com/downloadjs@1.4.7"></script>
 
-<!-- ========================================= -->
-<!-- ABA GMG -->
-<!-- ========================================= -->
+<style>
 
-<div
-  id="aba-gmg"
-  class="tab-content"
-  style="display:block;"
->
+body{
+  font-family:Arial;
+  background:#f4f4f4;
+  padding:40px;
+}
 
-SEU CONTEUDO GMG AQUI
-
-</div>
-
-<!-- ========================================= -->
-<!-- ABA SALA -->
-<!-- ========================================= -->
-
-<div
-  id="aba-sala"
-  class="tab-content"
-  style="display:none;"
->
-
-SEU CONTEUDO SALA AQUI
-
-</div>
+.container{
+  max-width:1100px;
+  margin:auto;
+  background:white;
+  padding:40px;
+  border-radius:20px;
+  box
