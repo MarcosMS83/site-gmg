@@ -528,7 +528,7 @@ async function gerarPDFSala(){
   ROTAÇÃO 90°
   */
 
-  page.drawText(String(gmgLargura),{
+  page.drawText(String(gmgLargura),
     x:400,
     y:600,
     size:8,
@@ -537,7 +537,7 @@ async function gerarPDFSala(){
     color:black
   });
 
-  page.drawText(String(gmgComprimento),
+  page.drawText(String(gmgComprimento),{
     x:460,
     y:830,
     size:8,
