@@ -562,18 +562,18 @@ async function gerarPDFSala(){
 
   page.drawText(String(gmgLargura),{
     x:410,
-    y:948,
+    y:935,
     size:7,
-    rotate: PDFLib.degrees(90),
+    rotate: PDFLib.degrees(180),
     font,
     color:black
   });
 
   page.drawText(String(gmgComprimento),{
-    x:455,
+    x:445,
     y:835,
     size:7,
-    rotate: PDFLib.degrees(0),
+    rotate: PDFLib.degrees(180),
     font,
     color:black
   });
@@ -606,8 +606,8 @@ async function gerarPDFSala(){
   });
 
   page.drawText(String(saidaLargura),{
-    x:409,
-    y:698,
+    x:413,
+    y:710,
     size:7,
     rotate: PDFLib.degrees(180),
     font,
@@ -642,8 +642,8 @@ async function gerarPDFSala(){
   });
 
   page.drawText(String(larguraSala),{
-    x:200,
-    y:180,
+    x:380,
+    y:710,
     size:8,
     rotate: PDFLib.degrees(90),
     font,
@@ -651,8 +651,8 @@ async function gerarPDFSala(){
   });
 
   page.drawText(String(comprimentoSala),{
-    x:280,
-    y:180,
+    x:500,
+    y:900,
     size:8,
     rotate: PDFLib.degrees(90),
     font,
