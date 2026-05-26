@@ -546,7 +546,8 @@ async function gerarPDFSala(){
     color:black
   });
 
-  p400,
+  page.drawText(String(gmgLargura),{
+    x:405,
     y:978,
     size:8,
     rotate: PDFLib.degrees(270),
