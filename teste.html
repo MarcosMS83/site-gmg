@@ -206,6 +206,20 @@ Se deixar vazio o peso não será inserido no PDF
 
 </div>
 
+<div class="card">
+<label>Número do Projeto - Opcional</label>
+
+<input
+  type="text"
+  id="numeroProjeto"
+>
+
+<small>
+Se deixar vazio o número do projeto não será inserido no PDF
+</small>
+
+</div>
+
 </div>
 
 <button onclick="gerarPDF()">
@@ -338,6 +352,9 @@ async function gerarPDF(){
   const peso =
     document.getElementById("peso").value;
 
+  const numeroProjeto =
+    document.getElementById("numeroProjeto").value;
+
   if(
     !potencia ||
     !altura ||
@@ -428,6 +445,21 @@ async function gerarPDF(){
       {
         x:605,
         y:60,
+        size:7,
+        font,
+        color:black
+      }
+    );
+
+  }
+
+  if(numeroProjeto){
+
+    page.drawText(
+      `Projeto: ${numeroProjeto}`,
+      {
+        x:605,
+        y:48,
         size:7,
         font,
         color:black
