@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MS Geradores - PDF</title>
+
+<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+<script src="https://unpkg.com/downloadjs@1.4.7"></script>
+
+<style>
+
+body{
+  font-family:Arial;
+  background:#f4f4f4;
+  padding:40px;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  background:white;
+  padding:40px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+.logo-area{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.logo-ms{
+  max-width:91px;
+}
+
+h1{
+  margin-bottom:15px;
+  color:#0f4ea8;
+  text-align:center;
+}
+
+.subtitle{
+  margin-bottom:30px;
+  color:#666;
+  text-align:center;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.card{
+  border:1px solid #ddd;
+  padding:20px;
+  border-radius:12px;
+}
+
+label{
+  display:block;
+  margin-bottom:8px;
+  font-weight:bold;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  border:1px solid #ccc;
+  border-radius:10px;
+  font-size:16px;
+}
+
+small{
+  color:#777;
+  display:block;
+  margin-top:6px;
+}
+
+button{
+  width:100%;
+  padding:18px;
+  border:none;
+  background:#0f4ea8;
+  color:white;
+  font-size:18px;
+  border-radius:12px;
+  cursor:pointer;
+  margin-top:30px;
+  font-weight:bold;
+}
+
+button:hover{
+  background:#0b3d84;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo-area">
+
+<img
+  src="logo.jpeg"
+  alt="MS Geradores"
+  class="logo-ms"
+>
+
+</div>
+
+<h1>MS GERADORES</h1>
+
+<div class="subtitle">
+LAYOUT DE SALA PARA GMG ABERTO COM KIT DE ATENUAÇÃO
+</div>
+
+<div class="grid">
+
+<div class="card">
+<label>Potência (kVA)</label>
+<input type="number" id="salaPotencia">
+</div>
+
+<div class="card">
+<label>Comprimento GMG (mm)</label>
+<input type="number" id="gmgComprimento">
+</div>
+
+<div class="card">
+<label>Largura GMG (mm)</label>
+<input type="number" id="gmgLargura">
+</div>
+
+<div></div>
+
+<!-- ========================================= -->
+<!-- ATENUADOR ENTRADA -->
+<!-- ========================================= -->
+
+<div
+  style="
+    grid-column:1 / -1;
+    font-weight:bold;
+    color:#0f4ea8;
+    margin-top:10px;
+    margin-bottom:-5px;
+    font-size:18px;
+  "
+>
+ATENUADOR DE ENTRADA
+</div>
+
+<div class="card">
+<label>Largura (mm)</label>
+<input type="number" id="entradaLargura">
+</div>
+
+<div class="card">
+<label>Comprimento (mm)</label>
+<input type="number" id="entradaComprimento">
+</div>
+
+<div class="card">
+<label>Altura (mm)</label>
+<input type="number" id="entradaAltura">
+</div>
+
+<div></div>
+
+<!-- ========================================= -->
+<!-- ATENUADOR SAÍDA -->
+<!-- ========================================= -->
+
+<div
+  style="
+    grid-column:1 / -1;
+    font-weight:bold;
+    color:#0f4ea8;
+    margin-top:10px;
+    margin-bottom:-5px;
+    font-size:18px;
+  "
+>
+ATENUADOR DE SAÍDA
+</div>
+
+<div class="card">
+<label>Largura (mm)</label>
+<input type="number" id="saidaLargura">
+</div>
+
+<div class="card">
+<label>Comprimento (mm)</label>
+<input type="number" id="saidaComprimento">
+</div>
+
+<div class="card">
+<label>Altura (mm)</label>
+<input type="number" id="saidaAltura">
+</div>
+
+<div class="card">
+<label>Largura Porta (mm)</label>
+<input type="number" id="larguraPorta">
+</div>
+
+<!-- ========================================= -->
+<!-- OPCIONAIS -->
+<!-- ========================================= -->
+
+<div
+  style="
+    grid-column:1 / -1;
+    font-weight:bold;
+    color:#0f4ea8;
+    margin-top:10px;
+    margin-bottom:-5px;
+    font-size:18px;
+  "
+>
+OPCIONAIS
+</div>
+
+<div class="card">
+<label>Peso (kg)</label>
+<input type="number" id="salaPeso">
+
+<small>
+Se deixar vazio o peso não será inserido no PDF
+</small>
+
+</div>
+
+<div class="card">
+<label>Número do Projeto</label>
+
+<input
+  type="text"
+  id="salaProjeto"
+>
+
+<small>
+Se deixar vazio o número do projeto não será inserido no PDF
+</small>
+
+</div>
+
+</div>
+
+<button onclick="gerarPDFSala()">
+GERAR PDF SALA
+</button>
+
+</div>
+
+<script>
+
+/* ========================================= */
+/* PDF SALA */
+/* ========================================= */
+
+async function gerarPDFSala(){
+
+  const potencia =
+    document.getElementById("salaPotencia").value;
+
+  const gmgComprimento =
+    parseInt(document.getElementById("gmgComprimento").value);
+
+  const gmgLargura =
+    parseInt(document.getElementById("gmgLargura").value);
+
+  const entradaLargura =
+    parseInt(document.getElementById("entradaLargura").value);
+
+  const entradaComprimento =
+    parseInt(document.getElementById("entradaComprimento").value);
+
+  const entradaAltura =
+    parseInt(document.getElementById("entradaAltura").value);
+
+  const saidaLargura =
+    parseInt(document.getElementById("saidaLargura").value);
+
+  const saidaComprimento =
+    parseInt(document.getElementById("saidaComprimento").value);
+
+  const saidaAltura =
+    parseInt(document.getElementById("saidaAltura").value);
+
+  const larguraPorta =
+    parseInt(document.getElementById("larguraPorta").value);
+
+  const peso =
+    document.getElementById("salaPeso").value;
+
+  const numeroProjeto =
+    document.getElementById("salaProjeto").value;
+
+  const peDireito = 3000;
+
+  const comprimentoSala =
+    entradaComprimento +
+    saidaComprimento +
+    gmgComprimento +
+    800;
+
+  const larguraSala =
+    gmgLargura + 2400;
+
+  const existingPdfBytes =
+    await fetch(
+      "OK - LAYOUT SALA - GMG ABERTO COM KIT ATENUAÇÃO.pdf"
+    ).then(res => res.arrayBuffer());
+
+  const pdfDoc =
+    await PDFLib.PDFDocument.load(existingPdfBytes);
+
+  const page =
+    pdfDoc.getPages()[0];
+
+  const black =
+    PDFLib.rgb(0,0,0);
+
+  const font =
+    await pdfDoc.embedFont(
+      PDFLib.StandardFonts.Helvetica
+    );
+
+  page.drawText(String(gmgLargura),{
+    x:413,
+    y:954,
+    size:7,
+    rotate: PDFLib.degrees(180),
+    font,
+    color:black
+  });
+
+  page.drawText(String(gmgComprimento),{
+    x:460,
+    y:835,
+    size:7,
+    rotate: PDFLib.degrees(90),
+    font,
+    color:black
+  });
+
+  page.drawText(String(entradaLargura),{
+    x:413,
+    y:984,
+    size:7,
+    rotate: PDFLib.degrees(180),
+    font,
+    color:black
+  });
+
+  page.drawText(String(entradaComprimento),{
+    x:420,
+    y:485,
+    size:7,
+    rotate: PDFLib.degrees(90),
+    font,
+    color:black
+  });
+
+  page.drawText(String(entradaAltura),{
+    x:465,
+    y:524,
+    size:7,
+    rotate: PDFLib.degrees(180),
+    font,
+    color:black
+  });
+
+  page.drawText(String(saidaLargura),{
+    x:413,
+    y:691,
+    size:7,
+    rotate: PDFLib.degrees(180),
+    font,
+    color:black
+  });
+
+  page.drawText(String(saidaComprimento),{
+    x:422,
+    y:180,
+    size:7,
+    rotate: PDFLib.degrees(90),
+    font,
+    color:black
+  });
+
+  page.drawText(String(saidaAltura),{
+    x:465,
+    y:145,
+    size:7,
+    rotate: PDFLib.degrees(180),
+    font,
+    color:black
+  });
+
+  page.drawText(String(peDireito),{
+    x:370,
+    y:435,
+    size:7,
+    rotate: PDFLib.degrees(180),
+    font,
+    color:black
+  });
+
+  page.drawText(String(larguraSala),{
+    x:400,
+    y:669,
+    size:7,
+    rotate: PDFLib.degrees(180),
+    font,
+    color:black
+  });
+
+  page.drawText(String(comprimentoSala),{
+    x:547,
+    y:867,
+    size:7,
+    rotate: PDFLib.degrees(90),
+    font,
+    color:black
+  });
+
+  page.drawText(String(larguraPorta),{
+    x:480,
+    y:1060,
+    size:7,
+    rotate: PDFLib.degrees(90),
+    font,
+    color:black
+  });
+
+  if(peso){
+
+    page.drawText(
+      `Peso: ${peso} kg`,
+      {
+        x:790,
+        y:800,
+        size:7,
+        rotate: PDFLib.degrees(90),
+        font,
+        color:black
+      }
+    );
+
+  }
+
+  if(numeroProjeto){
+
+    page.drawText(
+      `Projeto: ${numeroProjeto}`,
+      {
+        x:800,
+        y:800,
+        size:7,
+        rotate: PDFLib.degrees(90),
+        font,
+        color:black
+      }
+    );
+
+  }
+
+  const pdfBytes =
+    await pdfDoc.save();
+
+  download(
+    pdfBytes,
+    `LAYOUT_SALA_${potencia}KVA.pdf`,
+    "application/pdf"
+  );
+
+}
+
+</script>
+
+</body>
+
+</html>
