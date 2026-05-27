@@ -267,7 +267,7 @@ async function gerarPDFSala(){
     String(gmgLargura),
     {
       x:620,
-      y:260,
+      y:360,
       size:7,
       rotate: PDFLib.degrees(90),
       font,
@@ -281,9 +281,9 @@ async function gerarPDFSala(){
     String(gmgComprimento),
     {
       x:520,
-      y:180,
-      size:10,
-      rotate: PDFLib.degrees(90),
+      y:280,
+      size:7,
+      rotate: PDFLib.degrees(180),
       font,
       color:black
     }
@@ -294,8 +294,8 @@ async function gerarPDFSala(){
   page.drawText(
     String(peDireito),
     {
-      x:300,
-      y:290,
+      x:310,
+      y:350,
       size:7,
       rotate: PDFLib.degrees(90),
       font,
@@ -335,7 +335,7 @@ async function gerarPDFSala(){
   page.drawText(
     `${potencia}kVA`,
     {
-      x:650,
+      x:655,
       y:43,
       size:7,
       font,
