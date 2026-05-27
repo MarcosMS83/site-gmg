@@ -383,8 +383,9 @@ async function gerarPDFSala(){
     page.drawText(
       `Projeto: ${numeroProjeto}`,
       {
-        x:1110,
+        x:1250,
         y:80,
+        rotate: PDFLib.degrees(90),
         size:9,
         font,
         color:black
