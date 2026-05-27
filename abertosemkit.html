@@ -266,8 +266,8 @@ async function gerarPDFSala(){
   page.drawText(
     String(gmgLargura),
     {
-      x:120,
-      y:315,
+      x:1224,
+      y:550,
       size:8,
       rotate: PDFLib.degrees(90),
       font,
@@ -280,8 +280,8 @@ async function gerarPDFSala(){
   page.drawText(
     String(gmgComprimento),
     {
-      x:140,
-      y:315,
+      x:1100,
+      y:650,
       size:8,
       font,
       color:black
@@ -293,8 +293,8 @@ async function gerarPDFSala(){
   page.drawText(
     String(peDireito),
     {
-      x:160,
-      y:315,
+      x:580,
+      y:580,
       size:8,
       rotate: PDFLib.degrees(90),
       font,
@@ -307,8 +307,8 @@ async function gerarPDFSala(){
   page.drawText(
     String(larguraSala),
     {
-      x:180,
-      y:315,
+      x:950,
+      y:520,
       size:10,
       font,
       color:black
@@ -320,8 +320,8 @@ async function gerarPDFSala(){
   page.drawText(
     String(comprimentoSala),
     {
-      x:200,
-      y:315,
+      x:1280,
+      y:800,
       size:10,
       rotate: PDFLib.degrees(90),
       font,
@@ -334,8 +334,8 @@ async function gerarPDFSala(){
   page.drawText(
     `${potencia}kVA`,
     {
-      x:160,
-      y:315,
+      x:1320,
+      y:1100,
       size:7,
       font,
       color:black
@@ -351,8 +351,8 @@ async function gerarPDFSala(){
     page.drawText(
       `Peso: ${peso} kg`,
       {
-        x:600,
-        y:100,
+        x:1100,
+        y:1120,
         rotate: PDFLib.degrees(180),
         size:7,
         font,
@@ -367,8 +367,8 @@ async function gerarPDFSala(){
     page.drawText(
       `Projeto: ${numeroProjeto}`,
       {
-        x:240,
-        y:315,
+        x:1100,
+        y:1080,
         size:5,
         font,
         color:black
