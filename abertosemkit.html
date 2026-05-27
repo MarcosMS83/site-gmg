@@ -159,24 +159,26 @@ OPCIONAIS
 </div>
 
 <div class="card">
-
 <label>Peso (kg)</label>
+<input type="number" id="salaPeso">
 
-<input
-  type="number"
-  id="salaPeso"
->
+<small>
+Se deixar vazio o peso não será inserido no PDF
+</small>
 
 </div>
 
 <div class="card">
-
 <label>Número do Projeto</label>
 
 <input
   type="text"
   id="salaProjeto"
 >
+
+<small>
+Se deixar vazio o número do projeto não será inserido no PDF
+</small>
 
 </div>
 
@@ -200,14 +202,10 @@ async function gerarPDFSala(){
     document.getElementById("salaPotencia").value;
 
   const gmgComprimento =
-    parseInt(
-      document.getElementById("gmgComprimento").value
-    );
+    parseInt(document.getElementById("gmgComprimento").value);
 
   const gmgLargura =
-    parseInt(
-      document.getElementById("gmgLargura").value
-    );
+    parseInt(document.getElementById("gmgLargura").value);
 
   const peso =
     document.getElementById("salaPeso").value;
@@ -223,10 +221,6 @@ async function gerarPDFSala(){
     alert("Preencha os campos obrigatórios.");
     return;
   }
-
-  /* ========================================= */
-  /* CÁLCULOS */
-  /* ========================================= */
 
   const peDireito = 3000;
 
@@ -260,11 +254,11 @@ async function gerarPDFSala(){
 
   const font =
     await pdfDoc.embedFont(
-      PDFLib.StandardFonts.HelveticaBold
+      PDFLib.StandardFonts.Helvetica
     );
 
   /* ========================================= */
-  /* VISTA SUPERIOR */
+  /* MEDIDAS AJUSTADAS */
   /* ========================================= */
 
   /* LARGURA GMG */
@@ -274,7 +268,8 @@ async function gerarPDFSala(){
     {
       x:310,
       y:205,
-      size:7,
+      size:8,
+      rotate: PDFLib.degrees(90),
       font,
       color:black
     }
@@ -287,43 +282,34 @@ async function gerarPDFSala(){
     {
       x:250,
       y:275,
-      size:7,
-      rotate: PDFLib.degrees(90),
+      size:8,
       font,
       color:black
     }
   );
-
-  /* ========================================= */
-  /* VISTA LATERAL */
-  /* ========================================= */
 
   /* PÉ DIREITO */
 
   page.drawText(
     String(peDireito),
     {
-      x:380,
-      y:565,
-      size:7,
-      rotate: PDFLib.degrees(0),
+      x:160,
+      y:315,
+      size:8,
+      rotate: PDFLib.degrees(90),
       font,
       color:black
     }
   );
-
-  /* ========================================= */
-  /* MEDIDAS DA SALA */
-  /* ========================================= */
 
   /* LARGURA SALA */
 
   page.drawText(
     String(larguraSala),
     {
-      x:650,
-      y:520,
-      size:11,
+      x:180,
+      y:315,
+      size:10,
       font,
       color:black
     }
@@ -334,42 +320,41 @@ async function gerarPDFSala(){
   page.drawText(
     String(comprimentoSala),
     {
-      x:880,
-      y:250,
-      size:11,
+      x:200,
+      y:315,
+      size:10,
       rotate: PDFLib.degrees(90),
       font,
       color:black
     }
   );
 
-  /* ========================================= */
-  /* CAMPO CONTEÚDO */
-  /* ========================================= */
-
   /* POTÊNCIA */
 
   page.drawText(
-    `${potencia} kVA`,
+    `${potencia}kVA`,
     {
-      x:1110,
-      y:120,
-      size:10,
+      x:160,
+      y:315,
+      size:7,
       font,
       color:black
     }
   );
 
-  /* PESO */
+  /* ========================================= */
+  /* OPCIONAIS */
+  /* ========================================= */
 
   if(peso){
 
     page.drawText(
       `Peso: ${peso} kg`,
       {
-        x:1110,
+        x:600,
         y:100,
-        size:9,
+        rotate: PDFLib.degrees(180),
+        size:7,
         font,
         color:black
       }
@@ -377,16 +362,14 @@ async function gerarPDFSala(){
 
   }
 
-  /* PROJETO */
-
   if(numeroProjeto){
 
     page.drawText(
       `Projeto: ${numeroProjeto}`,
       {
-        x:1110,
-        y:80,
-        size:9,
+        x:240,
+        y:315,
+        size:5,
         font,
         color:black
       }
