@@ -261,61 +261,82 @@ async function gerarPDFSala(){
   /* MEDIDAS */
   /* ========================================= */
 
+  /* LARGURA GMG */
+
   page.drawText(
     String(gmgLargura),
     {
-      x:350,
-      y:800,
-      size:7,
-      rotate: PDFLib.degrees(180),
+      x:760,
+      y:310,
+      size:10,
       font,
       color:black
     }
   );
+
+  /* COMPRIMENTO GMG */
 
   page.drawText(
     String(gmgComprimento),
     {
-      x:650,
-      y:600,
-      size:7,
+      x:720,
+      y:220,
+      size:10,
       rotate: PDFLib.degrees(90),
       font,
       color:black
     }
   );
+
+  /* PÉ DIREITO */
 
   page.drawText(
     String(peDireito),
     {
-      x:700,
-      y:600,
-      size:7,
-      rotate: PDFLib.degrees(180),
+      x:430,
+      y:430,
+      size:10,
+      rotate: PDFLib.degrees(90),
       font,
       color:black
     }
   );
+
+  /* LARGURA SALA */
 
   page.drawText(
     String(larguraSala),
     {
-      x:120,
-      y:300,
-      size:14,
-      rotate: PDFLib.degrees(180),
+      x:760,
+      y:120,
+      size:10,
       font,
       color:black
     }
   );
 
+  /* COMPRIMENTO SALA */
+
   page.drawText(
     String(comprimentoSala),
     {
-      x:547,
-      y:867,
-      size:7,
+      x:950,
+      y:240,
+      size:10,
       rotate: PDFLib.degrees(90),
+      font,
+      color:black
+    }
+  );
+
+  /* POTÊNCIA */
+
+  page.drawText(
+    `${potencia}kVA`,
+    {
+      x:760,
+      y:55,
+      size:11,
       font,
       color:black
     }
@@ -330,10 +351,9 @@ async function gerarPDFSala(){
     page.drawText(
       `Peso: ${peso} kg`,
       {
-        x:790,
-        y:800,
-        size:7,
-        rotate: PDFLib.degrees(90),
+        x:670,
+        y:85,
+        size:9,
         font,
         color:black
       }
@@ -346,31 +366,15 @@ async function gerarPDFSala(){
     page.drawText(
       `Projeto: ${numeroProjeto}`,
       {
-        x:800,
-        y:800,
-        size:7,
-        rotate: PDFLib.degrees(90),
+        x:670,
+        y:70,
+        size:9,
         font,
         color:black
       }
     );
 
   }
-
-  /* ========================================= */
-  /* POTÊNCIA */
-  /* ========================================= */
-
-  page.drawText(
-    `${potencia}kVA`,
-    {
-      x:710,
-      y:800,
-      size:14,
-      font,
-      color:black
-    }
-  );
 
   /* ========================================= */
   /* SALVA PDF */
