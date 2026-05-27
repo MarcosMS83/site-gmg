@@ -207,11 +207,6 @@ Gerador automático de PDF dimensional
 <div class="card">
 <label>Peso (kg)</label>
 <input type="number" id="peso">
-
-<small>
-Se deixar vazio o peso não será inserido no PDF
-</small>
-
 </div>
 
 <div class="card">
@@ -221,10 +216,6 @@ Se deixar vazio o peso não será inserido no PDF
   type="text"
   id="numeroProjeto"
 >
-
-<small>
-Se deixar vazio o número do projeto não será inserido no PDF
-</small>
 
 </div>
 
@@ -504,16 +495,6 @@ async function gerarPDF(){
 
   const numeroProjeto =
     document.getElementById("numeroProjeto").value;
-
-  if(
-    !potencia ||
-    !altura ||
-    !largura ||
-    !comprimento
-  ){
-    alert("Preencha os campos obrigatórios.");
-    return;
-  }
 
   const larguraBase =
     largura + 2000;
@@ -894,7 +875,7 @@ async function gerarPDFSemAtenuacao(){
 
   const existingPdfBytes =
     await fetch(
-      "Sala_Gerador_Sem_Atenuacao"
+      "Sala_Gerador_Sem_Atenuacao.pdf"
     ).then(res => res.arrayBuffer());
 
   const pdfDoc =
