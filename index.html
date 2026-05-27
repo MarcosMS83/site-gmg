@@ -49,30 +49,6 @@ h1{
   text-align:center;
 }
 
-.tabs{
-  display:flex;
-  gap:10px;
-  margin-bottom:30px;
-}
-
-.tab-button{
-  padding:14px 20px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  background:#ddd;
-  font-weight:bold;
-}
-
-.tab-button.active{
-  background:#0f4ea8;
-  color:white;
-}
-
-.tab-content{
-  display:none;
-}
-
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -142,34 +118,6 @@ button:hover{
 
 <h1>MS GERADORES</h1>
 
-<div class="tabs">
-
-<button
-  class="tab-button active"
-  onclick="abrirAba('aba-gmg', this)"
->
-GMG CARENADO
-</button>
-
-<button
-  class="tab-button"
-  onclick="abrirAba('aba-sala', this)"
->
-SALA GMG ABERTO
-</button>
-
-</div>
-
-<!-- ========================================= -->
-<!-- ABA GMG -->
-<!-- ========================================= -->
-
-<div
-  id="aba-gmg"
-  class="tab-content"
-  style="display:block;"
->
-
 <div class="subtitle">
 Gerador automático de PDF dimensional
 </div>
@@ -197,7 +145,7 @@ Gerador automático de PDF dimensional
 </div>
 
 <div class="card">
-<label>Peso (kg) - Opcional</label>
+<label>Peso (kg)</label>
 <input type="number" id="peso">
 
 <small>
@@ -207,7 +155,7 @@ Se deixar vazio o peso não será inserido no PDF
 </div>
 
 <div class="card">
-<label>Número do Projeto - Opcional</label>
+<label>Número do Projeto</label>
 
 <input
   type="text"
@@ -228,108 +176,7 @@ GERAR PDF
 
 </div>
 
-<!-- ========================================= -->
-<!-- ABA SALA -->
-<!-- ========================================= -->
-
-<div
-  id="aba-sala"
-  class="tab-content"
->
-
-<div class="subtitle">
-Layout sala GMG aberto com kit atenuador
-</div>
-
-<div class="grid">
-
-<div class="card">
-<label>Potência (kVA)</label>
-<input type="number" id="salaPotencia">
-</div>
-
-<div class="card">
-<label>Comprimento GMG (mm)</label>
-<input type="number" id="gmgComprimento">
-</div>
-
-<div class="card">
-<label>Largura GMG (mm)</label>
-<input type="number" id="gmgLargura">
-</div>
-
-<div class="card">
-<label>Largura Atenuador Entrada (mm)</label>
-<input type="number" id="entradaLargura">
-</div>
-
-<div class="card">
-<label>Comprimento Atenuador Entrada (mm)</label>
-<input type="number" id="entradaComprimento">
-</div>
-
-<div class="card">
-<label>Altura Atenuador Entrada (mm)</label>
-<input type="number" id="entradaAltura">
-</div>
-
-<div class="card">
-<label>Largura Atenuador Saída (mm)</label>
-<input type="number" id="saidaLargura">
-</div>
-
-<div class="card">
-<label>Comprimento Atenuador Saída (mm)</label>
-<input type="number" id="saidaComprimento">
-</div>
-
-<div class="card">
-<label>Altura Atenuador Saída (mm)</label>
-<input type="number" id="saidaAltura">
-</div>
-
-<div class="card">
-<label>Largura Porta (mm)</label>
-<input type="number" id="larguraPorta">
-</div>
-
-</div>
-
-<button onclick="gerarPDFSala()">
-GERAR PDF SALA
-</button>
-
-</div>
-
-</div>
-
 <script>
-
-/* ========================================= */
-/* ABAS */
-/* ========================================= */
-
-function abrirAba(id, botao){
-
-  document
-    .querySelectorAll(".tab-content")
-    .forEach(el=>{
-      el.style.display="none";
-    });
-
-  document
-    .querySelectorAll(".tab-button")
-    .forEach(el=>{
-      el.classList.remove("active");
-    });
-
-  document
-    .getElementById(id)
-    .style.display="block";
-
-  botao.classList.add("active");
-
-}
 
 /* ========================================= */
 /* PDF CARENADO */
@@ -365,16 +212,28 @@ async function gerarPDF(){
     return;
   }
 
+  /* ========================================= */
+  /* BASE */
+  /* ========================================= */
+
   const larguraBase =
     largura + 2000;
 
   const comprimentoBase =
     comprimento + 2000;
 
+  /* ========================================= */
+  /* CARREGA PDF */
+  /* ========================================= */
+
   const existingPdfBytes =
     await fetch(
       "Dimensional GMG 25 KVA.pdf"
     ).then(res => res.arrayBuffer());
+
+  /* ========================================= */
+  /* ABRE PDF */
+  /* ========================================= */
 
   const pdfDoc =
     await PDFLib.PDFDocument.load(existingPdfBytes);
@@ -390,53 +249,83 @@ async function gerarPDF(){
       PDFLib.StandardFonts.Helvetica
     );
 
-  page.drawText(String(altura),{
-    x:85,
-    y:430,
-    size:7,
-    font,
-    color:black
-  });
+  /* ========================================= */
+  /* MEDIDAS GMG */
+  /* ========================================= */
 
-  page.drawText(String(largura),{
-    x:620,
-    y:325,
-    size:7,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(altura),
+    {
+      x:85,
+      y:430,
+      size:7,
+      font,
+      color:black
+    }
+  );
 
-  page.drawText(String(comprimento),{
-    x:235,
-    y:328,
-    size:7,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(largura),
+    {
+      x:620,
+      y:325,
+      size:7,
+      font,
+      color:black
+    }
+  );
 
-  page.drawText(String(larguraBase),{
-    x:85,
-    y:218,
-    size:7,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(comprimento),
+    {
+      x:235,
+      y:328,
+      size:7,
+      font,
+      color:black
+    }
+  );
 
-  page.drawText(String(comprimentoBase),{
-    x:235,
-    y:297,
-    size:7,
-    font,
-    color:black
-  });
+  /* ========================================= */
+  /* BASE */
+  /* ========================================= */
 
-  page.drawText(String(comprimentoBase),{
-    x:620,
-    y:210,
-    size:7,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(larguraBase),
+    {
+      x:85,
+      y:218,
+      size:7,
+      font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    String(comprimentoBase),
+    {
+      x:235,
+      y:297,
+      size:7,
+      font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    String(comprimentoBase),
+    {
+      x:620,
+      y:210,
+      size:7,
+      font,
+      color:black
+    }
+  );
+
+  /* ========================================= */
+  /* OPCIONAIS */
+  /* ========================================= */
 
   if(peso){
 
@@ -468,6 +357,10 @@ async function gerarPDF(){
 
   }
 
+  /* ========================================= */
+  /* POTÊNCIA */
+  /* ========================================= */
+
   page.drawText(
     `${potencia}kVA`,
     {
@@ -479,201 +372,16 @@ async function gerarPDF(){
     }
   );
 
+  /* ========================================= */
+  /* SALVA */
+  /* ========================================= */
+
   const pdfBytes =
     await pdfDoc.save();
 
   download(
     pdfBytes,
     `GMG_${potencia}kVA.pdf`,
-    "application/pdf"
-  );
-
-}
-
-/* ========================================= */
-/* PDF SALA */
-/* ========================================= */
-
-async function gerarPDFSala(){
-
-  const potencia =
-    document.getElementById("salaPotencia").value;
-
-  const gmgComprimento =
-    parseInt(document.getElementById("gmgComprimento").value);
-
-  const gmgLargura =
-    parseInt(document.getElementById("gmgLargura").value);
-
-  const entradaLargura =
-    parseInt(document.getElementById("entradaLargura").value);
-
-  const entradaComprimento =
-    parseInt(document.getElementById("entradaComprimento").value);
-
-  const entradaAltura =
-    parseInt(document.getElementById("entradaAltura").value);
-
-  const saidaLargura =
-    parseInt(document.getElementById("saidaLargura").value);
-
-  const saidaComprimento =
-    parseInt(document.getElementById("saidaComprimento").value);
-
-  const saidaAltura =
-    parseInt(document.getElementById("saidaAltura").value);
-
-  const larguraPorta =
-    parseInt(document.getElementById("larguraPorta").value);
-
-  const peDireito = 3000;
-
-  const comprimentoSala =
-    entradaComprimento +
-    saidaComprimento +
-    gmgComprimento +
-    800;
-
-  const larguraSala =
-    gmgLargura + 2200;
-
-  const existingPdfBytes =
-    await fetch(
-      "OK - LAYOUT SALA - GMG ABERTO COM KIT ATENUAÇÃO.pdf"
-    ).then(res => res.arrayBuffer());
-
-  const pdfDoc =
-    await PDFLib.PDFDocument.load(existingPdfBytes);
-
-  const page =
-    pdfDoc.getPages()[0];
-
-  const black =
-    PDFLib.rgb(0,0,0);
-
-  const font =
-    await pdfDoc.embedFont(
-      PDFLib.StandardFonts.Helvetica
-    );
-
-  /*
-  ROTAÇÃO 90°
-  */
-
-  page.drawText(String(gmgLargura),{
-    x:410,
-    y:950,
-    size:8,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
-
-  page.drawText(String(gmgComprimento),{
-    x:460,
-    y:830,
-    size:8,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
-
-  page.drawText(String(entradaLargura),{
-    x:405,
-    y:965,
-    size:8,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
-
-  page.drawText(String(entradaComprimento),{
-    x:415,
-    y:485,
-    size:8,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
-
-  page.drawText(String(entradaAltura),{
-    x:465,
-    y:123,
-    size:8,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
-
-  page.drawText(String(saidaLargura),{
-    x:411,
-    y:697,
-    size:6,
-    rotate: PDFLib.degrees(180),
-    font,
-    color:black
-  });
-
-  page.drawText(String(saidaComprimento),{
-    x:750,
-    y:120,
-    size:8,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
-
-  page.drawText(String(saidaAltura),{
-    x:280,
-    y:260,
-    size:8,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
-
-  page.drawText(String(peDireito),{
-    x:120,
-    y:180,
-    size:8,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
-
-  page.drawText(String(larguraSala),{
-    x:200,
-    y:180,
-    size:8,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
-
-  page.drawText(String(comprimentoSala),{
-    x:280,
-    y:180,
-    size:8,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
-
-  page.drawText(String(larguraPorta),{
-    x:360,
-    y:180,
-    size:8,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
-
-  const pdfBytes =
-    await pdfDoc.save();
-
-  download(
-    pdfBytes,
-    `LAYOUT_SALA_${potencia}KVA.pdf`,
     "application/pdf"
   );
 
