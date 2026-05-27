@@ -237,7 +237,7 @@ GERAR PDF
 </div>
 
 <!-- ========================================= -->
-<!-- ABA SALA COM ATENUAÇÃO -->
+<!-- ABA COM ATENUAÇÃO -->
 <!-- ========================================= -->
 
 <div
@@ -359,11 +359,6 @@ OPCIONAIS
 <div class="card">
 <label>Peso (kg)</label>
 <input type="number" id="salaPeso">
-
-<small>
-Se deixar vazio o peso não será inserido no PDF
-</small>
-
 </div>
 
 <div class="card">
@@ -373,10 +368,6 @@ Se deixar vazio o peso não será inserido no PDF
   type="text"
   id="salaProjeto"
 >
-
-<small>
-Se deixar vazio o número do projeto não será inserido no PDF
-</small>
 
 </div>
 
@@ -418,10 +409,7 @@ Layout sala GMG aberto sem atenuação
 <input type="number" id="semLargura">
 </div>
 
-<div class="card">
-<label>Largura Porta (mm)</label>
-<input type="number" id="semLarguraPorta">
-</div>
+<div></div>
 
 <!-- ========================================= -->
 <!-- OPCIONAIS -->
@@ -443,11 +431,6 @@ OPCIONAIS
 <div class="card">
 <label>Peso (kg)</label>
 <input type="number" id="semPeso">
-
-<small>
-Se deixar vazio o peso não será inserido no PDF
-</small>
-
 </div>
 
 <div class="card">
@@ -457,10 +440,6 @@ Se deixar vazio o peso não será inserido no PDF
   type="text"
   id="semProjeto"
 >
-
-<small>
-Se deixar vazio o número do projeto não será inserido no PDF
-</small>
 
 </div>
 
@@ -899,9 +878,6 @@ async function gerarPDFSemAtenuacao(){
   const gmgLargura =
     parseInt(document.getElementById("semLargura").value);
 
-  const larguraPorta =
-    parseInt(document.getElementById("semLarguraPorta").value);
-
   const peso =
     document.getElementById("semPeso").value;
 
@@ -936,55 +912,41 @@ async function gerarPDFSemAtenuacao(){
     );
 
   page.drawText(String(gmgLargura),{
-    x:413,
-    y:954,
-    size:7,
-    rotate: PDFLib.degrees(180),
+    x:250,
+    y:525,
+    size:8,
     font,
     color:black
   });
 
   page.drawText(String(gmgComprimento),{
-    x:460,
-    y:835,
-    size:7,
-    rotate: PDFLib.degrees(90),
+    x:390,
+    y:410,
+    size:8,
     font,
     color:black
   });
 
   page.drawText(String(peDireito),{
-    x:370,
-    y:435,
-    size:7,
-    rotate: PDFLib.degrees(180),
+    x:120,
+    y:350,
+    size:8,
     font,
     color:black
   });
 
   page.drawText(String(larguraSala),{
-    x:400,
-    y:669,
-    size:7,
-    rotate: PDFLib.degrees(180),
+    x:250,
+    y:310,
+    size:8,
     font,
     color:black
   });
 
   page.drawText(String(comprimentoSala),{
-    x:547,
-    y:867,
-    size:7,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
-
-  page.drawText(String(larguraPorta),{
-    x:480,
-    y:1060,
-    size:7,
-    rotate: PDFLib.degrees(90),
+    x:560,
+    y:410,
+    size:8,
     font,
     color:black
   });
@@ -994,10 +956,9 @@ async function gerarPDFSemAtenuacao(){
     page.drawText(
       `Peso: ${peso} kg`,
       {
-        x:790,
-        y:800,
-        size:7,
-        rotate: PDFLib.degrees(90),
+        x:650,
+        y:70,
+        size:8,
         font,
         color:black
       }
@@ -1010,16 +971,26 @@ async function gerarPDFSemAtenuacao(){
     page.drawText(
       `Projeto: ${numeroProjeto}`,
       {
-        x:800,
-        y:800,
-        size:7,
-        rotate: PDFLib.degrees(90),
+        x:650,
+        y:58,
+        size:8,
         font,
         color:black
       }
     );
 
   }
+
+  page.drawText(
+    `${potencia}kVA`,
+    {
+      x:720,
+      y:40,
+      size:8,
+      font,
+      color:black
+    }
+  );
 
   const pdfBytes =
     await pdfDoc.save();
