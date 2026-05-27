@@ -624,8 +624,8 @@ async function gerarPDFSemAtenuacao(){
     page.drawText(
       `GMG ${potencia}kVA`,
       {
-        x:100,
-        y:700,
+        x:200,
+        y:570,
         size:18,
         font,
         color:black
@@ -636,7 +636,7 @@ async function gerarPDFSemAtenuacao(){
       `Comprimento: ${gmgComprimento} mm`,
       {
         x:100,
-        y:660,
+        y:570,
         size:14,
         font,
         color:black
@@ -646,8 +646,8 @@ async function gerarPDFSemAtenuacao(){
     page.drawText(
       `Largura: ${gmgLargura} mm`,
       {
-        x:100,
-        y:630,
+        x:130,
+        y:570,
         size:14,
         font,
         color:black
@@ -659,8 +659,8 @@ async function gerarPDFSemAtenuacao(){
       page.drawText(
         `Peso: ${peso} kg`,
         {
-          x:100,
-          y:600,
+          x:250,
+          y:570,
           size:14,
           font,
           color:black
@@ -674,7 +674,7 @@ async function gerarPDFSemAtenuacao(){
       page.drawText(
         `Projeto: ${numeroProjeto}`,
         {
-          x:100,
+          x:150,
           y:570,
           size:14,
           font,
