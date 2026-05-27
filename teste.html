@@ -1,440 +1,3 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>MS Geradores - PDF</title>
-
-<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
-<script src="https://unpkg.com/downloadjs@1.4.7"></script>
-
-<style>
-
-body{
-  font-family:Arial;
-  background:#f4f4f4;
-  padding:40px;
-}
-
-.container{
-  max-width:1100px;
-  margin:auto;
-  background:white;
-  padding:40px;
-  border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.1);
-}
-
-.logo-area{
-  text-align:center;
-  margin-bottom:20px;
-}
-
-.logo-ms{
-  max-width:91px;
-}
-
-h1{
-  margin-bottom:15px;
-  color:#0f4ea8;
-  text-align:center;
-}
-
-.subtitle{
-  margin-bottom:30px;
-  color:#666;
-  text-align:center;
-}
-
-.tabs{
-  display:flex;
-  gap:10px;
-  margin-bottom:30px;
-  flex-wrap:wrap;
-}
-
-.tab-button{
-  padding:14px 20px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  background:#ddd;
-  font-weight:bold;
-}
-
-.tab-button.active{
-  background:#0f4ea8;
-  color:white;
-}
-
-.tab-content{
-  display:none;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-}
-
-.card{
-  border:1px solid #ddd;
-  padding:20px;
-  border-radius:12px;
-}
-
-label{
-  display:block;
-  margin-bottom:8px;
-  font-weight:bold;
-}
-
-input{
-  width:100%;
-  padding:14px;
-  border:1px solid #ccc;
-  border-radius:10px;
-  font-size:16px;
-}
-
-button{
-  width:100%;
-  padding:18px;
-  border:none;
-  background:#0f4ea8;
-  color:white;
-  font-size:18px;
-  border-radius:12px;
-  cursor:pointer;
-  margin-top:30px;
-  font-weight:bold;
-}
-
-button:hover{
-  background:#0b3d84;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="logo-area">
-
-<img
-  src="logo.jpeg"
-  alt="MS Geradores"
-  class="logo-ms"
->
-
-</div>
-
-<h1>MS GERADORES</h1>
-
-<div class="tabs">
-
-<button
-  class="tab-button active"
-  onclick="abrirAba('aba-gmg', this)"
->
-GMG CARENADO
-</button>
-
-<button
-  class="tab-button"
-  onclick="abrirAba('aba-sala', this)"
->
-GMG ABERTO COM ATENUAÇÃO
-</button>
-
-<button
-  class="tab-button"
-  onclick="abrirAba('aba-sem-atenuacao', this)"
->
-GMG ABERTO SEM ATENUAÇÃO
-</button>
-
-</div>
-
-<!-- ========================================= -->
-<!-- ABA GMG -->
-<!-- ========================================= -->
-
-<div
-  id="aba-gmg"
-  class="tab-content"
-  style="display:block;"
->
-
-<div class="subtitle">
-Gerador automático de PDF dimensional
-</div>
-
-<div class="grid">
-
-<div class="card">
-<label>Potência (kVA)</label>
-<input type="number" id="potencia">
-</div>
-
-<div class="card">
-<label>Largura (mm)</label>
-<input type="number" id="largura">
-</div>
-
-<div class="card">
-<label>Altura (mm)</label>
-<input type="number" id="altura">
-</div>
-
-<div class="card">
-<label>Comprimento (mm)</label>
-<input type="number" id="comprimento">
-</div>
-
-<div class="card">
-<label>Peso (kg)</label>
-<input type="number" id="peso">
-</div>
-
-<div class="card">
-<label>Número do Projeto</label>
-<input type="text" id="numeroProjeto">
-</div>
-
-</div>
-
-<button onclick="gerarPDF()">
-GERAR PDF
-</button>
-
-</div>
-
-<!-- ========================================= -->
-<!-- ABA COM ATENUAÇÃO -->
-<!-- ========================================= -->
-
-<div
-  id="aba-sala"
-  class="tab-content"
->
-
-<div class="subtitle">
-Layout sala GMG aberto com kit atenuador
-</div>
-
-<div class="grid">
-
-<div class="card">
-<label>Potência (kVA)</label>
-<input type="number" id="salaPotencia">
-</div>
-
-<div class="card">
-<label>Comprimento GMG (mm)</label>
-<input type="number" id="gmgComprimento">
-</div>
-
-<div class="card">
-<label>Largura GMG (mm)</label>
-<input type="number" id="gmgLargura">
-</div>
-
-<div></div>
-
-<div
-  style="
-    grid-column:1 / -1;
-    font-weight:bold;
-    color:#0f4ea8;
-    margin-top:10px;
-    margin-bottom:-5px;
-    font-size:18px;
-  "
->
-ATENUADOR DE ENTRADA
-</div>
-
-<div class="card">
-<label>Largura (mm)</label>
-<input type="number" id="entradaLargura">
-</div>
-
-<div class="card">
-<label>Comprimento (mm)</label>
-<input type="number" id="entradaComprimento">
-</div>
-
-<div class="card">
-<label>Altura (mm)</label>
-<input type="number" id="entradaAltura">
-</div>
-
-<div></div>
-
-<div
-  style="
-    grid-column:1 / -1;
-    font-weight:bold;
-    color:#0f4ea8;
-    margin-top:10px;
-    margin-bottom:-5px;
-    font-size:18px;
-  "
->
-ATENUADOR DE SAÍDA
-</div>
-
-<div class="card">
-<label>Largura (mm)</label>
-<input type="number" id="saidaLargura">
-</div>
-
-<div class="card">
-<label>Comprimento (mm)</label>
-<input type="number" id="saidaComprimento">
-</div>
-
-<div class="card">
-<label>Altura (mm)</label>
-<input type="number" id="saidaAltura">
-</div>
-
-<div class="card">
-<label>Largura Porta (mm)</label>
-<input type="number" id="larguraPorta">
-</div>
-
-<div
-  style="
-    grid-column:1 / -1;
-    font-weight:bold;
-    color:#0f4ea8;
-    margin-top:10px;
-    margin-bottom:-5px;
-    font-size:18px;
-  "
->
-OPCIONAIS
-</div>
-
-<div class="card">
-<label>Peso (kg)</label>
-<input type="number" id="salaPeso">
-</div>
-
-<div class="card">
-<label>Número do Projeto</label>
-<input type="text" id="salaProjeto">
-</div>
-
-</div>
-
-<button onclick="gerarPDFSala()">
-GERAR PDF SALA
-</button>
-
-</div>
-
-<!-- ========================================= -->
-<!-- ABA SEM ATENUAÇÃO -->
-<!-- ========================================= -->
-
-<div
-  id="aba-sem-atenuacao"
-  class="tab-content"
->
-
-<div class="subtitle">
-Layout sala GMG aberto sem atenuação
-</div>
-
-<div class="grid">
-
-<div class="card">
-<label>Potência (kVA)</label>
-<input type="number" id="semPotencia">
-</div>
-
-<div class="card">
-<label>Comprimento GMG (mm)</label>
-<input type="number" id="semComprimento">
-</div>
-
-<div class="card">
-<label>Largura GMG (mm)</label>
-<input type="number" id="semLargura">
-</div>
-
-<div></div>
-
-<div
-  style="
-    grid-column:1 / -1;
-    font-weight:bold;
-    color:#0f4ea8;
-    margin-top:10px;
-    margin-bottom:-5px;
-    font-size:18px;
-  "
->
-OPCIONAIS
-</div>
-
-<div class="card">
-<label>Peso (kg)</label>
-<input type="number" id="semPeso">
-</div>
-
-<div class="card">
-<label>Número do Projeto</label>
-<input type="text" id="semProjeto">
-</div>
-
-</div>
-
-<button onclick="gerarPDFSemAtenuacao()">
-GERAR PDF SALA
-</button>
-
-</div>
-
-</div>
-
-<script>
-
-/* ========================================= */
-/* ABAS */
-/* ========================================= */
-
-function abrirAba(id, botao){
-
-  document
-    .querySelectorAll(".tab-content")
-    .forEach(el=>{
-      el.style.display="none";
-    });
-
-  document
-    .querySelectorAll(".tab-button")
-    .forEach(el=>{
-      el.classList.remove("active");
-    });
-
-  document
-    .getElementById(id)
-    .style.display="block";
-
-  botao.classList.add("active");
-
-}
-
 /* ========================================= */
 /* PDF CARENADO */
 /* ========================================= */
@@ -459,11 +22,29 @@ async function gerarPDF(){
   const numeroProjeto =
     document.getElementById("numeroProjeto").value;
 
+  if(
+    !potencia ||
+    !altura ||
+    !largura ||
+    !comprimento
+  ){
+    alert("Preencha os campos obrigatórios.");
+    return;
+  }
+
+  /* ========================================= */
+  /* BASE */
+  /* ========================================= */
+
   const larguraBase =
     largura + 2000;
 
   const comprimentoBase =
     comprimento + 2000;
+
+  /* ========================================= */
+  /* PDF */
+  /* ========================================= */
 
   const existingPdfBytes =
     await fetch(
@@ -484,29 +65,83 @@ async function gerarPDF(){
       PDFLib.StandardFonts.Helvetica
     );
 
-  page.drawText(String(altura),{
-    x:85,
-    y:430,
-    size:7,
-    font,
-    color:black
-  });
+  /* ========================================= */
+  /* MEDIDAS GMG */
+  /* ========================================= */
 
-  page.drawText(String(largura),{
-    x:620,
-    y:325,
-    size:7,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(altura),
+    {
+      x:85,
+      y:430,
+      size:7,
+      font,
+      color:black
+    }
+  );
 
-  page.drawText(String(comprimento),{
-    x:235,
-    y:328,
-    size:7,
-    font,
-    color:black
-  });
+  page.drawText(
+    String(largura),
+    {
+      x:620,
+      y:325,
+      size:7,
+      font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    String(comprimento),
+    {
+      x:235,
+      y:328,
+      size:7,
+      font,
+      color:black
+    }
+  );
+
+  /* ========================================= */
+  /* MEDIDAS BASE */
+  /* ========================================= */
+
+  page.drawText(
+    String(larguraBase),
+    {
+      x:85,
+      y:218,
+      size:7,
+      font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    String(comprimentoBase),
+    {
+      x:235,
+      y:297,
+      size:7,
+      font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    String(comprimentoBase),
+    {
+      x:620,
+      y:210,
+      size:7,
+      font,
+      color:black
+    }
+  );
+
+  /* ========================================= */
+  /* OPCIONAIS */
+  /* ========================================= */
 
   if(peso){
 
@@ -549,6 +184,10 @@ async function gerarPDF(){
     }
   );
 
+  /* ========================================= */
+  /* SALVA */
+  /* ========================================= */
+
   const pdfBytes =
     await pdfDoc.save();
 
@@ -559,154 +198,3 @@ async function gerarPDF(){
   );
 
 }
-
-/* ========================================= */
-/* PDF SALA COM ATENUAÇÃO */
-/* ========================================= */
-
-async function gerarPDFSala(){
-
-  alert("ABA COM ATENUAÇÃO OK");
-
-}
-
-/* ========================================= */
-/* PDF SALA SEM ATENUAÇÃO */
-/* ========================================= */
-
-async function gerarPDFSemAtenuacao(){
-
-  try{
-
-    const potencia =
-      document.getElementById("semPotencia").value;
-
-    const gmgComprimento =
-      document.getElementById("semComprimento").value;
-
-    const gmgLargura =
-      document.getElementById("semLargura").value;
-
-    const peso =
-      document.getElementById("semPeso").value;
-
-    const numeroProjeto =
-      document.getElementById("semProjeto").value;
-
-    if(
-      !potencia ||
-      !gmgComprimento ||
-      !gmgLargura
-    ){
-      alert("Preencha os campos obrigatórios.");
-      return;
-    }
-
-    const existingPdfBytes =
-      await fetch(
-        "Sala_Gerador_Sem_Atenuacao.pdf"
-      ).then(res => res.arrayBuffer());
-
-    const pdfDoc =
-      await PDFLib.PDFDocument.load(existingPdfBytes);
-
-    const page =
-      pdfDoc.getPages()[0];
-
-    const black =
-      PDFLib.rgb(0,0,0);
-
-    const font =
-      await pdfDoc.embedFont(
-        PDFLib.StandardFonts.Helvetica
-      );
-
-    page.drawText(
-      `GMG ${potencia}kVA`,
-      {
-        x:200,
-        y:570,
-        size:18,
-        font,
-        color:black
-      }
-    );
-
-    page.drawText(
-      `Comprimento: ${gmgComprimento} mm`,
-      {
-        x:100,
-        y:770,
-        size:14,
-        font,
-        color:black
-      }
-    );
-
-    page.drawText(
-      `Largura: ${gmgLargura} mm`,
-      {
-        x:130,
-        y:570,
-        size:14,
-        font,
-        color:black
-      }
-    );
-
-    if(peso){
-
-      page.drawText(
-        `Peso: ${peso} kg`,
-        {
-          x:250,
-          y:570,
-          size:14,
-          font,
-          color:black
-        }
-      );
-
-    }
-
-    if(numeroProjeto){
-
-      page.drawText(
-        `Projeto: ${numeroProjeto}`,
-        {
-          x:150,
-          y:570,
-          size:14,
-          font,
-          color:black
-        }
-      );
-
-    }
-
-    const pdfBytes =
-      await pdfDoc.save();
-
-    download(
-      pdfBytes,
-      `GMG_SEM_ATENUACAO_${potencia}KVA.pdf`,
-      "application/pdf"
-    );
-
-  }catch(erro){
-
-    console.error(erro);
-
-    alert(
-      "Erro ao abrir Sala_Gerador_Sem_Atenuacao.pdf"
-    );
-
-  }
-
-}
-
-</script>
-
-</body>
-
-</html>
