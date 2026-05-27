@@ -6,10 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MS Geradores - PDF</title>
-
-<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
-<script src="https://unpkg.com/downloadjs@1.4.7"></script>
+<title>MS Geradores</title>
 
 <style>
 
@@ -17,13 +14,14 @@ body{
   font-family:Arial;
   background:#f4f4f4;
   padding:40px;
+  margin:0;
 }
 
 .container{
   max-width:1100px;
   margin:auto;
   background:white;
-  padding:40px;
+  padding:50px;
   border-radius:20px;
   box-shadow:0 10px 30px rgba(0,0,0,0.1);
 }
@@ -34,68 +32,63 @@ body{
 }
 
 .logo-ms{
-  max-width:91px;
+  max-width:100px;
 }
 
 h1{
-  margin-bottom:15px;
-  color:#0f4ea8;
   text-align:center;
+  color:#0f4ea8;
+  margin-bottom:10px;
 }
 
 .subtitle{
-  margin-bottom:30px;
-  color:#666;
   text-align:center;
+  color:#666;
+  margin-bottom:40px;
+  font-size:18px;
 }
 
 .grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:25px;
 }
 
 .card{
   border:1px solid #ddd;
-  padding:20px;
-  border-radius:12px;
-}
-
-label{
-  display:block;
-  margin-bottom:8px;
-  font-weight:bold;
-}
-
-input{
-  width:100%;
-  padding:14px;
-  border:1px solid #ccc;
-  border-radius:10px;
-  font-size:16px;
-}
-
-small{
-  color:#777;
-  display:block;
-  margin-top:6px;
-}
-
-button{
-  width:100%;
-  padding:18px;
-  border:none;
-  background:#0f4ea8;
-  color:white;
-  font-size:18px;
-  border-radius:12px;
+  border-radius:16px;
+  padding:35px 25px;
+  text-align:center;
+  transition:0.2s;
   cursor:pointer;
-  margin-top:30px;
-  font-weight:bold;
+  text-decoration:none;
+  color:#333;
+  background:white;
 }
 
-button:hover{
-  background:#0b3d84;
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 8px 25px rgba(0,0,0,0.12);
+}
+
+.card-title{
+  font-size:22px;
+  font-weight:bold;
+  color:#0f4ea8;
+  margin-bottom:15px;
+}
+
+.card-text{
+  color:#666;
+  line-height:1.5;
+}
+
+@media(max-width:900px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
 }
 
 </style>
@@ -119,275 +112,71 @@ button:hover{
 <h1>MS GERADORES</h1>
 
 <div class="subtitle">
-GERADOR CARENADO
+Selecione o tipo de layout desejado
 </div>
 
 <div class="grid">
 
-<div class="card">
-<label>Potência (kVA)</label>
-<input type="number" id="potencia">
-</div>
+<!-- ========================================= -->
+<!-- CARENADO -->
+<!-- ========================================= -->
 
-<div class="card">
-<label>Largura (mm)</label>
-<input type="number" id="largura">
-</div>
-
-<div class="card">
-<label>Altura (mm)</label>
-<input type="number" id="altura">
-</div>
-
-<div class="card">
-<label>Comprimento (mm)</label>
-<input type="number" id="comprimento">
-</div>
-
-<div class="card">
-<label>Peso (kg)</label>
-<input type="number" id="peso">
-
-<small>
-Se deixar vazio o peso não será inserido no PDF
-</small>
-
-</div>
-
-<div class="card">
-<label>Número do Projeto</label>
-
-<input
-  type="text"
-  id="numeroProjeto"
+<a
+  href="carenado.html"
+  class="card"
 >
 
-<small>
-Se deixar vazio o número do projeto não será inserido no PDF
-</small>
+<div class="card-title">
+GMG CARENADO
+</div>
+
+<div class="card-text">
+Layout dimensional para geradores carenados
+</div>
+
+</a>
+
+<!-- ========================================= -->
+<!-- ABERTO COM KIT -->
+<!-- ========================================= -->
+
+<a
+  href="abertcomkit.html"
+  class="card"
+>
+
+<div class="card-title">
+GMG ABERTO COM KIT
+</div>
+
+<div class="card-text">
+Layout de sala para gerador aberto com kit de atenuação
+</div>
+
+</a>
+
+<!-- ========================================= -->
+<!-- ABERTO SEM KIT -->
+<!-- ========================================= -->
+
+<a
+  href="abertosemkit.html"
+  class="card"
+>
+
+<div class="card-title">
+GMG ABERTO SEM KIT
+</div>
+
+<div class="card-text">
+Layout de sala para gerador aberto sem atenuação
+</div>
+
+</a>
 
 </div>
 
 </div>
-
-<button onclick="gerarPDF()">
-GERAR PDF
-</button>
-
-</div>
-
-<script>
-
-/* ========================================= */
-/* PDF CARENADO */
-/* ========================================= */
-
-async function gerarPDF(){
-
-  const potencia =
-    document.getElementById("potencia").value;
-
-  const altura =
-    parseInt(document.getElementById("altura").value);
-
-  const largura =
-    parseInt(document.getElementById("largura").value);
-
-  const comprimento =
-    parseInt(document.getElementById("comprimento").value);
-
-  const peso =
-    document.getElementById("peso").value;
-
-  const numeroProjeto =
-    document.getElementById("numeroProjeto").value;
-
-  if(
-    !potencia ||
-    !altura ||
-    !largura ||
-    !comprimento
-  ){
-    alert("Preencha os campos obrigatórios.");
-    return;
-  }
-
-  /* ========================================= */
-  /* BASE */
-  /* ========================================= */
-
-  const larguraBase =
-    largura + 2000;
-
-  const comprimentoBase =
-    comprimento + 2000;
-
-  /* ========================================= */
-  /* CARREGA PDF */
-  /* ========================================= */
-
-  const existingPdfBytes =
-    await fetch(
-      "Dimensional GMG 25 KVA.pdf"
-    ).then(res => res.arrayBuffer());
-
-  /* ========================================= */
-  /* ABRE PDF */
-  /* ========================================= */
-
-  const pdfDoc =
-    await PDFLib.PDFDocument.load(existingPdfBytes);
-
-  const page =
-    pdfDoc.getPages()[0];
-
-  const black =
-    PDFLib.rgb(0,0,0);
-
-  const font =
-    await pdfDoc.embedFont(
-      PDFLib.StandardFonts.Helvetica
-    );
-
-  /* ========================================= */
-  /* MEDIDAS GMG */
-  /* ========================================= */
-
-  page.drawText(
-    String(altura),
-    {
-      x:85,
-      y:430,
-      size:7,
-      font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    String(largura),
-    {
-      x:620,
-      y:325,
-      size:7,
-      font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    String(comprimento),
-    {
-      x:235,
-      y:328,
-      size:7,
-      font,
-      color:black
-    }
-  );
-
-  /* ========================================= */
-  /* BASE */
-  /* ========================================= */
-
-  page.drawText(
-    String(larguraBase),
-    {
-      x:85,
-      y:218,
-      size:7,
-      font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    String(comprimentoBase),
-    {
-      x:235,
-      y:297,
-      size:7,
-      font,
-      color:black
-    }
-  );
-
-  page.drawText(
-    String(comprimentoBase),
-    {
-      x:620,
-      y:210,
-      size:7,
-      font,
-      color:black
-    }
-  );
-
-  /* ========================================= */
-  /* OPCIONAIS */
-  /* ========================================= */
-
-  if(peso){
-
-    page.drawText(
-      `Peso: ${peso} kg`,
-      {
-        x:605,
-        y:60,
-        size:7,
-        font,
-        color:black
-      }
-    );
-
-  }
-
-  if(numeroProjeto){
-
-    page.drawText(
-      `Projeto: ${numeroProjeto}`,
-      {
-        x:605,
-        y:48,
-        size:7,
-        font,
-        color:black
-      }
-    );
-
-  }
-
-  /* ========================================= */
-  /* POTÊNCIA */
-  /* ========================================= */
-
-  page.drawText(
-    `${potencia}kVA`,
-    {
-      x:710,
-      y:32,
-      size:7,
-      font,
-      color:black
-    }
-  );
-
-  /* ========================================= */
-  /* SALVA */
-  /* ========================================= */
-
-  const pdfBytes =
-    await pdfDoc.save();
-
-  download(
-    pdfBytes,
-    `GMG_${potencia}kVA.pdf`,
-    "application/pdf"
-  );
-
-}
-
-</script>
 
 </body>
 
