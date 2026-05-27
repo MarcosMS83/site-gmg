@@ -53,6 +53,7 @@ h1{
   display:flex;
   gap:10px;
   margin-bottom:30px;
+  flex-wrap:wrap;
 }
 
 .tab-button{
@@ -158,6 +159,13 @@ GMG CARENADO
 GMG ABERTO COM ATENUAÇÃO
 </button>
 
+<button
+  class="tab-button"
+  onclick="abrirAba('aba-sem-atenuacao', this)"
+>
+GMG ABERTO SEM ATENUAÇÃO
+</button>
+
 </div>
 
 <!-- ========================================= -->
@@ -229,7 +237,7 @@ GERAR PDF
 </div>
 
 <!-- ========================================= -->
-<!-- ABA SALA -->
+<!-- ABA SALA COM ATENUAÇÃO -->
 <!-- ========================================= -->
 
 <div
@@ -375,6 +383,90 @@ Se deixar vazio o número do projeto não será inserido no PDF
 </div>
 
 <button onclick="gerarPDFSala()">
+GERAR PDF SALA
+</button>
+
+</div>
+
+<!-- ========================================= -->
+<!-- ABA SEM ATENUAÇÃO -->
+<!-- ========================================= -->
+
+<div
+  id="aba-sem-atenuacao"
+  class="tab-content"
+>
+
+<div class="subtitle">
+Layout sala GMG aberto sem atenuação
+</div>
+
+<div class="grid">
+
+<div class="card">
+<label>Potência (kVA)</label>
+<input type="number" id="semPotencia">
+</div>
+
+<div class="card">
+<label>Comprimento GMG (mm)</label>
+<input type="number" id="semComprimento">
+</div>
+
+<div class="card">
+<label>Largura GMG (mm)</label>
+<input type="number" id="semLargura">
+</div>
+
+<div class="card">
+<label>Largura Porta (mm)</label>
+<input type="number" id="semLarguraPorta">
+</div>
+
+<!-- ========================================= -->
+<!-- OPCIONAIS -->
+<!-- ========================================= -->
+
+<div
+  style="
+    grid-column:1 / -1;
+    font-weight:bold;
+    color:#0f4ea8;
+    margin-top:10px;
+    margin-bottom:-5px;
+    font-size:18px;
+  "
+>
+OPCIONAIS
+</div>
+
+<div class="card">
+<label>Peso (kg)</label>
+<input type="number" id="semPeso">
+
+<small>
+Se deixar vazio o peso não será inserido no PDF
+</small>
+
+</div>
+
+<div class="card">
+<label>Número do Projeto</label>
+
+<input
+  type="text"
+  id="semProjeto"
+>
+
+<small>
+Se deixar vazio o número do projeto não será inserido no PDF
+</small>
+
+</div>
+
+</div>
+
+<button onclick="gerarPDFSemAtenuacao()">
 GERAR PDF SALA
 </button>
 
@@ -570,7 +662,7 @@ async function gerarPDF(){
 }
 
 /* ========================================= */
-/* PDF SALA */
+/* PDF SALA COM ATENUAÇÃO */
 /* ========================================= */
 
 async function gerarPDFSala(){
@@ -787,6 +879,154 @@ async function gerarPDFSala(){
   download(
     pdfBytes,
     `LAYOUT_SALA_${potencia}KVA.pdf`,
+    "application/pdf"
+  );
+
+}
+
+/* ========================================= */
+/* PDF SALA SEM ATENUAÇÃO */
+/* ========================================= */
+
+async function gerarPDFSemAtenuacao(){
+
+  const potencia =
+    document.getElementById("semPotencia").value;
+
+  const gmgComprimento =
+    parseInt(document.getElementById("semComprimento").value);
+
+  const gmgLargura =
+    parseInt(document.getElementById("semLargura").value);
+
+  const larguraPorta =
+    parseInt(document.getElementById("semLarguraPorta").value);
+
+  const peso =
+    document.getElementById("semPeso").value;
+
+  const numeroProjeto =
+    document.getElementById("semProjeto").value;
+
+  const peDireito = 3000;
+
+  const comprimentoSala =
+    gmgComprimento + 800;
+
+  const larguraSala =
+    gmgLargura + 2400;
+
+  const existingPdfBytes =
+    await fetch(
+      "SALA DO GERADOR sem atenuador.pdf"
+    ).then(res => res.arrayBuffer());
+
+  const pdfDoc =
+    await PDFLib.PDFDocument.load(existingPdfBytes);
+
+  const page =
+    pdfDoc.getPages()[0];
+
+  const black =
+    PDFLib.rgb(0,0,0);
+
+  const font =
+    await pdfDoc.embedFont(
+      PDFLib.StandardFonts.Helvetica
+    );
+
+  page.drawText(String(gmgLargura),{
+    x:413,
+    y:954,
+    size:7,
+    rotate: PDFLib.degrees(180),
+    font,
+    color:black
+  });
+
+  page.drawText(String(gmgComprimento),{
+    x:460,
+    y:835,
+    size:7,
+    rotate: PDFLib.degrees(90),
+    font,
+    color:black
+  });
+
+  page.drawText(String(peDireito),{
+    x:370,
+    y:435,
+    size:7,
+    rotate: PDFLib.degrees(180),
+    font,
+    color:black
+  });
+
+  page.drawText(String(larguraSala),{
+    x:400,
+    y:669,
+    size:7,
+    rotate: PDFLib.degrees(180),
+    font,
+    color:black
+  });
+
+  page.drawText(String(comprimentoSala),{
+    x:547,
+    y:867,
+    size:7,
+    rotate: PDFLib.degrees(90),
+    font,
+    color:black
+  });
+
+  page.drawText(String(larguraPorta),{
+    x:480,
+    y:1060,
+    size:7,
+    rotate: PDFLib.degrees(90),
+    font,
+    color:black
+  });
+
+  if(peso){
+
+    page.drawText(
+      `Peso: ${peso} kg`,
+      {
+        x:790,
+        y:800,
+        size:7,
+        rotate: PDFLib.degrees(90),
+        font,
+        color:black
+      }
+    );
+
+  }
+
+  if(numeroProjeto){
+
+    page.drawText(
+      `Projeto: ${numeroProjeto}`,
+      {
+        x:800,
+        y:800,
+        size:7,
+        rotate: PDFLib.degrees(90),
+        font,
+        color:black
+      }
+    );
+
+  }
+
+  const pdfBytes =
+    await pdfDoc.save();
+
+  download(
+    pdfBytes,
+    `LAYOUT_SALA_SEM_ATENUACAO_${potencia}KVA.pdf`,
     "application/pdf"
   );
 
