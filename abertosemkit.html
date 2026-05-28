@@ -296,7 +296,7 @@ async function gerarPDFSala(){
     {
       x:320,
       y:535,
-      size:8,
+      size:7,
       rotate: PDFLib.degrees(0),
       font,
       color:black
@@ -310,7 +310,8 @@ async function gerarPDFSala(){
     {
       x:180,
       y:315,
-      size:10,
+      size:7,
+      rotate: PDFLib.degrees(0),
       font,
       color:black
     }
@@ -353,8 +354,8 @@ async function gerarPDFSala(){
     page.drawText(
       `Peso: ${peso} kg`,
       {
-        x:600,
-        y:100,
+        x:240,
+        y:315,
         rotate: PDFLib.degrees(270),
         size:7,
         font,
