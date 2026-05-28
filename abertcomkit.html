@@ -272,9 +272,6 @@ async function gerarPDFSala(){
   const potencia =
     document.getElementById("salaPotencia").value;
  
-  const potencia =
-    parseInt(document.getElementById("salaPotencia").value);
- 
   const gmgComprimento =
     parseInt(document.getElementById("gmgComprimento").value);
 
@@ -446,15 +443,6 @@ async function gerarPDFSala(){
     color:black
   });
   
-   page.drawText(String(salaPotencia),{
-    x:790,
-    y:800,
-    size:7,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
-
   if(peso){
 
     page.drawText(
