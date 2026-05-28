@@ -442,6 +442,15 @@ async function gerarPDFSala(){
     font,
     color:black
   });
+  
+   page.drawText(String(salaPotencia),{
+    x:810,
+    y:850,
+    size:7,
+    rotate: PDFLib.degrees(90),
+    font,
+    color:black
+  });
 
   if(peso){
 
