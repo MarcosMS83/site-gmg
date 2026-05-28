@@ -225,7 +225,7 @@ async function gerarPDFSala(){
   const peDireito = 3000;
 
   const comprimentoSala =
-    gmgComprimento + 1200;
+    gmgComprimento + 1500;
 
   const larguraSala =
     gmgLargura + 2400;
@@ -323,7 +323,7 @@ async function gerarPDFSala(){
     String(comprimentoSala),
     {
       x:205,
-      y:215,
+      y:220,
       size:7,
       rotate: PDFLib.degrees(270),
       font,
@@ -336,8 +336,8 @@ async function gerarPDFSala(){
   page.drawText(
     `${potencia}kVA`,
     {
-      x:45,
-      y:190,
+      x:42,
+      y:185,
       rotate: PDFLib.degrees(270),
       size:7,
       font,
@@ -354,8 +354,8 @@ async function gerarPDFSala(){
     page.drawText(
       `Peso: ${peso} kg`,
       {
-        x:35,
-        y:210,
+        x:33,
+        y:285,
         rotate: PDFLib.degrees(270),
         size:7,
         font,
@@ -370,8 +370,8 @@ async function gerarPDFSala(){
     page.drawText(
       `Projeto: ${numeroProjeto}`,
       {
-        x:25,
-        y:210,
+        x:23,
+        y:285,
         size:7,
         rotate: PDFLib.degrees(270),
         font,
