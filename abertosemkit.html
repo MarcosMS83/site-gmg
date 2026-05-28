@@ -308,7 +308,7 @@ async function gerarPDFSala(){
   page.drawText(
     String(larguraSala),
     {
-      x:280,
+      x:300,
       y:370,
       size:7,
       rotate: PDFLib.degrees(0),
@@ -322,14 +322,16 @@ async function gerarPDFSala(){
   page.drawText(
     String(comprimentoSala),
     {
-      x:240,
-      y:320,
+      x:180,
+      y:280,
       size:7,
       rotate: PDFLib.degrees(270),
       font,
       color:black
     }
   );
+   x:270,
+      y:295,
 
   /* POTÊNCIA */
 
