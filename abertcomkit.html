@@ -232,25 +232,11 @@ OPCIONAIS
 <div class="card">
 <label>Peso (kg)</label>
 <input type="number" id="salaPeso">
-
-<small>
-Se deixar vazio o peso não será inserido no PDF
-</small>
-
 </div>
 
 <div class="card">
 <label>Número do Projeto</label>
-
-<input
-  type="text"
-  id="salaProjeto"
->
-
-<small>
-Se deixar vazio o número do projeto não será inserido no PDF
-</small>
-
+<input type="text" id="salaProjeto">
 </div>
 
 </div>
@@ -263,15 +249,11 @@ GERAR PDF SALA
 
 <script>
 
-/* ========================================= */
-/* PDF SALA */
-/* ========================================= */
-
 async function gerarPDFSala(){
 
   const potencia =
     document.getElementById("salaPotencia").value;
- 
+
   const gmgComprimento =
     parseInt(document.getElementById("gmgComprimento").value);
 
@@ -332,126 +314,208 @@ async function gerarPDFSala(){
 
   const font =
     await pdfDoc.embedFont(
-      PDFLib.StandardFonts.Helvetica
+      PDFLib.StandardFonts.HelveticaBold
     );
 
-  page.drawText(String(gmgLargura),{
-    x:413,
-    y:954,
-    size:7,
-    rotate: PDFLib.degrees(180),
-    font,
-    color:black
-  });
+  /* ========================================= */
+  /* MEDIDAS PRINCIPAIS */
+  /* ========================================= */
 
-  page.drawText(String(gmgComprimento),{
-    x:460,
-    y:835,
-    size:7,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
+  /* LARGURA GMG */
 
-  page.drawText(String(entradaLargura),{
-    x:413,
-    y:984,
-    size:7,
-    rotate: PDFLib.degrees(180),
-    font,
-    color:black
-  });
+  page.drawText(
+    String(gmgLargura),
+    {
+      x:760,
+      y:455,
+      size:11,
+      font,
+      color:black
+    }
+  );
 
-  page.drawText(String(entradaComprimento),{
-    x:420,
-    y:485,
-    size:7,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
+  /* COMPRIMENTO GMG */
 
-  page.drawText(String(entradaAltura),{
-    x:465,
-    y:524,
-    size:7,
-    rotate: PDFLib.degrees(180),
-    font,
-    color:black
-  });
+  page.drawText(
+    String(gmgComprimento),
+    {
+      x:930,
+      y:455,
+      size:11,
+      font,
+      color:black
+    }
+  );
 
-  page.drawText(String(saidaLargura),{
-    x:413,
-    y:691,
-    size:7,
-    rotate: PDFLib.degrees(180),
-    font,
-    color:black
-  });
+  /* PÉ DIREITO */
 
-  page.drawText(String(saidaComprimento),{
-    x:422,
-    y:180,
-    size:7,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
+  page.drawText(
+    String(peDireito),
+    {
+      x:420,
+      y:640,
+      size:11,
+      rotate: PDFLib.degrees(90),
+      font,
+      color:black
+    }
+  );
 
-  page.drawText(String(saidaAltura),{
-    x:465,
-    y:145,
-    size:7,
-    rotate: PDFLib.degrees(180),
-    font,
-    color:black
-  });
+  /* LARGURA SALA */
 
-  page.drawText(String(peDireito),{
-    x:370,
-    y:435,
-    size:7,
-    rotate: PDFLib.degrees(180),
-    font,
-    color:black
-  });
+  page.drawText(
+    String(larguraSala),
+    {
+      x:650,
+      y:520,
+      size:11,
+      rotate: PDFLib.degrees(90),
+      font,
+      color:black
+    }
+  );
 
-  page.drawText(String(larguraSala),{
-    x:400,
-    y:669,
-    size:7,
-    rotate: PDFLib.degrees(180),
-    font,
-    color:black
-  });
+  /* COMPRIMENTO SALA */
 
-  page.drawText(String(comprimentoSala),{
-    x:547,
-    y:867,
-    size:7,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
+  page.drawText(
+    String(comprimentoSala),
+    {
+      x:880,
+      y:250,
+      size:11,
+      font,
+      color:black
+    }
+  );
 
-  page.drawText(String(larguraPorta),{
-    x:480,
-    y:1060,
-    size:7,
-    rotate: PDFLib.degrees(90),
-    font,
-    color:black
-  });
-  
+  /* ========================================= */
+  /* ATENUADOR ENTRADA */
+  /* ========================================= */
+
+  page.drawText(
+    `L:${entradaLargura}`,
+    {
+      x:620,
+      y:690,
+      size:8,
+      font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `C:${entradaComprimento}`,
+    {
+      x:620,
+      y:670,
+      size:8,
+      font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `A:${entradaAltura}`,
+    {
+      x:620,
+      y:650,
+      size:8,
+      font,
+      color:black
+    }
+  );
+
+  /* ========================================= */
+  /* ATENUADOR SAÍDA */
+  /* ========================================= */
+
+  page.drawText(
+    `L:${saidaLargura}`,
+    {
+      x:620,
+      y:430,
+      size:8,
+      font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `C:${saidaComprimento}`,
+    {
+      x:620,
+      y:410,
+      size:8,
+      font,
+      color:black
+    }
+  );
+
+  page.drawText(
+    `A:${saidaAltura}`,
+    {
+      x:620,
+      y:390,
+      size:8,
+      font,
+      color:black
+    }
+  );
+
+  /* ========================================= */
+  /* PORTA */
+  /* ========================================= */
+
+  page.drawText(
+    String(larguraPorta),
+    {
+      x:1085,
+      y:560,
+      size:8,
+      rotate: PDFLib.degrees(90),
+      font,
+      color:black
+    }
+  );
+
+  /* ========================================= */
+  /* POTÊNCIA NO DESENHO */
+  /* ========================================= */
+
+  page.drawText(
+    `${potencia} kVA`,
+    {
+      x:800,
+      y:800,
+      size:10,
+      font,
+      color:black
+    }
+  );
+
+  /* ========================================= */
+  /* CAMPO CONTEÚDO */
+  /* ========================================= */
+
+  page.drawText(
+    `${potencia} kVA`,
+    {
+      x:1110,
+      y:120,
+      size:10,
+      font,
+      color:black
+    }
+  );
+
   if(peso){
 
     page.drawText(
       `Peso: ${peso} kg`,
       {
-        x:790,
-        y:800,
-        size:7,
-        rotate: PDFLib.degrees(90),
+        x:1110,
+        y:100,
+        size:9,
         font,
         color:black
       }
@@ -464,10 +528,9 @@ async function gerarPDFSala(){
     page.drawText(
       `Projeto: ${numeroProjeto}`,
       {
-        x:800,
-        y:800,
-        size:7,
-        rotate: PDFLib.degrees(90),
+        x:1110,
+        y:80,
+        size:9,
         font,
         color:black
       }
